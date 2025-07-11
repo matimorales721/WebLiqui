@@ -1,10 +1,11 @@
+<!-- procesos.html con mejoras -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WebLiqui - Procesos</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="topbar">
@@ -14,6 +15,7 @@
       <div class="avatar">M</div>
     </div>
   </div>
+
   <div class="main-container" style="display: flex;">
     <div class="sidebar">
       <h3>Menú</h3>
@@ -33,7 +35,8 @@
             <th>Fecha Inicio</th>
             <th>Estado</th>
             <th>Error</th>
-            <th>Acciones</th>
+            <th>Ver</th>
+            <th>Ver Logs</th>
           </tr>
         </thead>
         <tbody>
@@ -45,8 +48,48 @@
             <td class="status-completed">Completado</td>
             <td><input type="checkbox"></td>
             <td><button onclick="window.location.href='proceso.html?codigo=1234'">Ver</button></td>
+            <td><button onclick="window.location.href='logs.html?codigo=1234'">Ver Logs</button></td>
           </tr>
-          <!-- Agrega más procesos aquí si deseas -->
+          <tr>
+            <td>2345</td>
+            <td>M</td>
+            <td>12 horas</td>
+            <td>14/05/2023 20:00</td>
+            <td class="status-completed">Completado</td>
+            <td><input type="checkbox"></td>
+            <td><button onclick="window.location.href='proceso.html?codigo=2345'">Ver</button></td>
+            <td><button onclick="window.location.href='logs.html?codigo=2345'">Ver Logs</button></td>
+          </tr>
+          <tr>
+            <td>3456</td>
+            <td>E</td>
+            <td>12 horas</td>
+            <td>14/05/2023 08:00</td>
+            <td class="status-inprogress">En progreso</td>
+            <td><input type="checkbox"></td>
+            <td><button onclick="window.location.href='proceso.html?codigo=3456'">Ver</button></td>
+            <td><button onclick="window.location.href='logs.html?codigo=3456'">Ver Logs</button></td>
+          </tr>
+          <tr>
+            <td>4567</td>
+            <td>M</td>
+            <td>12 horas</td>
+            <td>13/05/2023 20:00</td>
+            <td class="status-failed">Fallido</td>
+            <td><input type="checkbox"></td>
+            <td><button onclick="window.location.href='proceso.html?codigo=4567'">Ver</button></td>
+            <td><button onclick="window.location.href='logs.html?codigo=4567'">Ver Logs</button></td>
+          </tr>
+          <tr>
+            <td>5678</td>
+            <td>E</td>
+            <td>12 horas</td>
+            <td>13/05/2023 08:00</td>
+            <td class="status-completed">Completado</td>
+            <td><input type="checkbox"></td>
+            <td><button onclick="window.location.href='proceso.html?codigo=5678'">Ver</button></td>
+            <td><button onclick="window.location.href='logs.html?codigo=5678'">Ver Logs</button></td>
+          </tr>
         </tbody>
       </table>
     </div>
