@@ -229,3 +229,44 @@ button:hover {
 .tab-content.active {
   display: block;
 }
+
+
+
+/* Esto es para los botones de la pantalla de procesos */
+.proceso-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.proceso-table th,
+.proceso-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+.proceso-table th {
+  background-color: var(--primary-color);
+  color: white;
+}
+.btn-ver {
+  padding: 0.4rem 0.8rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.btn-ver:hover {
+  background-color: #004f87;
+}
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+.filters select,
+.filters input {
+  padding: 0.5rem;
+  font-size: 1rem;
+}

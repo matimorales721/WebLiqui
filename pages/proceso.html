@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WebLiqui - Detalle del Proceso</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
   </head>
   <body>
     <div class="topbar">
@@ -20,7 +20,7 @@
       <div class="sidebar">
         <h3>Menú</h3>
         <nav>
-          <a href="procesos.html">← Volver a Procesos</a>
+          <a href="./procesos.html">← Volver a Procesos</a>
         </nav>
       </div>
 
@@ -48,12 +48,14 @@
         <div class="tabs">
           <div class="tab active" onclick="showTab('practicas')">Prácticas</div>
           <div class="tab" onclick="showTab('detalle')">Detalle</div>
-          <div class="tab" onclick="showTab('resu')">Resu</div>
+          <div class="tab" onclick="showTab('cabecera')">Cabecera</div>
+          <div class="tab" onclick="showTab('aprob-cabecera')">Aprob Cabecera</div>
         </div>
 
         <div id="practicas" class="tab-content active"><table id="tablaPracticas" class="styled-table"></table></div>
         <div id="detalle" class="tab-content"><table id="tablaDetalle" class="styled-table"></table></div>
-        <div id="resu" class="tab-content"><table id="tablaResu" class="styled-table"></table></div>
+        <div id="cabecera" class="tab-content"><table id="tablaCabecera" class="styled-table"></table></div>
+        <div id="aprob-cabecera" class="tab-content"><table id="tablaAprobCabecera" class="styled-table"></table></div>
       </div>
     </div>
 
@@ -65,7 +67,7 @@
         detalleGlobal = [],
         cabeceraGlobal = [];
 
-      fetch("procesos.json")
+      fetch("../data/procesos.json")
         .then((response) => response.json())
         .then((data) => {
           const proceso = data.results[0].items.find((p) => parseInt(p.c_proceso) === codigoNumerico);
@@ -81,26 +83,27 @@
         });
 
       Promise.all([
-        fetch("practicas.json")
+        fetch("../data/practicas.json")
           .then((res) => res.json())
           .then((j) => j.results?.[0]?.items || []),
-        fetch("detalle.json")
+        fetch("../data/detalle.json")
           .then((res) => res.json())
           .then((j) => j.results?.[0]?.items || []),
-        fetch("cabecera.json")
+        fetch("../data/cabecera.json")
           .then((res) => res.json())
           .then((j) => j.results?.[0]?.items || []),
-      ]).then(([practicas, detalle, cabecera]) => {
-        console.log("codigoNumerico: '" + codigoNumerico + "'.");
-        console.log("String(codigoNumerico): '" + String(codigoNumerico) + "'.");
-        console.log("practicas[0]: '" + practicas[0] + "'.");
-
+        fetch("../data/aprob_cabecera.json")
+          .then((res) => res.json())
+          .then((j) => j.results?.[0]?.items || []),
+      ]).then(([practicas, detalle, cabecera, aprobcabecera]) => {
         practicasGlobal = practicas.filter((p) => String(p.c_proceso) === String(codigoNumerico));
         detalleGlobal = detalle.filter((d) => String(d.c_proceso) === String(codigoNumerico));
         cabeceraGlobal = cabecera.filter((c) => String(c.c_proceso) === String(codigoNumerico));
+        aprobcabeceraGlobal = aprobcabecera.filter((ac) => String(ac.c_proceso) === String(codigoNumerico));
         renderTable("tablaPracticas", practicasGlobal);
         renderTable("tablaDetalle", detalleGlobal);
-        renderTable("tablaResu", cabeceraGlobal);
+        renderTable("tablaCabecera", cabeceraGlobal);
+        renderTable("tablaAprobCabecera", aprobcabeceraGlobal);
       });
 
       function renderTable(id, rows) {

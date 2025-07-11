@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebLiqui - Procesos</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="logo">WebLiqui</div>
+      <div class="user">
+        <span>Usuario</span>
+        <div class="avatar">U</div>
+      </div>
+    </div>
+
+    <div class="main-container" style="display: flex">
+      <div class="sidebar">
+        <h3>Menú</h3>
+        <nav>
+          <a href="#">Procesos</a>
+          <a href="#">Liquidación</a>
+        </nav>
+      </div>
+      <div class="content">
+        <h2>Lista de Procesos</h2>
+
+        <div class="filters">
+          <label
+            >Tipo:
+            <select id="filtroTipo">
+              <option value="">Todos</option>
+              <option value="E">E</option>
+              <option value="M">M</option>
+            </select>
+          </label>
+
+          <label
+            >Período:
+            <input type="text" id="filtroPeriodo" placeholder="ej: 202301" />
+          </label>
+
+          <button onclick="filtrar()">Filtrar</button>
+        </div>
+
+        <table id="tablaProcesos" class="proceso-table"></table>
+      </div>
+    </div>
+
+    <script>
+      let procesosOriginales = [];
+
+      fetch("../data/procesos.json")
+        .then((res) => res.json())
+        .then((json) => {
+          procesosOriginales = json.results[0].items;
+          renderTabla(procesosOriginales);
+        });
+
+      function renderTabla(procesos) {
+        const table = document.getElementById("tablaProcesos");
+        const headers = [
+          "c_proceso",
+          "c_tipo_ejecucion",
+          "c_periodo",
+          "f_inicio",
+          "f_fin",
+          "m_es_gdi",
+          "Ver Detalle",
+          "Ver Logs",
+        ];
+        const thead = `<thead><tr>${headers.map((h) => `<th>${h.replace(/_/g, " ")}</th>`).join("")}</tr></thead>`;
+        const tbody = `<tbody>${procesos
+          .map(
+            (p) => `
+        <tr>
+          <td>${p.c_proceso}</td>
+          <td>${p.c_tipo_ejecucion}</td>
+          <td>${p.c_periodo}</td>
+          <td>${p.f_inicio || ""}</td>
+          <td>${p.f_fin || ""}</td>
+          <td>${p.m_es_gdi}</td>
+          <td><a class="btn-ver" href="proceso.html?codigo=${p.c_proceso}">Ver</a></td>
+          <td><a class="btn-ver" href="logs.html?codigo=${p.c_proceso}">Logs</a></td>
+        </tr>`
+          )
+          .join("")}</tbody>`;
+        table.innerHTML = thead + tbody;
+      }
+
+      function filtrar() {
+        const tipo = document.getElementById("filtroTipo").value;
+        const periodo = document.getElementById("filtroPeriodo").value.trim();
+
+        const filtrados = procesosOriginales.filter((p) => {
+          return (
+            (tipo === "" || p.c_tipo_ejecucion === tipo) && (periodo === "" || p.c_periodo.toString().includes(periodo))
+          );
+        });
+
+        renderTabla(filtrados);
+      }
+    </script>
+  </body>
+</html>
