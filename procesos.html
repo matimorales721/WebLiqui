@@ -1,4 +1,3 @@
-<!-- procesos.html con mejoras -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,17 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WebLiqui - Procesos</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .proceso-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    .proceso-table th, .proceso-table td {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    .proceso-table th {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    .btn-ver {
+      padding: 0.4rem 0.8rem;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .btn-ver:hover {
+      background-color: #004f87;
+    }
+    .filters {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .filters select, .filters input {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 <body>
   <div class="topbar">
     <div class="logo">WebLiqui</div>
     <div class="user">
-      <span>Martín Rodríguez</span>
-      <div class="avatar">M</div>
+      <span>Usuario</span>
+      <div class="avatar">U</div>
     </div>
   </div>
 
-  <div class="main-container" style="display: flex;">
+  <div class="main-container" style="display: flex">
     <div class="sidebar">
       <h3>Menú</h3>
       <nav>
@@ -26,73 +62,75 @@
     </div>
     <div class="content">
       <h2>Lista de Procesos</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Código</th>
-            <th>Tipo</th>
-            <th>Duración</th>
-            <th>Fecha Inicio</th>
-            <th>Estado</th>
-            <th>Error</th>
-            <th>Ver</th>
-            <th>Ver Logs</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1234</td>
-            <td>E</td>
-            <td>12 horas</td>
-            <td>15/05/2023 08:00</td>
-            <td class="status-completed">Completado</td>
-            <td><input type="checkbox"></td>
-            <td><button onclick="window.location.href='proceso.html?codigo=1234'">Ver</button></td>
-            <td><button onclick="window.location.href='logs.html?codigo=1234'">Ver Logs</button></td>
-          </tr>
-          <tr>
-            <td>2345</td>
-            <td>M</td>
-            <td>12 horas</td>
-            <td>14/05/2023 20:00</td>
-            <td class="status-completed">Completado</td>
-            <td><input type="checkbox"></td>
-            <td><button onclick="window.location.href='proceso.html?codigo=2345'">Ver</button></td>
-            <td><button onclick="window.location.href='logs.html?codigo=2345'">Ver Logs</button></td>
-          </tr>
-          <tr>
-            <td>3456</td>
-            <td>E</td>
-            <td>12 horas</td>
-            <td>14/05/2023 08:00</td>
-            <td class="status-inprogress">En progreso</td>
-            <td><input type="checkbox"></td>
-            <td><button onclick="window.location.href='proceso.html?codigo=3456'">Ver</button></td>
-            <td><button onclick="window.location.href='logs.html?codigo=3456'">Ver Logs</button></td>
-          </tr>
-          <tr>
-            <td>4567</td>
-            <td>M</td>
-            <td>12 horas</td>
-            <td>13/05/2023 20:00</td>
-            <td class="status-failed">Fallido</td>
-            <td><input type="checkbox"></td>
-            <td><button onclick="window.location.href='proceso.html?codigo=4567'">Ver</button></td>
-            <td><button onclick="window.location.href='logs.html?codigo=4567'">Ver Logs</button></td>
-          </tr>
-          <tr>
-            <td>5678</td>
-            <td>E</td>
-            <td>12 horas</td>
-            <td>13/05/2023 08:00</td>
-            <td class="status-completed">Completado</td>
-            <td><input type="checkbox"></td>
-            <td><button onclick="window.location.href='proceso.html?codigo=5678'">Ver</button></td>
-            <td><button onclick="window.location.href='logs.html?codigo=5678'">Ver Logs</button></td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div class="filters">
+        <label>Tipo:
+          <select id="filtroTipo">
+            <option value="">Todos</option>
+            <option value="E">E</option>
+            <option value="M">M</option>
+          </select>
+        </label>
+
+        <label>Período:
+          <input type="text" id="filtroPeriodo" placeholder="ej: 202301">
+        </label>
+
+        <button onclick="filtrar()">Filtrar</button>
+      </div>
+
+      <table id="tablaProcesos" class="proceso-table"></table>
     </div>
   </div>
+
+  <script>
+    let procesosOriginales = [];
+
+    fetch("procesos.json")
+      .then(res => res.json())
+      .then(json => {
+        procesosOriginales = json.results[0].items;
+        renderTabla(procesosOriginales);
+      });
+
+    function renderTabla(procesos) {
+      const table = document.getElementById("tablaProcesos");
+      const headers = [
+        "c_proceso",
+        "c_tipo_ejecucion",
+        "c_periodo",
+        "f_inicio",
+        "f_fin",
+        "m_es_gdi",
+        "Ver Detalle",
+        "Ver Logs"
+      ];
+      const thead = `<thead><tr>${headers.map(h => `<th>${h.replace(/_/g, " ")}</th>`).join('')}</tr></thead>`;
+      const tbody = `<tbody>${procesos.map(p => `
+        <tr>
+          <td>${p.c_proceso}</td>
+          <td>${p.c_tipo_ejecucion}</td>
+          <td>${p.c_periodo}</td>
+          <td>${p.f_inicio || ''}</td>
+          <td>${p.f_fin || ''}</td>
+          <td>${p.m_es_gdi}</td>
+          <td><a class="btn-ver" href="proceso.html?codigo=${p.c_proceso}">Ver</a></td>
+          <td><a class="btn-ver" href="logs.html?codigo=${p.c_proceso}">Logs</a></td>
+        </tr>`).join('')}</tbody>`;
+      table.innerHTML = thead + tbody;
+    }
+
+    function filtrar() {
+      const tipo = document.getElementById("filtroTipo").value;
+      const periodo = document.getElementById("filtroPeriodo").value.trim();
+
+      const filtrados = procesosOriginales.filter(p => {
+        return (tipo === "" || p.c_tipo_ejecucion === tipo) &&
+               (periodo === "" || p.c_periodo.toString().includes(periodo));
+      });
+
+      renderTabla(filtrados);
+    }
+  </script>
 </body>
 </html>

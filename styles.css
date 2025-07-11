@@ -189,3 +189,43 @@ button:hover {
 .login-box button:hover {
   transform: scale(1.05);
 }
+
+
+
+.detalle-proceso {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  margin-bottom: 2rem;
+}
+.detalle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.filters {
+  margin-bottom: 1.5rem;
+}
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 1rem;
+}
+.tab {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+.tab.active {
+  border-bottom: 3px solid var(--primary-color);
+  color: var(--primary-color);
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
