@@ -1,0 +1,224 @@
+/* styles.css - inspirado en MercadoLibre con mejoras tipográficas */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+  --primary-color: #3483fa;
+  --primary-light: #e3f0fd;
+  --background-color: #f5f5f5;
+  --sidebar-color: #ffffff;
+  --sidebar-hover: #f0f0f0;
+  --text-color: #333;
+  --white: #fff;
+  --border-radius: 6px;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.topbar {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.topbar .logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.topbar .user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 400;
+}
+
+.topbar .avatar {
+  width: 36px;
+  height: 36px;
+  background-color: white;
+  color: var(--primary-color);
+  font-weight: 600;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container {
+  display: flex;
+  height: calc(100vh - 64px);
+}
+
+.sidebar {
+  background-color: var(--sidebar-color);
+  width: 220px;
+  color: var(--text-color);
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 4px var(--shadow-color);
+}
+
+.sidebar h3 {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar nav a {
+  padding: 0.75rem 2rem;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  border-left: 4px solid transparent;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.sidebar nav a:hover {
+  background-color: var(--sidebar-hover);
+  border-left: 4px solid var(--primary-color);
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: var(--background-color);
+}
+
+table {
+  width: 100%;
+  background-color: white;
+  border-collapse: collapse;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 1px 6px var(--shadow-color);
+  margin-bottom: 2rem;
+}
+
+th, td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+th {
+  background-color: var(--primary-light);
+  font-weight: 500;
+}
+
+.status-completed { color: green; }
+.status-inprogress { color: orange; }
+.status-failed { color: red; }
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-family: 'Roboto', sans-serif;
+}
+
+button:hover {
+  background-color: #1d6de0;
+  transform: scale(1.05);
+}
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-color);
+}
+
+.login-box {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 40px var(--shadow-color);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-box h2 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(90deg, var(--primary-color), #63b3ff);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: transform 0.2s;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.login-box button:hover {
+  transform: scale(1.05);
+}

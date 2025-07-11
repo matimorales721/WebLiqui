@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebLiqui - Procesos</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo">WebLiqui</div>
+    <div class="user">
+      <span>Martín Rodríguez</span>
+      <div class="avatar">M</div>
+    </div>
+  </div>
+  <div class="main-container" style="display: flex;">
+    <div class="sidebar">
+      <h3>Menú</h3>
+      <nav>
+        <a href="#">Procesos</a>
+        <a href="#">Liquidación</a>
+      </nav>
+    </div>
+    <div class="content">
+      <h2>Lista de Procesos</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Tipo</th>
+            <th>Duración</th>
+            <th>Fecha Inicio</th>
+            <th>Estado</th>
+            <th>Error</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1234</td>
+            <td>E</td>
+            <td>12 horas</td>
+            <td>15/05/2023 08:00</td>
+            <td class="status-completed">Completado</td>
+            <td><input type="checkbox"></td>
+            <td><button onclick="window.location.href='proceso.html?codigo=1234'">Ver</button></td>
+          </tr>
+          <!-- Agrega más procesos aquí si deseas -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

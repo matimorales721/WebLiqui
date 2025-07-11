@@ -1,0 +1,192 @@
+<!-- proceso.html mejorado -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebLiqui - Detalle del Proceso</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .detalle-proceso {
+        background: white;
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: 0 2px 8px var(--shadow-color);
+        margin-bottom: 2rem;
+      }
+      .detalle-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+      .filters {
+        margin-bottom: 1.5rem;
+      }
+      .tabs {
+        display: flex;
+        border-bottom: 2px solid #ccc;
+        margin-bottom: 1rem;
+      }
+      .tab {
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        font-weight: 500;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s ease;
+      }
+      .tab.active {
+        border-bottom: 3px solid var(--primary-color);
+        color: var(--primary-color);
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="logo">WebLiqui</div>
+      <div class="user">
+        <span>Martín Rodríguez</span>
+        <div class="avatar">M</div>
+      </div>
+    </div>
+
+    <div class="main-container" style="display: flex">
+      <div class="sidebar">
+        <h3>Menú</h3>
+        <nav>
+          <a href="procesos.html">← Volver a Procesos</a>
+        </nav>
+      </div>
+      <div class="content">
+        <h2>Detalle del Proceso</h2>
+
+        <div class="detalle-proceso">
+          <div class="detalle-grid">
+            <div><strong>Código:</strong> <span id="codigo"></span></div>
+            <div><strong>Tipo de ejecución:</strong> E</div>
+            <div><strong>Duración:</strong> 12 horas</div>
+            <div><strong>Error:</strong> <input type="checkbox" /></div>
+          </div>
+        </div>
+
+        <div class="filters">
+          <input type="text" placeholder="Prestador" />
+          <input type="text" placeholder="Beneficiario" />
+          <button>Actualizar</button>
+        </div>
+
+        <div>
+          <div class="tabs">
+            <div class="tab active" onclick="showTab('practicas')">Prácticas</div>
+            <div class="tab" onclick="showTab('detalle')">Detalle</div>
+            <div class="tab" onclick="showTab('resu')">Resu</div>
+          </div>
+
+          <div id="practicas" class="tab-content active">
+            <table>
+              <thead>
+                <tr>
+                  <th>C_PROCESO</th>
+                  <th>C_PRESTADOR</th>
+                  <th>C_RED</th>
+                  <th>N_BENEFICIO</th>
+                  <th>C_GRADO_PAREN</th>
+                  <th>C_PERIODO</th>
+                  <th>C_CONCEPTO</th>
+                  <th>Q_PRACT_CORRECTAS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1234</td>
+                  <td>9876</td>
+                  <td>001</td>
+                  <td>456789</td>
+                  <td>01</td>
+                  <td>202301</td>
+                  <td>100</td>
+                  <td>15</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="detalle" class="tab-content">
+            <table>
+              <thead>
+                <tr>
+                  <th>C_PROCESO</th>
+                  <th>C_PRESTADOR</th>
+                  <th>C_RED</th>
+                  <th>N_BENEFICIO</th>
+                  <th>C_GRADO_PAREN</th>
+                  <th>C_PERIODO</th>
+                  <th>C_CONCEPTO</th>
+                  <th>Q_PRACT_CORRECTAS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1234</td>
+                  <td>9876</td>
+                  <td>002</td>
+                  <td>123456</td>
+                  <td>02</td>
+                  <td>202302</td>
+                  <td>200</td>
+                  <td>10</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="resu" class="tab-content">
+            <table>
+              <thead>
+                <tr>
+                  <th>C_PROCESO</th>
+                  <th>C_PRESTADOR</th>
+                  <th>C_RED</th>
+                  <th>N_BENEFICIO</th>
+                  <th>C_GRADO_PAREN</th>
+                  <th>C_PERIODO</th>
+                  <th>C_CONCEPTO</th>
+                  <th>Q_PRACT_CORRECTAS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1234</td>
+                  <td>9876</td>
+                  <td>003</td>
+                  <td>789123</td>
+                  <td>03</td>
+                  <td>202303</td>
+                  <td>300</td>
+                  <td>5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      document.getElementById("codigo").textContent = params.get("codigo") || "Sin código";
+
+      function showTab(tabId) {
+        document.querySelectorAll(".tab").forEach((tab) => tab.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach((tc) => tc.classList.remove("active"));
+        document.getElementById(tabId).classList.add("active");
+        document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add("active");
+      }
+    </script>
+  </body>
+</html>
