@@ -1,89 +1,102 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const codigoNumerico = parseInt(urlParams.get("codigo"));
-
-  let practicasGlobal = [];
-  let detalleGlobal = [];
-  let cabeceraGlobal = [];
-  let aprobCabeceraGlobal = [];
-
-  Promise.all([
-  fetch("../data/practicas.json").then(res => res.json()).then(j => j.results?.[0]?.items || []),
-  fetch("../data/detalle.json").then(res => res.json()).then(j => j.results?.[0]?.items || []),
-  fetch("../data/cabecera.json").then(res => res.json()).then(j => j.results?.[0]?.items || []),
-  fetch("../data/aprob_cabecera.json").then(res => res.json()).then(j => j.results?.[0]?.items || []),
-  fetch("../data/procesos.json").then(res => res.json()).then(j => j.results?.[0]?.items || [])
-]).then(([practicas, detalle, cabecera, aprobCabecera, procesos]) => {
-    const proceso = procesos.find(p => parseInt(p.c_proceso) === codigoNumerico);
-
-    if (!proceso) return;
-
-    document.getElementById("codigo").textContent = proceso.c_proceso;
-    document.getElementById("tipo").textContent =
-      proceso.c_tipo_ejecucion === "E" ? "Excepción" :
-      proceso.c_tipo_ejecucion === "M" ? "Mensual" :
-      proceso.c_tipo_ejecucion;
-
-    document.getElementById("periodo").textContent = proceso.c_periodo;
-    document.getElementById("inicio").textContent = proceso.f_inicio;
-    document.getElementById("fin").textContent = proceso.f_fin;
-    document.getElementById("duracion").textContent = calcularDuracion(proceso.f_inicio, proceso.f_fin);
-
-    document.getElementById("btnLogs").addEventListener("click", () => {
-      window.location.href = `logs.html?codigo=${proceso.codigo}`;
-    });
-
-    practicasGlobal = practicas.filter(p => parseInt(p.c_proceso) === codigoNumerico);
-    detalleGlobal = detalle.filter(p => parseInt(p.c_proceso) === codigoNumerico);
-    cabeceraGlobal = cabecera.filter(p => parseInt(p.c_proceso) === codigoNumerico);
-    aprobCabeceraGlobal = aprobCabecera.filter(p => parseInt(p.c_proceso) === codigoNumerico);
-
-    generateTable(practicasGlobal, "tablaPracticas", 
-        ["c_concepto", "c_periodo", "c_prestador", "n_beneficio", "c_modulo_pami_4x", "c_practica", "f_practica", "q_practica", "q_pract_correctas"],
-        {
-            c_concepto: "Concepto",
-            c_periodo: "C_PERIODO",
-            c_prestador: "Prestador",
-            n_beneficio: "Beneficiario",
-            c_modulo_pami_4x: "C_MODULO_PAMI_4X",
-            c_practica: "C_PRACTICA",
-            f_practica: "Fecha Práctica",
-            q_practica: "Q_PRAC",
-            q_pract_correctas: "Q_CORR"
-        }
-    );
-
-    generateTable(detalleGlobal, "tablaDetalle", 
-        ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_4x", "c_practica", "i_valorizado_p"],
-        {
-            c_concepto: "Concepto",
-            c_periodo_ex: "C_PERIODO_EX",
-            c_prestador: "Prestador",
-            c_modulo_pami_4x: "C_MODULO_PAMI_4X",
-            c_practica: "C_PRACTICA",
-            i_valorizado_p: "I_VALORIZADO"
-        }
-    );
-
-    generateTable(cabeceraGlobal, "tablaCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_4x", "i_valorizado"],
-        {
-            c_concepto: "Concepto",
-            c_periodo_ex: "C_PERIODO_EX",
-            c_prestador: "Prestador",
-            c_modulo_pami_4x: "C_MODULO_PAMI_4X",
-            i_valorizado: "I_VALORIZADO"
-        });
+    const urlParams = new URLSearchParams(window.location.search);
+    const codigoNumerico = parseInt(urlParams.get("codigo"));
     
-    generateTable(aprobCabeceraGlobal, "tablaAprobCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_7x", "i_monto"],
-        {
-            c_concepto: "Concepto",
-            c_periodo_ex: "C_PERIODO_EX",
-            c_prestador: "Prestador",
-            c_modulo_pami_7x: "C_MODULO_PAMI_7X",
-            i_monto: "I_MONTO"
+    const safeFetch = (url) =>
+        fetch(url)
+            .then(res => res.ok ? res.json() : { results: [{ items: [] }] })
+            .then(j => j.results?.[0]?.items || [])
+            .catch(() => []);
+
+    let practicasGlobal = [];
+    let detalleGlobal = [];
+    let cabeceraGlobal = [];
+    let aprobCabeceraGlobal = [];
+
+    Promise.all([
+        safeFetch("../data/practicas-" + codigoNumerico + ".json"),
+        safeFetch("../data/detalle-" + codigoNumerico + ".json"),
+        safeFetch("../data/cabecera-" + codigoNumerico + ".json"),
+        safeFetch("../data/aprob-cabecera-" + codigoNumerico + ".json"),
+        safeFetch("../data/procesos.json")
+    ])
+    .then(([practicas, detalle, cabecera, aprobCabecera, procesos]) => {
+        const proceso = procesos.find(p => parseInt(p.c_proceso) === codigoNumerico);
+
+        if (!proceso) return;
+
+        document.getElementById("codigo").textContent = proceso.c_proceso;
+        document.getElementById("tipo").textContent =
+        proceso.c_tipo_ejecucion === "E" ? "Excepción" :
+        proceso.c_tipo_ejecucion === "M" ? "Mensual" :
+        proceso.c_tipo_ejecucion;
+
+        document.getElementById("periodo").textContent = proceso.c_periodo;
+        document.getElementById("inicio").textContent = proceso.f_inicio;
+        document.getElementById("fin").textContent = proceso.f_fin;
+        document.getElementById("duracion").textContent = calcularDuracion(proceso.f_inicio, proceso.f_fin);
+
+        document.getElementById("btnLogs").addEventListener("click", () => {
+        window.location.href = `logs.html?codigo=${proceso.codigo}`;
         });
-  });
+
+        practicasGlobal = practicas;
+        detalleGlobal = detalle;
+        cabeceraGlobal = cabecera;
+        aprobCabeceraGlobal = aprobCabecera;
+
+        generateTable(practicasGlobal, "tablaPracticas", 
+            ["c_concepto", "c_periodo", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "n_beneficio", "f_practica", "q_practica", "q_pract_correctas"],
+            {
+                c_concepto: "Concepto",
+                c_periodo: "Periodo",
+                c_prestador: "Cod. Prestador",
+                d_prestador: "Prestador",
+                d_modulo_pami: "Modulo",
+                d_practica: "Práctica",
+                n_beneficio: "Beneficiario",
+                f_practica: "Fecha Práctica",
+                q_practica: "Q_PRAC",
+                q_pract_correctas: "Q_CORR"
+            }
+        );
+
+        generateTable(detalleGlobal, "tablaDetalle", 
+            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "i_valorizado"],
+            {
+                c_concepto: "Concepto",
+                c_periodo_ex: "Periodo",
+                c_prestador: "Cod. Prestador",
+                d_prestador: "Prestador",
+                d_modulo_pami: "Modulo",
+                d_practica: "Práctica",
+                i_valorizado: "I_VALORIZADO"
+            }
+        );
+
+        generateTable(cabeceraGlobal, "tablaCabecera",
+            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_valorizado"],
+            {
+                c_concepto: "Concepto",
+                c_periodo_ex: "Periodo",
+                c_prestador: "Cod. Prestador",
+                d_prestador: "Prestador",
+                d_modulo_pami: "Modulo",
+                i_valorizado: "I_VALORIZADO"
+            });
+        
+        generateTable(aprobCabeceraGlobal, "tablaAprobCabecera",
+            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_monto"],
+            {
+                c_concepto: "Concepto",
+                c_periodo_ex: "Periodo",
+                c_prestador: "Cod. Prestador",
+                d_prestador: "Prestador",
+                d_modulo_pami: "Modulo (7X)",
+                i_monto: "I_MONTO"
+            });
+    });
 
     /* Filtros */
     /*  - Filtros Prácticas */
@@ -101,14 +114,15 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         generateTable(filtradas, "tablaPracticas", 
-            ["c_concepto", "c_periodo", "c_prestador", "n_beneficio", "c_modulo_pami_4x", "c_practica", "f_practica", "q_practica", "q_pract_correctas"],
+            ["c_concepto", "c_periodo", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "n_beneficio", "f_practica", "q_practica", "q_pract_correctas"],
             {
                 c_concepto: "Concepto",
-                c_periodo: "C_PERIODO",
-                c_prestador: "Prestador",
+                c_periodo: "Periodo",
+                c_prestador: "Cod. Prestador",
+                d_prestador: "Prestador",
+                d_modulo_pami: "Modulo",
+                d_practica: "Práctica",
                 n_beneficio: "Beneficiario",
-                c_modulo_pami_4x: "C_MODULO_PAMI_4X",
-                c_practica: "C_PRACTICA",
                 f_practica: "Fecha Práctica",
                 q_practica: "Q_PRAC",
                 q_pract_correctas: "Q_CORR"
@@ -129,14 +143,15 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         generateTable(filtradas, "tablaDetalle", 
-            ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_4x", "c_practica", "i_valorizado_p"],
+            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "i_valorizado"],
             {
                 c_concepto: "Concepto",
-                c_periodo_ex: "C_PERIODO_EX",
-                c_prestador: "Prestador",
-                c_modulo_pami_4x: "C_MODULO_PAMI_4X",
-                c_practica: "C_PRACTICA",
-                i_valorizado_p: "I_VALORIZADO"
+                c_periodo_ex: "Periodo",
+                c_prestador: "Cod. Prestador",
+                d_prestador: "Prestador",
+                d_modulo_pami: "Modulo",
+                d_practica: "Práctica",
+                i_valorizado: "I_VALORIZADO"
             }
         );
     });
@@ -153,12 +168,14 @@ document.addEventListener("DOMContentLoaded", () => {
         (!periodo || p.c_periodo_ex == periodo)
         );
 
-        generateTable(filtradas, "tablaCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_4x", "i_valorizado"],
+        generateTable(filtradas, "tablaCabecera",
+            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_valorizado"],
             {
                 c_concepto: "Concepto",
-                c_periodo_ex: "C_PERIODO_EX",
-                c_prestador: "Prestador",
-                c_modulo_pami_4x: "C_MODULO_PAMI_4X",
+                c_periodo_ex: "Periodo",
+                c_prestador: "Cod. Prestador",
+                d_prestador: "Prestador",
+                d_modulo_pami: "Modulo",
                 i_valorizado: "I_VALORIZADO"
             });
     });
@@ -175,12 +192,14 @@ document.addEventListener("DOMContentLoaded", () => {
         (!periodo || p.c_periodo_ex == periodo)
         );
 
-        generateTable(filtradas, "tablaAprobCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_7x", "i_monto"],
+        generateTable(filtradas, "tablaAprobCabecera",
+            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_monto"],
             {
                 c_concepto: "Concepto",
-                c_periodo_ex: "C_PERIODO_EX",
-                c_prestador: "Prestador",
-                c_modulo_pami_7x: "C_MODULO_PAMI_7X",
+                c_periodo_ex: "Periodo",
+                c_prestador: "Cod. Prestador",
+                d_prestador: "Prestador",
+                d_modulo_pami: "Modulo (7X)",
                 i_monto: "I_MONTO"
             });
     });
