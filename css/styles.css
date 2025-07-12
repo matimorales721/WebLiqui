@@ -440,45 +440,63 @@ th.sortable-header:hover {
 }
 
 
-/* // Aca los estilo de las columnas moneda */
-td.moneda-cell {
-  padding-right: 10px;
-  font-variant-numeric: tabular-nums;
+/* Celda de Moneda */
+/* Celda de la tabla con valor en pesos */
+.moneda-cell {
   text-align: right;
+  position: relative;
+  padding: 0.3em 1em;
 }
 
-td.moneda-cell .moneda-wrapper {
-  display: flex; /* cambia de inline-block a flex */
+/* Recuadro estilizado del valor */
+.moneda-wrapper {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between; /* separa símbolo y valor */
+  justify-content: flex-end;
+  gap: 0.25em;
+
   background-color: #f5f7fa;
   border-radius: 8px;
-  padding: 4px 8px;
+  padding: 6px 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  min-width: 100px;
-}
-
-td.moneda-cell .moneda-simbolo {
-  display: inline-block;
-  width: 1.5em;
-  text-align: left;
-  font-weight: bold;
-  color: #0a0a0a;
-}
-
-td.moneda-cell .moneda-valor {
-  display: inline-block;
-  min-width: 6em;
-  text-align: right;
-  font-weight: normal;
-  color: #1a1a1a;
-  
   font-family: "Monda", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-
+  position: relative;
+  min-width: 8em; /* Aumentado de 6em a 8em */
+  text-align: right;
+  white-space: nowrap; /* Para que no haga wrap */
 }
+
+/* Valor en sí */
+.moneda-valor {
+  color: #1a1a1a;
+  font-weight: 400;
+  font-size: 1em;
+  display: inline-block;
+}
+
+/* Botón copiar */
+.moneda-wrapper .copy-icon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 1em;
+  background: rgba(255,255,255,0.8);
+  border-radius: 4px;
+  padding: 2px 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  justify-content: space-between;
+}
+
+/* Al pasar el mouse */
+.moneda-wrapper:hover .copy-icon {
+  opacity: 1;
+}
+
+
+
+
 
 .code-wrapper {
   align-items: center;

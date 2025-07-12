@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const camposImportantesDetalle = [
     { key: "c_concepto", header: "Concepto" },
     { key: "c_periodo_ex", header: "Periodo" },
-    { key: "c_prestador", header: "Cod. Prestador" },
+    { key: "c_prestador", header: "Cod. Prestador", format: "code" },
     { key: "d_prestador", header: "Prestador" },
     { key: "d_modulo_pami", header: "Modulo" },
     { key: "d_practica", header: "Práctica" },
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const camposImportantesCabecera = [
     { key: "c_concepto", header: "Concepto" },
     { key: "c_periodo_ex", header: "Periodo" },
-    { key: "c_prestador", header: "Cod. Prestador" },
+    { key: "c_prestador", header: "Cod. Prestador", format: "code" },
     { key: "d_prestador", header: "Prestador" },
     { key: "d_modulo_pami", header: "Modulo" },
     { key: "i_valorizado", header: "I_VALORIZADO", format: "moneda"}
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const camposImportantesAprobCabecera = [
     { key: "c_concepto", header: "Concepto" },
     { key: "c_periodo_ex", header: "Periodo" },
-    { key: "c_prestador", header: "Cod. Prestador" },
+    { key: "c_prestador", header: "Cod. Prestador", format: "code" },
     { key: "d_prestador", header: "Prestador" },
     { key: "d_modulo_pami", header: "Modulo (7X)" },
     { key: "i_monto", header: "I_MONTO", format: "moneda"}
@@ -207,11 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
     table.innerHTML = headerHtml + rowsHtml;
   };
 
-  function parsearFecha(fechaStr) {
-    const [fecha, hora] = fechaStr.split(" ");
-    const [dia, mes, anio] = fecha.split("/");
-    return new Date(`${anio}-${mes}-${dia}T${hora}`);
-  }
+  
     
   function calcularDuracion(inicio, fin) {
     const inicioDate = parsearFecha(inicio);
@@ -232,8 +228,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("copy-icon")) {
-    const wrapper = e.target.closest(".code-wrapper");
-    const content = wrapper?.querySelector(".code-content")?.textContent;
+    let wrapper = e.target.closest(".code-wrapper") || e.target.closest(".moneda-wrapper");
+    let content =
+      wrapper?.querySelector(".code-content")?.textContent ||
+      wrapper?.querySelector(".moneda-content")?.textContent;
 
     if (content) {
       navigator.clipboard.writeText(content).then(() => {
@@ -367,20 +365,19 @@ function generateTable(data, tableId, camposImportantes, encabezadosLegibles, pa
           const spanWrapper = document.createElement("span");
           spanWrapper.className = "moneda-wrapper";
 
-          const spanSimbolo = document.createElement("span");
-          spanSimbolo.className = "moneda-simbolo";
-          spanSimbolo.textContent = "$";
-
           const spanValor = document.createElement("span");
-          spanValor.className = "moneda-valor";
-          spanValor.textContent = formatearMoneda(valor).replace('$', '').trim();
+          spanValor.className = "code-content";
+          spanValor.textContent = formatearMoneda(item[key]);
 
-          td.classList.add("moneda-cell");
-        
-          spanWrapper.appendChild(spanSimbolo);
+          const spanCopyIcon = document.createElement("span");
+          spanCopyIcon.className = "copy-icon";
+          spanCopyIcon.title = "Copiar";
+          spanCopyIcon.textContent = "📋";
+
           spanWrapper.appendChild(spanValor);
-
+          spanWrapper.appendChild(spanCopyIcon);
           td.appendChild(spanWrapper);
+          td.classList.add("moneda-cell");
         }
 
       } else if (format === 'code') {
@@ -408,8 +405,12 @@ function generateTable(data, tableId, camposImportantes, encabezadosLegibles, pa
       } else if (format === 'numeric') {
         td.textContent = Number(valor).toLocaleString('es-AR');
         td.classList.add("right-align");
+
       } else if (format === 'date') {
-        td.textContent = new Date(valor).toLocaleDateString('es-AR');
+
+        if (valor != null && valor !== "") {
+          td.textContent = formatearFecha(parsearFecha(valor));
+        }
       } else {
         td.textContent = valor ?? "";
       }
@@ -462,6 +463,31 @@ function poblarSelectUnico(data, campo, selectId, titulo) {
     select.appendChild(option);
   });
 }
+
+function parsearFecha(fechaStr) {
+    const [fecha, hora] = fechaStr.split(" ");
+    const [dia, mes, anio] = fecha.split("/");
+    return new Date(`${anio}-${mes}-${dia}T${hora}`);
+}
+  
+function formatearFecha(date, incluirHora = false) {
+  if (!(date instanceof Date) || isNaN(date)) return "Fecha inválida";
+
+  const dia = String(date.getDate()).padStart(2, '0');
+  const mes = String(date.getMonth() + 1).padStart(2, '0'); // ¡Mes comienza en 0!
+  const anio = date.getFullYear();
+
+  const fechaStr = `${dia}/${mes}/${anio}`;
+
+  if (!incluirHora) return fechaStr;
+
+  const horas = String(date.getHours()).padStart(2, '0');
+  const minutos = String(date.getMinutes()).padStart(2, '0');
+  const segundos = String(date.getSeconds()).padStart(2, '0');
+
+  return `${fechaStr} ${horas}:${minutos}:${segundos}`;
+}
+
 
 
 const sortStates = {};
