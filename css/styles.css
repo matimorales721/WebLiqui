@@ -419,3 +419,20 @@ button:hover {
   font-weight: bolder;
   border: 2px solid white;
 }
+
+.filters select {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin: 0 5px 10px 0;
+  background-color: #1565c0;
+  color: white;
+  font-size: 14px;
+  min-width: 150px;
+}
+
+.filters select:focus {
+  outline: none;
+  border-color: #8fc1f7;
+  background-color: #a1c5ee;
+}

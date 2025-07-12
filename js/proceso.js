@@ -46,6 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
         cabeceraGlobal = cabecera;
         aprobCabeceraGlobal = aprobCabecera;
 
+        poblarSelectUnico(practicasGlobal, "c_concepto", "filtroConcepto_practicas", "Conceptos");
+        poblarSelectUnico(practicasGlobal, "c_periodo", "filtroPeriodo_practicas", "Periodos");
+        poblarSelectUnico(practicasGlobal, "c_prestador", "filtroPrestador_practicas", "Prestadores");
+        poblarSelectUnico(practicasGlobal, "n_beneficio", "filtroBeneficiario_practicas", "Beneficiarios");
+
         generateTable(practicasGlobal, "tablaPracticas", 
             ["c_concepto", "c_periodo", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "n_beneficio", "f_practica", "q_practica", "q_pract_correctas"],
             {
@@ -301,6 +306,21 @@ function agregarPaginacion(tableId, data, camposImportantes, encabezadosLegibles
     pagContainer.appendChild(btn);
   }
 }
+
+function poblarSelectUnico(data, campo, selectId, titulo) {
+  const select = document.getElementById(selectId);
+  if (!select) return;
+
+  const valoresUnicos = [...new Set(data.map(item => item[campo]).filter(Boolean))].sort();
+  select.innerHTML = `<option value="">${titulo}</option>`;
+  valoresUnicos.forEach(valor => {
+    const option = document.createElement("option");
+    option.value = valor;
+    option.textContent = valor;
+    select.appendChild(option);
+  });
+}
+
 
 
 
