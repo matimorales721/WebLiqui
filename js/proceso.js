@@ -86,15 +86,32 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("filtroBtn").addEventListener("click", () => {
+    const concepto = document.getElementById("filtroConcepto").value.toLowerCase();
     const prestador = document.getElementById("filtroPrestador").value.toLowerCase();
     const beneficiario = document.getElementById("filtroBeneficiario").value.toLowerCase();
+    const periodo = document.getElementById("filtroPeriodo").value.toLowerCase();
 
     const filtradas = practicasGlobal.filter(p =>
+      (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
       (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
-      (!beneficiario || p.n_beneficio?.toLowerCase().includes(beneficiario))
+      (!beneficiario || p.n_beneficio?.toLowerCase().includes(beneficiario)) &&
+      (!periodo || p.c_periodo?.toLowerCase().includes(periodo))
     );
 
-    renderTable("tablaPracticas", filtradas);
+    generateTable(filtradas, "tablaPracticas", 
+        ["c_concepto", "c_periodo", "c_prestador", "n_beneficio", "c_modulo_pami_4x", "c_practica", "f_practica", "q_practica", "q_pract_correctas"],
+        {
+            c_concepto: "Concepto",
+            c_periodo: "C_PERIODO",
+            c_prestador: "Prestador",
+            n_beneficio: "Beneficiario",
+            c_modulo_pami_4x: "C_MODULO_PAMI_4X",
+            c_practica: "C_PRACTICA",
+            f_practica: "Fecha Práctica",
+            q_practica: "Q_PRAC",
+            q_pract_correctas: "Q_CORR"
+        }
+    );
   });
 
   window.showTab = (tabId) => {
