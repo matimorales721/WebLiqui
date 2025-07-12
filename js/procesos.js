@@ -27,8 +27,8 @@ function renderTabla(procesos) {
       <td>${p.f_inicio || ""}</td>
       <td>${p.f_fin || ""}</td>
       <td>${p.m_es_gdi}</td>
-      <td><a class="btn-ver" href="proceso.html?codigo=${p.c_proceso}">Ver</a></td>
-      <td><a class="btn-ver" href="logs.html?codigo=${p.c_proceso}">Logs</a></td>
+      <td><a class="btn" href="proceso.html?codigo=${p.c_proceso}">Ver</a></td>
+      <td><a class="btn" href="logs.html?codigo=${p.c_proceso}">Logs</a></td>
     </tr>`).join("")}</tbody>`;
   table.innerHTML = thead + tbody;
 }
@@ -44,3 +44,19 @@ function filtrar() {
 
   renderTabla(filtrados);
 }
+
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('active');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.getElementById("hamburger");
+  const sidebar = document.querySelector(".sidebar");
+
+  if (hamburger && sidebar) {
+    hamburger.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+    });
+  }
+});

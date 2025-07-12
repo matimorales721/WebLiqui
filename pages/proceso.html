@@ -8,6 +8,11 @@
   </head>
   <body>
     <div class="topbar">
+      <div class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       <div class="logo">WebLiqui</div>
       <div class="user">
         <span>Martín Rodríguez</span>
@@ -16,14 +21,16 @@
     </div>
 
     <div class="main-container">
-      <div class="sidebar">
+      <div class="sidebar" id="sidebar">
         <h3>Menú</h3>
         <nav>
-          <a href="./procesos.html">← Volver a Procesos</a>
+          <a href="./procesos.html">Procesos</a>
+          <a href="#">Liquidación</a>
         </nav>
       </div>
 
       <div class="content">
+        <a href="./procesos.html" class="btn-volver-mobile">←</a>
         <h2>Detalle del Proceso</h2>
 
         <div class="detalle-proceso">
@@ -35,7 +42,7 @@
             <div><strong>Fin:</strong> <span id="fin"></span></div>
             <div><strong>Duración:</strong> <span id="duracion"></span></div>
           </div>
-          <a id="btnLogs" class="btn-logs">Ver Logs</a>
+          <a id="btnLogs" class="btn">Ver Logs</a>
         </div>
 
         <div class="filters">

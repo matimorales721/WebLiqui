@@ -89,3 +89,19 @@ function calcularDuracion(inicio, fin) {
         : `${Math.round(diffMin / 60 /60)} horas`;
         }
 });
+
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('active');
+}
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburger");
+    const sidebar = document.getElementById("sidebar");
+
+    hamburger.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+    });
+});
