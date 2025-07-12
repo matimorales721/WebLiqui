@@ -67,6 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
+        poblarSelectUnico(detalleGlobal, "c_concepto", "filtroConcepto_detalle", "Conceptos");
+        poblarSelectUnico(detalleGlobal, "c_periodo_ex", "filtroPeriodo_detalle", "Periodos");
+        poblarSelectUnico(detalleGlobal, "c_prestador", "filtroPrestador_detalle", "Prestadores");
+
         generateTable(detalleGlobal, "tablaDetalle", 
             ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "i_valorizado"],
             {
@@ -80,6 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
+        poblarSelectUnico(cabeceraGlobal, "c_concepto", "filtroConcepto_cabecera", "Conceptos");
+        poblarSelectUnico(cabeceraGlobal, "c_periodo_ex", "filtroPeriodo_cabecera", "Periodos");
+        poblarSelectUnico(cabeceraGlobal, "c_prestador", "filtroPrestador_cabecera", "Prestadores");
+
         generateTable(cabeceraGlobal, "tablaCabecera",
             ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_valorizado"],
             {
@@ -90,6 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 d_modulo_pami: "Modulo",
                 i_valorizado: "I_VALORIZADO"
             });
+
+        poblarSelectUnico(aprobCabeceraGlobal, "c_concepto", "filtroConcepto_aprob_cabecera", "Conceptos");
+        poblarSelectUnico(aprobCabeceraGlobal, "c_periodo_ex", "filtroPeriodo_aprob_cabecera", "Periodos");
+        poblarSelectUnico(aprobCabeceraGlobal, "c_prestador", "filtroPrestador_aprob_cabecera", "Prestadores");
         
         generateTable(aprobCabeceraGlobal, "tablaAprobCabecera",
             ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_monto"],
