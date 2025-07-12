@@ -386,3 +386,12 @@ button:hover {
   }
 }
 
+#grillasPorProceso th {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+#grillasPorProceso td {
+  font-size: 0.95rem;
+}
+

@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
     cabeceraGlobal = cabecera.filter(p => parseInt(p.c_proceso) === codigoNumerico);
     aprobCabeceraGlobal = aprobCabecera.filter(p => parseInt(p.c_proceso) === codigoNumerico);
 
-    renderTable("tablaPracticas", practicasGlobal);
-    renderTable("tablaDetalle", detalleGlobal);
-    renderTable("tablaCabecera", cabeceraGlobal);
-    renderTable("tablaAprobCabecera", aprobCabeceraGlobal);
+    generateTable(practicasGlobal, "tablaPracticas", ["c_prestador", "n_beneficio", "f_practica", "c_practica", "q_pract_correctas", "c_error"]);
+    generateTable(detalleGlobal, "tablaDetalle", ["c_prestador", "c_periodo_ex", "c_practica", "i_valorizado_p"]);
+    generateTable(cabeceraGlobal, "tablaCabecera", ["c_prestador", "c_periodo_ex", "c_modulo_pami_4x", "i_valorizado"]);
+    generateTable(aprobCabeceraGlobal, "tablaAprobCabecera", ["c_prestador", "c_periodo_ex", "c_modulo_pami_7x", "c_concepto", "i_monto"]);
   });
 
   document.getElementById("filtroBtn").addEventListener("click", () => {
@@ -93,6 +93,40 @@ function calcularDuracion(inicio, fin) {
 function toggleSidebar() {
   const sidebar = document.querySelector('.sidebar');
   sidebar.classList.toggle('active');
+}
+
+function generateTable(data, tableId, columnasImportantes = []) {
+  const table = document.getElementById(tableId);
+  table.innerHTML = "";
+
+  if (!data || data.length === 0) {
+    table.innerHTML = "<tr><td>No hay datos disponibles</td></tr>";
+    return;
+  }
+
+  const headers = columnasImportantes.length > 0 ? columnasImportantes : Object.keys(data[0]);
+
+  const thead = document.createElement("thead");
+  const trHead = document.createElement("tr");
+  headers.forEach(key => {
+    const th = document.createElement("th");
+    th.textContent = key.toUpperCase(); // Más legible
+    trHead.appendChild(th);
+  });
+  thead.appendChild(trHead);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  data.forEach(item => {
+    const tr = document.createElement("tr");
+    headers.forEach(key => {
+      const td = document.createElement("td");
+      td.textContent = item[key] || "";
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
 }
 
 
