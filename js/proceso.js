@@ -248,17 +248,14 @@ document.addEventListener("click", function (e) {
 });
 
 function formatearMoneda(valor) {
-  if (valor == null || valor === "") return "";
+  if (isNaN(valor)) return valor;
 
-  const numero = typeof valor === 'number' ? valor : parseFloat(valor);
-  if (isNaN(numero)) return valor;
-
-  const absValor = Math.abs(numero).toLocaleString('es-AR', {
+  const absValor = Math.abs(valor).toLocaleString('es-AR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
 
-  return `${numero < 0 ? '$ -' : '$ '}${absValor}`;
+  return absValor;
 }
 
 
@@ -363,21 +360,28 @@ function generateTable(data, tableId, camposImportantes, encabezadosLegibles, pa
       if (format === "moneda") {
         if (valor != null && valor !== "") {
           const spanWrapper = document.createElement("span");
-          spanWrapper.className = "moneda-wrapper";
+          spanWrapper.className = "code-wrapper";
+          spanWrapper.classList.add("moneda-wrapper");
 
           const spanValor = document.createElement("span");
           spanValor.className = "code-content";
-          spanValor.textContent = formatearMoneda(item[key]);
+          spanValor.classList.add("moneda-content");
 
+          // se formatea el valor antes de ser mostrado
+          var valorSinFormato = valor;
+          var valorNumerico = parseFloat(valorSinFormato);
+          var valorFormateado = formatearMoneda(valorSinFormato);
+          spanValor.textContent = `$ ${valorFormateado}`;;
+
+          spanWrapper.appendChild(spanValor);
+          
           const spanCopyIcon = document.createElement("span");
           spanCopyIcon.className = "copy-icon";
           spanCopyIcon.title = "Copiar";
           spanCopyIcon.textContent = "📋";
 
-          spanWrapper.appendChild(spanValor);
           spanWrapper.appendChild(spanCopyIcon);
           td.appendChild(spanWrapper);
-          td.classList.add("moneda-cell");
         }
 
       } else if (format === 'code') {
@@ -395,10 +399,9 @@ function generateTable(data, tableId, camposImportantes, encabezadosLegibles, pa
           const spanCopyIcon = document.createElement("span");
           spanCopyIcon.className = "copy-icon";
           spanCopyIcon.title = "Copiar";
-          spanCopyIcon.textContent = "📋"; // <-- este es el emoji que querías
+          spanCopyIcon.textContent = "📋"; 
 
           spanWrapper.appendChild(spanCopyIcon);
-
           td.appendChild(spanWrapper);
         }
 
