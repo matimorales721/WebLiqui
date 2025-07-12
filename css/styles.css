@@ -270,3 +270,49 @@ button:hover {
   padding: 0.5rem;
   font-size: 1rem;
 }
+
+
+.btn-ver {
+  display: inline-block;
+  background-color: #0070cc;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.btn-ver:hover {
+  background-color: #005fa3;
+}
+
+
+.btn-logs {
+  display: inline-block;
+  background-color: #0070cc;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.btn-logs:hover {
+  background-color: #005fa3;
+}
+
+.detalle-proceso {
+  background-color: #f5faff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.detalle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}

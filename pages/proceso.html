@@ -1,4 +1,3 @@
-<!-- proceso.html actualizado con parseInt para filtrar por c_proceso correctamente -->
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -34,7 +33,7 @@
             <div><strong>Período:</strong> <span id="periodo"></span></div>
             <div><strong>Inicio:</strong> <span id="inicio"></span></div>
             <div><strong>Fin:</strong> <span id="fin"></span></div>
-            <div><strong>Es GDI:</strong> <span id="esgdi"></span></div>
+            <div><strong>Duración:</strong> <span id="duracion"></span></div>
           </div>
           <a id="btnLogs" class="btn-logs">Ver Logs</a>
         </div>
@@ -42,7 +41,7 @@
         <div class="filters">
           <input type="text" id="filtroPrestador" placeholder="Prestador" />
           <input type="text" id="filtroBeneficiario" placeholder="Beneficiario" />
-          <button id="filtroBtn" onclick="filtrarPracticas()">Actualizar</button>
+          <button id="filtroBtn">Actualizar</button>
         </div>
 
         <div class="tabs">
