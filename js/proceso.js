@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let aprobCabeceraGlobal = [];
   
   const camposImportantesPractica = [
-    { key: "c_concepto", header: "Concepto" },
-    { key: "c_periodo", header: "Periodo" },
+    { key: "c_concepto", header: "Concepto", format: "code" },
+    { key: "c_periodo", header: "Periodo", format: "code" },
     { key: "c_prestador", header: "Cod. Prestador", format: "code" },
     { key: "d_prestador", header: "Prestador" },
     { key: "d_modulo_pami", header: "Modulo" },
@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const camposImportantesDetalle = [
-    { key: "c_concepto", header: "Concepto" },
-    { key: "c_periodo_ex", header: "Periodo" },
+    { key: "c_concepto", header: "Concepto", format: "code" },
+    { key: "c_periodo_ex", header: "Periodo", format: "code" },
     { key: "c_prestador", header: "Cod. Prestador", format: "code" },
     { key: "d_prestador", header: "Prestador" },
     { key: "d_modulo_pami", header: "Modulo" },
@@ -41,16 +41,16 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   
   const camposImportantesCabecera = [
-    { key: "c_concepto", header: "Concepto" },
-    { key: "c_periodo_ex", header: "Periodo" },
+    { key: "c_concepto", header: "Concepto", format: "code" },
+    { key: "c_periodo_ex", header: "Periodo", format: "code" },
     { key: "c_prestador", header: "Cod. Prestador", format: "code" },
     { key: "d_prestador", header: "Prestador" },
     { key: "d_modulo_pami", header: "Modulo" },
     { key: "i_valorizado", header: "I_VALORIZADO", format: "moneda"}
   ];
   const camposImportantesAprobCabecera = [
-    { key: "c_concepto", header: "Concepto" },
-    { key: "c_periodo_ex", header: "Periodo" },
+    { key: "c_concepto", header: "Concepto", format: "code" },
+    { key: "c_periodo_ex", header: "Periodo", format: "code" },
     { key: "c_prestador", header: "Cod. Prestador", format: "code" },
     { key: "d_prestador", header: "Prestador" },
     { key: "d_modulo_pami", header: "Modulo (7X)" },
@@ -363,6 +363,12 @@ function generateTable(data, tableId, camposImportantes, encabezadosLegibles, pa
           spanWrapper.className = "code-wrapper";
           spanWrapper.classList.add("moneda-wrapper");
 
+          const spanSimbolo = document.createElement("span");
+          spanSimbolo.className = "moneda-simbolo";
+          spanSimbolo.textContent = "$ ";
+
+          spanWrapper.appendChild(spanSimbolo);
+
           const spanValor = document.createElement("span");
           spanValor.className = "code-content";
           spanValor.classList.add("moneda-content");
@@ -371,7 +377,7 @@ function generateTable(data, tableId, camposImportantes, encabezadosLegibles, pa
           var valorSinFormato = valor;
           var valorNumerico = parseFloat(valorSinFormato);
           var valorFormateado = formatearMoneda(valorSinFormato);
-          spanValor.textContent = `$ ${valorFormateado}`;;
+          spanValor.textContent = valorFormateado;
 
           spanWrapper.appendChild(spanValor);
           

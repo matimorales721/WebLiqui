@@ -466,18 +466,18 @@ th.sortable-header:hover {
   font-family: 'Consolas', 'Courier New', monospace;
   font-size: 0.9em;
   box-shadow: 1px 1px 5px rgba(0,0,0,0.05);
-  display: inline-block;
   overflow: auto;
+  display: flex; /* 💥 clave para alinear símbolo y valor en línea */
+  align-items: center;
+  justify-content: space-between; /* o 'flex-start' si querés más control */
 }
 
 
 .code-wrapper .code-content {
   display: inline-block;
   vertical-align: middle;
-  word-break: break-word;
-  
-  white-space: pre-wrap;
-  /*white-space: nowrap; /* ❗ Previene saltos de línea */
+  word-break: break-word;  
+  white-space: nowrap; /* ❗ Previene saltos de línea */
 }
 
 .code-wrapper .copy-icon {
@@ -501,5 +501,12 @@ th.sortable-header:hover {
 
 .moneda-wrapper.code-wrapper {
   text-align: right;
-  min-width: 12em; /* antes era 6em aprox. */
+  min-width: 11em; /* antes era 6em aprox. */
+}
+
+.moneda-simbolo {
+  font-weight: bold;
+  color: #333;
+  min-width: 1em;
+  text-align: left;
 }
