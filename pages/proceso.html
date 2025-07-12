@@ -51,43 +51,45 @@
           <div class="tab" onclick="showTab('cabecera')">Cabecera</div>
           <div class="tab" onclick="showTab('aprob-cabecera')">Aprob Cabecera</div>
         </div>
-        <div id="grillasPorProceso">
-          <div id="practicas" class="tab-content active">
-            <div class="filters">
-              <input type="text" id="filtroConcepto_practicas" placeholder="Concepto" />
-              <input type="text" id="filtroPeriodo_practicas" placeholder="Periodo" />
-              <input type="text" id="filtroPrestador_practicas" placeholder="Prestador" />
-              <input type="text" id="filtroBeneficiario_practicas" placeholder="Beneficiario" />
-              <button id="filtroBtn_practicas">Filtrar</button>
+        <div class="tabla-container">
+          <div id="grillasPorProceso">
+            <div id="practicas" class="tab-content active">
+              <div class="filters">
+                <input type="text" id="filtroConcepto_practicas" placeholder="Concepto" />
+                <input type="text" id="filtroPeriodo_practicas" placeholder="Periodo" />
+                <input type="text" id="filtroPrestador_practicas" placeholder="Prestador" />
+                <input type="text" id="filtroBeneficiario_practicas" placeholder="Beneficiario" />
+                <button id="filtroBtn_practicas">Filtrar</button>
+              </div>
+              <table id="tablaPracticas" class="styled-table"></table>
             </div>
-            <table id="tablaPracticas" class="styled-table"></table>
-          </div>
-          <div id="detalle" class="tab-content">
-            <div class="filters">
-              <input type="text" id="filtroConcepto_detalle" placeholder="Concepto" />
-              <input type="text" id="filtroPeriodo_detalle" placeholder="Periodo" />
-              <input type="text" id="filtroPrestador_detalle" placeholder="Prestador" />
-              <button id="filtroBtn_detalle">Filtrar</button>
+            <div id="detalle" class="tab-content">
+              <div class="filters">
+                <input type="text" id="filtroConcepto_detalle" placeholder="Concepto" />
+                <input type="text" id="filtroPeriodo_detalle" placeholder="Periodo" />
+                <input type="text" id="filtroPrestador_detalle" placeholder="Prestador" />
+                <button id="filtroBtn_detalle">Filtrar</button>
+              </div>
+              <table id="tablaDetalle" class="styled-table"></table>
             </div>
-            <table id="tablaDetalle" class="styled-table"></table>
-          </div>
-          <div id="cabecera" class="tab-content">
-            <div class="filters">
-              <input type="text" id="filtroConcepto_cabecera" placeholder="Concepto" />
-              <input type="text" id="filtroPeriodo_cabecera" placeholder="Periodo" />
-              <input type="text" id="filtroPrestador_cabecera" placeholder="Prestador" />
-              <button id="filtroBtn_cabecera">Filtrar</button>
+            <div id="cabecera" class="tab-content">
+              <div class="filters">
+                <input type="text" id="filtroConcepto_cabecera" placeholder="Concepto" />
+                <input type="text" id="filtroPeriodo_cabecera" placeholder="Periodo" />
+                <input type="text" id="filtroPrestador_cabecera" placeholder="Prestador" />
+                <button id="filtroBtn_cabecera">Filtrar</button>
+              </div>
+              <table id="tablaCabecera" class="styled-table"></table>
             </div>
-            <table id="tablaCabecera" class="styled-table"></table>
-          </div>
-          <div id="aprob-cabecera" class="tab-content">
-            <div class="filters">
-              <input type="text" id="filtroConcepto_aprob_cabecera" placeholder="Concepto" />
-              <input type="text" id="filtroPeriodo_aprob_cabecera" placeholder="Periodo" />
-              <input type="text" id="filtroPrestador_aprob_cabecera" placeholder="Prestador" />
-              <button id="filtroBtn_aprob_cabecera">Filtrar</button>
+            <div id="aprob-cabecera" class="tab-content">
+              <div class="filters">
+                <input type="text" id="filtroConcepto_aprob_cabecera" placeholder="Concepto" />
+                <input type="text" id="filtroPeriodo_aprob_cabecera" placeholder="Periodo" />
+                <input type="text" id="filtroPrestador_aprob_cabecera" placeholder="Prestador" />
+                <button id="filtroBtn_aprob_cabecera">Filtrar</button>
+              </div>
+              <table id="tablaAprobCabecera" class="styled-table"></table>
             </div>
-            <table id="tablaAprobCabecera" class="styled-table"></table>
           </div>
         </div>
       </div>

@@ -395,3 +395,27 @@ button:hover {
   font-size: 0.95rem;
 }
 
+
+
+.paginacion {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.paginacion button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.paginacion button.active-page {
+  background-color: var(--primary-light);
+  font-weight: bolder;
+  border: 2px solid white;
+}

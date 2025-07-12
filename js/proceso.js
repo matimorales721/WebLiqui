@@ -94,10 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const periodo = document.getElementById("filtroPeriodo_practicas").value.toLowerCase();
 
         const filtradas = practicasGlobal.filter(p =>
-        (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
-        (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
-        (!beneficiario || p.n_beneficio?.toLowerCase().includes(beneficiario)) &&
-        (!periodo || p.c_periodo?.toLowerCase().includes(periodo))
+        (!concepto || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
+        (!prestador || p.c_prestador == prestador) &&
+        (!beneficiario || p.n_beneficio == beneficiario) &&
+        (!periodo || p.c_periodo == periodo)
         );
 
         generateTable(filtradas, "tablaPracticas", 
@@ -119,13 +119,13 @@ document.addEventListener("DOMContentLoaded", () => {
     /*  - Filtros Detalles */
     document.getElementById("filtroBtn_detalle").addEventListener("click", () => {
         const concepto = document.getElementById("filtroConcepto_detalle").value.toLowerCase();
-        const prestador = document.getElementById("filtroPrestador_detalle").value.toLowerCase();
         const periodo = document.getElementById("filtroPeriodo_detalle").value.toLowerCase();
+        const prestador = document.getElementById("filtroPrestador_detalle").value.toLowerCase();
 
         const filtradas = detalleGlobal.filter(p =>
-        (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
-        (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
-        (!periodo || p.c_periodo_ex?.toLowerCase().includes(periodo))
+        (!concepto || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
+        (!periodo || p.c_periodo_ex == periodo) &&
+        (!prestador || p.c_prestador == prestador)
         );
 
         generateTable(filtradas, "tablaDetalle", 
@@ -148,9 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const periodo = document.getElementById("filtroPeriodo_cabecera").value.toLowerCase();
 
         const filtradas = cabeceraGlobal.filter(p =>
-        (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
-        (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
-        (!periodo || p.c_periodo_ex?.toLowerCase().includes(periodo))
+        (!concepto || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
+        (!prestador || p.c_prestador == prestador) &&
+        (!periodo || p.c_periodo_ex == periodo)
         );
 
         generateTable(filtradas, "tablaCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_4x", "i_valorizado"],
@@ -170,9 +170,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const periodo = document.getElementById("filtroPeriodo_aprob_cabecera").value.toLowerCase();
 
         const filtradas = aprobCabeceraGlobal.filter(p =>
-        (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
-        (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
-        (!periodo || p.c_periodo_ex?.toLowerCase().includes(periodo))
+        (!concepto || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
+        (!prestador || p.c_prestador == prestador) &&
+        (!periodo || p.c_periodo_ex == periodo)
         );
 
         generateTable(filtradas, "tablaAprobCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_7x", "i_monto"],
@@ -223,32 +223,64 @@ function toggleSidebar() {
   sidebar.classList.toggle('active');
 }
 
-function generateTable(data, tableId, camposImportantes, encabezadosLegibles) {
+function generateTable(data, tableId, camposImportantes, encabezadosLegibles, page = 1, pageSize = 10) {
   const table = document.getElementById(tableId);
-  table.innerHTML = "";
+  if (!table) return;
 
-  if (!data || data.length === 0) {
-    table.innerHTML = "<tr><td>No hay datos disponibles.</td></tr>";
-    return;
-  }
+  table.innerHTML = ""; // Limpiar tabla
 
+  // Calcular paginación
+  const totalPages = Math.ceil(data.length / pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const pageData = data.slice(startIndex, endIndex);
+
+  // Encabezados
   const thead = table.createTHead();
   const row = thead.insertRow();
-
   camposImportantes.forEach(key => {
     const th = document.createElement("th");
     th.textContent = encabezadosLegibles[key] || key;
     row.appendChild(th);
   });
 
+  // Filas
   const tbody = table.createTBody();
-  data.forEach(item => {
+  pageData.forEach(item => {
     const tr = tbody.insertRow();
     camposImportantes.forEach(key => {
       const td = tr.insertCell();
       td.textContent = item[key] ?? "";
     });
   });
+
+  // Agregar paginación
+  agregarPaginacion(tableId, data, camposImportantes, encabezadosLegibles, totalPages, page, pageSize);
+}
+
+function agregarPaginacion(tableId, data, camposImportantes, encabezadosLegibles, totalPages, currentPage, pageSize) {
+  const pagContainerId = `paginacion_${tableId}`;
+  let pagContainer = document.getElementById(pagContainerId);
+
+  if (!pagContainer) {
+    pagContainer = document.createElement("div");
+    pagContainer.id = pagContainerId;
+    pagContainer.className = "paginacion";
+    const tableElement = document.getElementById(tableId);
+    tableElement.parentElement.appendChild(pagContainer);
+  }
+
+  pagContainer.innerHTML = "";
+
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i;
+    if (i === currentPage) btn.classList.add("active-page");
+    btn.addEventListener("click", () => {
+      generateTable(data, tableId, camposImportantes, encabezadosLegibles, i, pageSize);
+    });
+    pagContainer.appendChild(btn);
+  }
 }
 
 
