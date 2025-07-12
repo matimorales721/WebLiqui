@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
             i_valorizado: "I_VALORIZADO"
         });
     
-    generateTable(aprobCabeceraGlobal, "tablaAprobCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_7x", "c_concepto", "i_monto"],
+    generateTable(aprobCabeceraGlobal, "tablaAprobCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_7x", "i_monto"],
         {
             c_concepto: "Concepto",
             c_periodo_ex: "C_PERIODO_EX",
@@ -85,34 +85,105 @@ document.addEventListener("DOMContentLoaded", () => {
         });
   });
 
-  document.getElementById("filtroBtn").addEventListener("click", () => {
-    const concepto = document.getElementById("filtroConcepto").value.toLowerCase();
-    const prestador = document.getElementById("filtroPrestador").value.toLowerCase();
-    const beneficiario = document.getElementById("filtroBeneficiario").value.toLowerCase();
-    const periodo = document.getElementById("filtroPeriodo").value.toLowerCase();
+    /* Filtros */
+    /*  - Filtros Prácticas */
+    document.getElementById("filtroBtn_practicas").addEventListener("click", () => {
+        const concepto = document.getElementById("filtroConcepto_practicas").value.toLowerCase();
+        const prestador = document.getElementById("filtroPrestador_practicas").value.toLowerCase();
+        const beneficiario = document.getElementById("filtroBeneficiario_practicas").value.toLowerCase();
+        const periodo = document.getElementById("filtroPeriodo_practicas").value.toLowerCase();
 
-    const filtradas = practicasGlobal.filter(p =>
-      (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
-      (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
-      (!beneficiario || p.n_beneficio?.toLowerCase().includes(beneficiario)) &&
-      (!periodo || p.c_periodo?.toLowerCase().includes(periodo))
-    );
+        const filtradas = practicasGlobal.filter(p =>
+        (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
+        (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
+        (!beneficiario || p.n_beneficio?.toLowerCase().includes(beneficiario)) &&
+        (!periodo || p.c_periodo?.toLowerCase().includes(periodo))
+        );
 
-    generateTable(filtradas, "tablaPracticas", 
-        ["c_concepto", "c_periodo", "c_prestador", "n_beneficio", "c_modulo_pami_4x", "c_practica", "f_practica", "q_practica", "q_pract_correctas"],
-        {
-            c_concepto: "Concepto",
-            c_periodo: "C_PERIODO",
-            c_prestador: "Prestador",
-            n_beneficio: "Beneficiario",
-            c_modulo_pami_4x: "C_MODULO_PAMI_4X",
-            c_practica: "C_PRACTICA",
-            f_practica: "Fecha Práctica",
-            q_practica: "Q_PRAC",
-            q_pract_correctas: "Q_CORR"
-        }
-    );
-  });
+        generateTable(filtradas, "tablaPracticas", 
+            ["c_concepto", "c_periodo", "c_prestador", "n_beneficio", "c_modulo_pami_4x", "c_practica", "f_practica", "q_practica", "q_pract_correctas"],
+            {
+                c_concepto: "Concepto",
+                c_periodo: "C_PERIODO",
+                c_prestador: "Prestador",
+                n_beneficio: "Beneficiario",
+                c_modulo_pami_4x: "C_MODULO_PAMI_4X",
+                c_practica: "C_PRACTICA",
+                f_practica: "Fecha Práctica",
+                q_practica: "Q_PRAC",
+                q_pract_correctas: "Q_CORR"
+            }
+        );
+    });
+    
+    /*  - Filtros Detalles */
+    document.getElementById("filtroBtn_detalle").addEventListener("click", () => {
+        const concepto = document.getElementById("filtroConcepto_detalle").value.toLowerCase();
+        const prestador = document.getElementById("filtroPrestador_detalle").value.toLowerCase();
+        const periodo = document.getElementById("filtroPeriodo_detalle").value.toLowerCase();
+
+        const filtradas = detalleGlobal.filter(p =>
+        (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
+        (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
+        (!periodo || p.c_periodo_ex?.toLowerCase().includes(periodo))
+        );
+
+        generateTable(filtradas, "tablaDetalle", 
+            ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_4x", "c_practica", "i_valorizado_p"],
+            {
+                c_concepto: "Concepto",
+                c_periodo_ex: "C_PERIODO_EX",
+                c_prestador: "Prestador",
+                c_modulo_pami_4x: "C_MODULO_PAMI_4X",
+                c_practica: "C_PRACTICA",
+                i_valorizado_p: "I_VALORIZADO"
+            }
+        );
+    });
+        
+    /*  - Filtros Cabecera */
+    document.getElementById("filtroBtn_cabecera").addEventListener("click", () => {
+        const concepto = document.getElementById("filtroConcepto_cabecera").value.toLowerCase();
+        const prestador = document.getElementById("filtroPrestador_cabecera").value.toLowerCase();
+        const periodo = document.getElementById("filtroPeriodo_cabecera").value.toLowerCase();
+
+        const filtradas = cabeceraGlobal.filter(p =>
+        (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
+        (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
+        (!periodo || p.c_periodo_ex?.toLowerCase().includes(periodo))
+        );
+
+        generateTable(filtradas, "tablaCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_4x", "i_valorizado"],
+            {
+                c_concepto: "Concepto",
+                c_periodo_ex: "C_PERIODO_EX",
+                c_prestador: "Prestador",
+                c_modulo_pami_4x: "C_MODULO_PAMI_4X",
+                i_valorizado: "I_VALORIZADO"
+            });
+    });
+        
+    /*  - Filtros Aprob_Cabecera */
+    document.getElementById("filtroBtn_aprob_cabecera").addEventListener("click", () => {
+        const concepto = document.getElementById("filtroConcepto_aprob_cabecera").value.toLowerCase();
+        const prestador = document.getElementById("filtroPrestador_aprob_cabecera").value.toLowerCase();
+        const periodo = document.getElementById("filtroPeriodo_aprob_cabecera").value.toLowerCase();
+
+        const filtradas = aprobCabeceraGlobal.filter(p =>
+        (!concepto || p.c_concepto?.toLowerCase().includes(concepto)) &&
+        (!prestador || p.c_prestador?.toLowerCase().includes(prestador)) &&
+        (!periodo || p.c_periodo_ex?.toLowerCase().includes(periodo))
+        );
+
+        generateTable(filtradas, "tablaAprobCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_7x", "i_monto"],
+            {
+                c_concepto: "Concepto",
+                c_periodo_ex: "C_PERIODO_EX",
+                c_prestador: "Prestador",
+                c_modulo_pami_7x: "C_MODULO_PAMI_7X",
+                i_monto: "I_MONTO"
+            });
+    });
 
   window.showTab = (tabId) => {
     document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));

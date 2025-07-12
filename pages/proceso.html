@@ -45,14 +45,6 @@
           <a id="btnLogs" class="btn">Ver Logs</a>
         </div>
 
-        <div class="filters">
-          <input type="text" id="filtroConcepto" placeholder="Concepto" />
-          <input type="text" id="filtroPrestador" placeholder="Prestador" />
-          <input type="text" id="filtroBeneficiario" placeholder="Beneficiario" />
-          <input type="text" id="filtroPeriodo" placeholder="Periodo" />
-          <button id="filtroBtn">Actualizar</button>
-        </div>
-
         <div class="tabs">
           <div class="tab active" onclick="showTab('practicas')">Prácticas</div>
           <div class="tab" onclick="showTab('detalle')">Detalle</div>
@@ -60,10 +52,41 @@
           <div class="tab" onclick="showTab('aprob-cabecera')">Aprob Cabecera</div>
         </div>
         <div id="grillasPorProceso">
-          <div id="practicas" class="tab-content active"><table id="tablaPracticas" class="styled-table"></table></div>
-          <div id="detalle" class="tab-content"><table id="tablaDetalle" class="styled-table"></table></div>
-          <div id="cabecera" class="tab-content"><table id="tablaCabecera" class="styled-table"></table></div>
+          <div id="practicas" class="tab-content active">
+            <div class="filters">
+              <input type="text" id="filtroConcepto_practicas" placeholder="Concepto" />
+              <input type="text" id="filtroPeriodo_practicas" placeholder="Periodo" />
+              <input type="text" id="filtroPrestador_practicas" placeholder="Prestador" />
+              <input type="text" id="filtroBeneficiario_practicas" placeholder="Beneficiario" />
+              <button id="filtroBtn_practicas">Filtrar</button>
+            </div>
+            <table id="tablaPracticas" class="styled-table"></table>
+          </div>
+          <div id="detalle" class="tab-content">
+            <div class="filters">
+              <input type="text" id="filtroConcepto_detalle" placeholder="Concepto" />
+              <input type="text" id="filtroPeriodo_detalle" placeholder="Periodo" />
+              <input type="text" id="filtroPrestador_detalle" placeholder="Prestador" />
+              <button id="filtroBtn_detalle">Filtrar</button>
+            </div>
+            <table id="tablaDetalle" class="styled-table"></table>
+          </div>
+          <div id="cabecera" class="tab-content">
+            <div class="filters">
+              <input type="text" id="filtroConcepto_cabecera" placeholder="Concepto" />
+              <input type="text" id="filtroPeriodo_cabecera" placeholder="Periodo" />
+              <input type="text" id="filtroPrestador_cabecera" placeholder="Prestador" />
+              <button id="filtroBtn_cabecera">Filtrar</button>
+            </div>
+            <table id="tablaCabecera" class="styled-table"></table>
+          </div>
           <div id="aprob-cabecera" class="tab-content">
+            <div class="filters">
+              <input type="text" id="filtroConcepto_aprob_cabecera" placeholder="Concepto" />
+              <input type="text" id="filtroPeriodo_aprob_cabecera" placeholder="Periodo" />
+              <input type="text" id="filtroPrestador_aprob_cabecera" placeholder="Prestador" />
+              <button id="filtroBtn_aprob_cabecera">Filtrar</button>
+            </div>
             <table id="tablaAprobCabecera" class="styled-table"></table>
           </div>
         </div>
