@@ -18,14 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const camposImportantesPractica = [
     { key: "c_concepto", header: "Concepto" },
     { key: "c_periodo", header: "Periodo" },
-    { key: "c_prestador", header: "Cod. Prestador" },
+    { key: "c_prestador", header: "Cod. Prestador", format: "code" },
     { key: "d_prestador", header: "Prestador" },
     { key: "d_modulo_pami", header: "Modulo" },
     { key: "d_practica", header: "Práctica" },
-    { key: "n_beneficio", header: "Beneficiario" },
+    { key: "n_orden_rechazo", header: "N_OP", format: "code" },
+    { key: "n_beneficio", header: "Beneficiario", format: "code" },
     { key: "f_practica", header: "Fecha Práctica", format: "date" },
     { key: "q_practica", header: "Q_PRACT", format: "numeric" },
-    { key: "q_pract_correctas", header: "Q_CORR", format: "numeric" } /* , destacada: true } */
+    { key: "q_pract_correctas", header: "Q_CORR", format: "numeric" }, /* , destacada: true } */
+    { key: "c_id_practica", header: "C_ID_PRACTICA", format: "code" }
   ];
 
   const camposImportantesDetalle = [
@@ -228,6 +230,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("copy-icon")) {
+    const wrapper = e.target.closest(".code-wrapper");
+    const content = wrapper?.querySelector(".code-content")?.textContent;
+
+    if (content) {
+      navigator.clipboard.writeText(content).then(() => {
+        e.target.textContent = "✅";
+        setTimeout(() => {
+          e.target.textContent = "📋";
+        }, 1500);
+      }).catch(err => {
+        console.error("Error al copiar:", err);
+        alert("No se pudo copiar al portapapeles.");
+      });
+    }
+  }
+});
+
 function formatearMoneda(valor) {
   if (valor == null || valor === "") return "";
 
@@ -245,7 +266,7 @@ function formatearMoneda(valor) {
 
 function toggleSidebar() {
   const sidebar = document.querySelector('.sidebar');
-  sidebar.classList.toggle('active');
+  sidebar.classList.toggle('hidden');
 }
 
 function generateTable(data, tableId, camposImportantes, encabezadosLegibles, page = 1, pageSize = 10) {
@@ -342,23 +363,47 @@ function generateTable(data, tableId, camposImportantes, encabezadosLegibles, pa
       let valor = item[key];
 
       if (format === "moneda") {
-        const spanWrapper = document.createElement("span");
-        spanWrapper.className = "moneda-wrapper";
+        if (valor != null && valor !== "") {
+          const spanWrapper = document.createElement("span");
+          spanWrapper.className = "moneda-wrapper";
 
-        const spanSimbolo = document.createElement("span");
-        spanSimbolo.className = "moneda-simbolo";
-        spanSimbolo.textContent = "$";
+          const spanSimbolo = document.createElement("span");
+          spanSimbolo.className = "moneda-simbolo";
+          spanSimbolo.textContent = "$";
 
-        const spanValor = document.createElement("span");
-        spanValor.className = "moneda-valor";
-        spanValor.textContent = formatearMoneda(valor).replace('$', '').trim();
+          const spanValor = document.createElement("span");
+          spanValor.className = "moneda-valor";
+          spanValor.textContent = formatearMoneda(valor).replace('$', '').trim();
 
-        td.classList.add("moneda-cell");
+          td.classList.add("moneda-cell");
         
-        spanWrapper.appendChild(spanSimbolo);
-        spanWrapper.appendChild(spanValor);
+          spanWrapper.appendChild(spanSimbolo);
+          spanWrapper.appendChild(spanValor);
 
-        td.appendChild(spanWrapper);
+          td.appendChild(spanWrapper);
+        }
+
+      } else if (format === 'code') {
+
+        if (valor != null && valor !== "") {
+          const spanWrapper = document.createElement("span");
+          spanWrapper.className = "code-wrapper";
+
+          const spanValor = document.createElement("span");
+          spanValor.className = "code-content";
+          spanValor.textContent = valor;
+
+          spanWrapper.appendChild(spanValor);
+
+          const spanCopyIcon = document.createElement("span");
+          spanCopyIcon.className = "copy-icon";
+          spanCopyIcon.title = "Copiar";
+          spanCopyIcon.textContent = "📋"; // <-- este es el emoji que querías
+
+          spanWrapper.appendChild(spanCopyIcon);
+
+          td.appendChild(spanWrapper);
+        }
 
       } else if (format === 'numeric') {
         td.textContent = Number(valor).toLocaleString('es-AR');

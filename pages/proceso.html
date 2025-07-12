@@ -14,20 +14,22 @@
   </head>
   <body>
     <div class="topbar">
-      <div class="hamburger" id="hamburger">
-        <div></div>
-        <div></div>
-        <div></div>
+      <div class="topbar-left">
+        <div class="hamburger" id="hamburger" onclick="toggleSidebar()">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="logo">WebLiqui</div>
       </div>
-      <div class="logo">WebLiqui</div>
-      <div class="user">
+      <div class="topbar-user">
         <span>Martín Rodríguez</span>
         <div class="avatar">M</div>
       </div>
     </div>
 
     <div class="main-container">
-      <div class="sidebar" id="sidebar">
+      <div class="sidebar hidden" id="sidebar">
         <h3>Menú</h3>
         <nav>
           <a href="./procesos.html">Procesos</a>
