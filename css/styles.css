@@ -437,3 +437,16 @@ button:hover {
   background-color: #1565c0;
   color: rgb(1, 8, 55);
 }
+
+
+th.sortable-header {
+  position: relative;
+  user-select: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+th.sortable-header:hover {
+  background-color: #e1f5fe;
+  color: #1565c0;
+}

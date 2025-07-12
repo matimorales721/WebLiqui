@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let detalleGlobal = [];
     let cabeceraGlobal = [];
     let aprobCabeceraGlobal = [];
-
+    
     Promise.all([
         safeFetch("../data/practicas-" + codigoNumerico + ".json"),
         safeFetch("../data/detalle-" + codigoNumerico + ".json"),
@@ -265,24 +265,67 @@ function generateTable(data, tableId, camposImportantes, encabezadosLegibles, pa
 
   table.innerHTML = ""; // Limpiar tabla
 
-  // Calcular paginación
-  const totalPages = Math.ceil(data.length / pageSize);
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const pageData = data.slice(startIndex, endIndex);
+    // Calcular paginación
+    const totalPages = Math.ceil(data.length / pageSize);
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const pageData = data.slice(startIndex, endIndex);
 
-  // Encabezados
-  const thead = table.createTHead();
-  const row = thead.insertRow();
-  camposImportantes.forEach(key => {
-    const th = document.createElement("th");
-    th.textContent = encabezadosLegibles[key] || key;
-    row.appendChild(th);
-  });
+    // Encabezados
+    const thead = table.createTHead();
+    const row = thead.insertRow();
+    camposImportantes.forEach(key => {
+      const th = document.createElement("th");
+      th.classList.add("sortable-header");
+      th.style.cursor = "pointer";
 
-  // Filas
-  const tbody = table.createTBody();
-  pageData.forEach(item => {
+      const currentSort = sortStates[tableId];
+      const isActive = currentSort?.column === key;
+      const direction = isActive
+        ? currentSort.ascending ? " 🔼" : " 🔽"
+        : "";
+
+      th.innerHTML = (encabezadosLegibles[key] || key) + direction;
+
+      th.addEventListener('click', () => {
+        // Inicializar estado si no existe
+        if (!sortStates[tableId]) {
+          sortStates[tableId] = { column: null, ascending: true };
+        }
+
+        const current = sortStates[tableId];
+
+        if (current.column === key) {
+          current.ascending = !current.ascending;
+        } else {
+          current.column = key;
+          current.ascending = true;
+        }
+
+        // Ordenar los datos
+        data.sort((a, b) => {
+          const valA = a[key] ?? '';
+          const valB = b[key] ?? '';
+
+          if (typeof valA === 'number' && typeof valB === 'number') {
+            return current.ascending ? valA - valB : valB - valA;
+          }
+
+          return current.ascending
+            ? valA.toString().localeCompare(valB.toString())
+            : valB.toString().localeCompare(valA.toString());
+        });
+
+        // Regenerar tabla
+        generateTable(data, tableId, camposImportantes, encabezadosLegibles, 1, pageSize);
+      });
+
+      row.appendChild(th);
+    });
+
+    // Filas
+    const tbody = table.createTBody();
+    pageData.forEach(item => {
     const tr = tbody.insertRow();
     camposImportantes.forEach(key => {
       const td = tr.insertCell();
@@ -334,7 +377,7 @@ function poblarSelectUnico(data, campo, selectId, titulo) {
 }
 
 
-
+const sortStates = {};
 
 document.addEventListener("DOMContentLoaded", function () {
     const hamburger = document.getElementById("hamburger");
