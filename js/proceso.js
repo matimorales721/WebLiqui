@@ -39,10 +39,50 @@ document.addEventListener("DOMContentLoaded", () => {
     cabeceraGlobal = cabecera.filter(p => parseInt(p.c_proceso) === codigoNumerico);
     aprobCabeceraGlobal = aprobCabecera.filter(p => parseInt(p.c_proceso) === codigoNumerico);
 
-    generateTable(practicasGlobal, "tablaPracticas", ["c_prestador", "n_beneficio", "f_practica", "c_practica", "q_pract_correctas", "c_error"]);
-    generateTable(detalleGlobal, "tablaDetalle", ["c_prestador", "c_periodo_ex", "c_practica", "i_valorizado_p"]);
-    generateTable(cabeceraGlobal, "tablaCabecera", ["c_prestador", "c_periodo_ex", "c_modulo_pami_4x", "i_valorizado"]);
-    generateTable(aprobCabeceraGlobal, "tablaAprobCabecera", ["c_prestador", "c_periodo_ex", "c_modulo_pami_7x", "c_concepto", "i_monto"]);
+    generateTable(practicasGlobal, "tablaPracticas", 
+        ["c_concepto", "c_periodo", "c_prestador", "n_beneficio", "c_modulo_pami_4x", "c_practica", "f_practica", "q_practica", "q_pract_correctas"],
+        {
+            c_concepto: "Concepto",
+            c_periodo: "C_PERIODO",
+            c_prestador: "Prestador",
+            n_beneficio: "Beneficiario",
+            c_modulo_pami_4x: "C_MODULO_PAMI_4X",
+            c_practica: "C_PRACTICA",
+            f_practica: "Fecha Práctica",
+            q_practica: "Q_PRAC",
+            q_pract_correctas: "Q_CORR"
+        }
+    );
+
+    generateTable(detalleGlobal, "tablaDetalle", 
+        ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_4x", "c_practica", "i_valorizado_p"],
+        {
+            c_concepto: "Concepto",
+            c_periodo_ex: "C_PERIODO_EX",
+            c_prestador: "Prestador",
+            c_modulo_pami_4x: "C_MODULO_PAMI_4X",
+            c_practica: "C_PRACTICA",
+            i_valorizado_p: "I_VALORIZADO"
+        }
+    );
+
+    generateTable(cabeceraGlobal, "tablaCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_4x", "i_valorizado"],
+        {
+            c_concepto: "Concepto",
+            c_periodo_ex: "C_PERIODO_EX",
+            c_prestador: "Prestador",
+            c_modulo_pami_4x: "C_MODULO_PAMI_4X",
+            i_valorizado: "I_VALORIZADO"
+        });
+    
+    generateTable(aprobCabeceraGlobal, "tablaAprobCabecera", ["c_concepto", "c_periodo_ex", "c_prestador", "c_modulo_pami_7x", "c_concepto", "i_monto"],
+        {
+            c_concepto: "Concepto",
+            c_periodo_ex: "C_PERIODO_EX",
+            c_prestador: "Prestador",
+            c_modulo_pami_7x: "C_MODULO_PAMI_7X",
+            i_monto: "I_MONTO"
+        });
   });
 
   document.getElementById("filtroBtn").addEventListener("click", () => {
@@ -95,38 +135,32 @@ function toggleSidebar() {
   sidebar.classList.toggle('active');
 }
 
-function generateTable(data, tableId, columnasImportantes = []) {
+function generateTable(data, tableId, camposImportantes, encabezadosLegibles) {
   const table = document.getElementById(tableId);
   table.innerHTML = "";
 
   if (!data || data.length === 0) {
-    table.innerHTML = "<tr><td>No hay datos disponibles</td></tr>";
+    table.innerHTML = "<tr><td>No hay datos disponibles.</td></tr>";
     return;
   }
 
-  const headers = columnasImportantes.length > 0 ? columnasImportantes : Object.keys(data[0]);
+  const thead = table.createTHead();
+  const row = thead.insertRow();
 
-  const thead = document.createElement("thead");
-  const trHead = document.createElement("tr");
-  headers.forEach(key => {
+  camposImportantes.forEach(key => {
     const th = document.createElement("th");
-    th.textContent = key.toUpperCase(); // Más legible
-    trHead.appendChild(th);
+    th.textContent = encabezadosLegibles[key] || key;
+    row.appendChild(th);
   });
-  thead.appendChild(trHead);
-  table.appendChild(thead);
 
-  const tbody = document.createElement("tbody");
+  const tbody = table.createTBody();
   data.forEach(item => {
-    const tr = document.createElement("tr");
-    headers.forEach(key => {
-      const td = document.createElement("td");
-      td.textContent = item[key] || "";
-      tr.appendChild(td);
+    const tr = tbody.insertRow();
+    camposImportantes.forEach(key => {
+      const td = tr.insertCell();
+      td.textContent = item[key] ?? "";
     });
-    tbody.appendChild(tr);
   });
-  table.appendChild(tbody);
 }
 
 
