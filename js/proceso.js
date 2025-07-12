@@ -1,118 +1,123 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const codigoNumerico = parseInt(urlParams.get("codigo"));
+  const urlParams = new URLSearchParams(window.location.search);
+  const codigoNumerico = parseInt(urlParams.get("codigo"));
     
-    const safeFetch = (url) =>
-        fetch(url)
-            .then(res => res.ok ? res.json() : { results: [{ items: [] }] })
-            .then(j => j.results?.[0]?.items || [])
-            .catch(() => []);
+  const safeFetch = (url) =>
+    fetch(url)
+      .then(res => res.ok ? res.json() : { results: [{ items: [] }] })
+      .then(j => j.results?.[0]?.items || [])
+    .catch(() => []);
+  
 
-    let practicasGlobal = [];
-    let detalleGlobal = [];
-    let cabeceraGlobal = [];
-    let aprobCabeceraGlobal = [];
-    
-    Promise.all([
-        safeFetch("../data/practicas-" + codigoNumerico + ".json"),
-        safeFetch("../data/detalle-" + codigoNumerico + ".json"),
-        safeFetch("../data/cabecera-" + codigoNumerico + ".json"),
-        safeFetch("../data/aprob-cabecera-" + codigoNumerico + ".json"),
-        safeFetch("../data/procesos.json")
-    ])
+  let practicasGlobal = [];
+  let detalleGlobal = [];
+  let cabeceraGlobal = [];
+  let aprobCabeceraGlobal = [];
+  
+  const camposImportantesPractica = [
+    { key: "c_concepto", header: "Concepto" },
+    { key: "c_periodo", header: "Periodo" },
+    { key: "c_prestador", header: "Cod. Prestador" },
+    { key: "d_prestador", header: "Prestador" },
+    { key: "d_modulo_pami", header: "Modulo" },
+    { key: "d_practica", header: "Práctica" },
+    { key: "n_beneficio", header: "Beneficiario" },
+    { key: "f_practica", header: "Fecha Práctica", format: "date" },
+    { key: "q_practica", header: "Q_PRACT", format: "numeric" },
+    { key: "q_pract_correctas", header: "Q_CORR", format: "numeric" } /* , destacada: true } */
+  ];
+
+  const camposImportantesDetalle = [
+    { key: "c_concepto", header: "Concepto" },
+    { key: "c_periodo_ex", header: "Periodo" },
+    { key: "c_prestador", header: "Cod. Prestador" },
+    { key: "d_prestador", header: "Prestador" },
+    { key: "d_modulo_pami", header: "Modulo" },
+    { key: "d_practica", header: "Práctica" },
+    { key: "i_valorizado", header: "I_VALORIZADO", format: "moneda"}
+  ];
+  
+  const camposImportantesCabecera = [
+    { key: "c_concepto", header: "Concepto" },
+    { key: "c_periodo_ex", header: "Periodo" },
+    { key: "c_prestador", header: "Cod. Prestador" },
+    { key: "d_prestador", header: "Prestador" },
+    { key: "d_modulo_pami", header: "Modulo" },
+    { key: "i_valorizado", header: "I_VALORIZADO", format: "moneda"}
+  ];
+  const camposImportantesAprobCabecera = [
+    { key: "c_concepto", header: "Concepto" },
+    { key: "c_periodo_ex", header: "Periodo" },
+    { key: "c_prestador", header: "Cod. Prestador" },
+    { key: "d_prestador", header: "Prestador" },
+    { key: "d_modulo_pami", header: "Modulo (7X)" },
+    { key: "i_monto", header: "I_MONTO", format: "moneda"}
+  ];
+  
+  Promise.all([
+    safeFetch("../data/practicas-" + codigoNumerico + ".json"),
+    safeFetch("../data/detalle-" + codigoNumerico + ".json"),
+    safeFetch("../data/cabecera-" + codigoNumerico + ".json"),
+    safeFetch("../data/aprob-cabecera-" + codigoNumerico + ".json"),
+    safeFetch("../data/procesos.json")
+  ])
     .then(([practicas, detalle, cabecera, aprobCabecera, procesos]) => {
-        const proceso = procesos.find(p => parseInt(p.c_proceso) === codigoNumerico);
+      const proceso = procesos.find(p => parseInt(p.c_proceso) === codigoNumerico);
 
-        if (!proceso) return;
+      if (!proceso) return;
 
-        document.getElementById("codigo").textContent = proceso.c_proceso;
-        document.getElementById("tipo").textContent =
-        proceso.c_tipo_ejecucion === "E" ? "Excepción" :
-        proceso.c_tipo_ejecucion === "M" ? "Mensual" :
-        proceso.c_tipo_ejecucion;
+      document.getElementById("codigo").textContent = proceso.c_proceso;
+      document.getElementById("tipo").textContent =
+      proceso.c_tipo_ejecucion === "E" ? "Excepción" :
+      proceso.c_tipo_ejecucion === "M" ? "Mensual" :
+      proceso.c_tipo_ejecucion;
 
-        document.getElementById("periodo").textContent = proceso.c_periodo;
-        document.getElementById("inicio").textContent = proceso.f_inicio;
-        document.getElementById("fin").textContent = proceso.f_fin;
-        document.getElementById("duracion").textContent = calcularDuracion(proceso.f_inicio, proceso.f_fin);
+      document.getElementById("periodo").textContent = proceso.c_periodo;
+      document.getElementById("inicio").textContent = proceso.f_inicio;
+      document.getElementById("fin").textContent = proceso.f_fin;
+      document.getElementById("duracion").textContent = calcularDuracion(proceso.f_inicio, proceso.f_fin);
 
-        document.getElementById("btnLogs").addEventListener("click", () => {
-        window.location.href = `logs.html?codigo=${proceso.codigo}`;
-        });
+      document.getElementById("btnLogs").addEventListener("click", () => {
+      window.location.href = `logs.html?codigo=${proceso.codigo}`;
+      });
 
-        practicasGlobal = practicas;
-        detalleGlobal = detalle;
-        cabeceraGlobal = cabecera;
-        aprobCabeceraGlobal = aprobCabecera;
+      practicasGlobal = practicas;
+      detalleGlobal = detalle;
+      cabeceraGlobal = cabecera;
+      aprobCabeceraGlobal = aprobCabecera;
 
-        poblarSelectUnico(practicasGlobal, "c_concepto", "filtroConcepto_practicas", "Conceptos");
-        poblarSelectUnico(practicasGlobal, "c_periodo", "filtroPeriodo_practicas", "Periodos");
-        poblarSelectUnico(practicasGlobal, "c_prestador", "filtroPrestador_practicas", "Prestadores");
-        poblarSelectUnico(practicasGlobal, "n_beneficio", "filtroBeneficiario_practicas", "Beneficiarios");
+      // Prácticas
+      poblarSelectUnico(practicasGlobal, "c_concepto", "filtroConcepto_practicas", "Conceptos");
+      poblarSelectUnico(practicasGlobal, "c_periodo", "filtroPeriodo_practicas", "Periodos");
+      poblarSelectUnico(practicasGlobal, "c_prestador", "filtroPrestador_practicas", "Prestadores");
+      poblarSelectUnico(practicasGlobal, "n_beneficio", "filtroBeneficiario_practicas", "Beneficiarios");
 
-        generateTable(practicasGlobal, "tablaPracticas", 
-            ["c_concepto", "c_periodo", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "n_beneficio", "f_practica", "q_practica", "q_pract_correctas"],
-            {
-                c_concepto: "Concepto",
-                c_periodo: "Periodo",
-                c_prestador: "Cod. Prestador",
-                d_prestador: "Prestador",
-                d_modulo_pami: "Modulo",
-                d_practica: "Práctica",
-                n_beneficio: "Beneficiario",
-                f_practica: "Fecha Práctica",
-                q_practica: "Q_PRAC",
-                q_pract_correctas: "Q_CORR"
-            }
-        );
+      generateTable(practicasGlobal, "tablaPracticas", camposImportantesPractica);
 
-        poblarSelectUnico(detalleGlobal, "c_concepto", "filtroConcepto_detalle", "Conceptos");
-        poblarSelectUnico(detalleGlobal, "c_periodo_ex", "filtroPeriodo_detalle", "Periodos");
-        poblarSelectUnico(detalleGlobal, "c_prestador", "filtroPrestador_detalle", "Prestadores");
+    
+      // Detalle
+      poblarSelectUnico(detalleGlobal, "c_concepto", "filtroConcepto_detalle", "Conceptos");
+      poblarSelectUnico(detalleGlobal, "c_periodo_ex", "filtroPeriodo_detalle", "Periodos");
+      poblarSelectUnico(detalleGlobal, "c_prestador", "filtroPrestador_detalle", "Prestadores");
+    
+      generateTable(detalleGlobal, "tablaDetalle", camposImportantesDetalle);
 
-        generateTable(detalleGlobal, "tablaDetalle", 
-            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "i_valorizado"],
-            {
-                c_concepto: "Concepto",
-                c_periodo_ex: "Periodo",
-                c_prestador: "Cod. Prestador",
-                d_prestador: "Prestador",
-                d_modulo_pami: "Modulo",
-                d_practica: "Práctica",
-                i_valorizado: "I_VALORIZADO"
-            }
-        );
+      
+      // Cabecera
+      poblarSelectUnico(cabeceraGlobal, "c_concepto", "filtroConcepto_cabecera", "Conceptos");
+      poblarSelectUnico(cabeceraGlobal, "c_periodo_ex", "filtroPeriodo_cabecera", "Periodos");
+      poblarSelectUnico(cabeceraGlobal, "c_prestador", "filtroPrestador_cabecera", "Prestadores");
 
-        poblarSelectUnico(cabeceraGlobal, "c_concepto", "filtroConcepto_cabecera", "Conceptos");
-        poblarSelectUnico(cabeceraGlobal, "c_periodo_ex", "filtroPeriodo_cabecera", "Periodos");
-        poblarSelectUnico(cabeceraGlobal, "c_prestador", "filtroPrestador_cabecera", "Prestadores");
+      generateTable(cabeceraGlobal, "tablaCabecera", camposImportantesCabecera);
 
-        generateTable(cabeceraGlobal, "tablaCabecera",
-            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_valorizado"],
-            {
-                c_concepto: "Concepto",
-                c_periodo_ex: "Periodo",
-                c_prestador: "Cod. Prestador",
-                d_prestador: "Prestador",
-                d_modulo_pami: "Modulo",
-                i_valorizado: "I_VALORIZADO"
-            });
-
-        poblarSelectUnico(aprobCabeceraGlobal, "c_concepto", "filtroConcepto_aprob_cabecera", "Conceptos");
-        poblarSelectUnico(aprobCabeceraGlobal, "c_periodo_ex", "filtroPeriodo_aprob_cabecera", "Periodos");
-        poblarSelectUnico(aprobCabeceraGlobal, "c_prestador", "filtroPrestador_aprob_cabecera", "Prestadores");
-        
-        generateTable(aprobCabeceraGlobal, "tablaAprobCabecera",
-            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_monto"],
-            {
-                c_concepto: "Concepto",
-                c_periodo_ex: "Periodo",
-                c_prestador: "Cod. Prestador",
-                d_prestador: "Prestador",
-                d_modulo_pami: "Modulo (7X)",
-                i_monto: "I_MONTO"
-            });
+      
+      // Aprob_Cabecera
+      poblarSelectUnico(aprobCabeceraGlobal, "c_concepto", "filtroConcepto_aprob_cabecera", "Conceptos");
+      poblarSelectUnico(aprobCabeceraGlobal, "c_periodo_ex", "filtroPeriodo_aprob_cabecera", "Periodos");
+      poblarSelectUnico(aprobCabeceraGlobal, "c_prestador", "filtroPrestador_aprob_cabecera", "Prestadores");
+      
+      generateTable(aprobCabeceraGlobal, "tablaAprobCabecera", camposImportantesAprobCabecera);
     });
 
     /* Filtros */
@@ -130,21 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         (!periodo || p.c_periodo == periodo)
         );
 
-        generateTable(filtradas, "tablaPracticas", 
-            ["c_concepto", "c_periodo", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "n_beneficio", "f_practica", "q_practica", "q_pract_correctas"],
-            {
-                c_concepto: "Concepto",
-                c_periodo: "Periodo",
-                c_prestador: "Cod. Prestador",
-                d_prestador: "Prestador",
-                d_modulo_pami: "Modulo",
-                d_practica: "Práctica",
-                n_beneficio: "Beneficiario",
-                f_practica: "Fecha Práctica",
-                q_practica: "Q_PRAC",
-                q_pract_correctas: "Q_CORR"
-            }
-        );
+        generateTable(filtradas, "tablaPracticas", camposImportantesPractica);
     });
     
     /*  - Filtros Detalles */
@@ -159,18 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
         (!prestador || p.c_prestador == prestador)
         );
 
-        generateTable(filtradas, "tablaDetalle", 
-            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "d_practica", "i_valorizado"],
-            {
-                c_concepto: "Concepto",
-                c_periodo_ex: "Periodo",
-                c_prestador: "Cod. Prestador",
-                d_prestador: "Prestador",
-                d_modulo_pami: "Modulo",
-                d_practica: "Práctica",
-                i_valorizado: "I_VALORIZADO"
-            }
-        );
+        generateTable(filtradas, "tablaDetalle", camposImportantesDetalle);
     });
         
     /*  - Filtros Cabecera */
@@ -185,16 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
         (!periodo || p.c_periodo_ex == periodo)
         );
 
-        generateTable(filtradas, "tablaCabecera",
-            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_valorizado"],
-            {
-                c_concepto: "Concepto",
-                c_periodo_ex: "Periodo",
-                c_prestador: "Cod. Prestador",
-                d_prestador: "Prestador",
-                d_modulo_pami: "Modulo",
-                i_valorizado: "I_VALORIZADO"
-            });
+        generateTable(filtradas, "tablaCabecera", camposImportantesCabecera);
     });
         
     /*  - Filtros Aprob_Cabecera */
@@ -209,16 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
         (!periodo || p.c_periodo_ex == periodo)
         );
 
-        generateTable(filtradas, "tablaAprobCabecera",
-            ["c_concepto", "c_periodo_ex", "c_prestador", "d_prestador", "d_modulo_pami", "i_monto"],
-            {
-                c_concepto: "Concepto",
-                c_periodo_ex: "Periodo",
-                c_prestador: "Cod. Prestador",
-                d_prestador: "Prestador",
-                d_modulo_pami: "Modulo (7X)",
-                i_monto: "I_MONTO"
-            });
+        generateTable(filtradas, "tablaAprobCabecera", camposImportantesAprobCabecera);
     });
 
   window.showTab = (tabId) => {
@@ -242,17 +204,44 @@ document.addEventListener("DOMContentLoaded", () => {
     ).join("");
     table.innerHTML = headerHtml + rowsHtml;
   };
+
+  function parsearFecha(fechaStr) {
+    const [fecha, hora] = fechaStr.split(" ");
+    const [dia, mes, anio] = fecha.split("/");
+    return new Date(`${anio}-${mes}-${dia}T${hora}`);
+  }
     
-function calcularDuracion(inicio, fin) {
-    const inicioDate = new Date(inicio);
-    const finDate = new Date(fin);
+  function calcularDuracion(inicio, fin) {
+    const inicioDate = parsearFecha(inicio);
+    const finDate = parsearFecha(fin);
     const diffMs = finDate - inicioDate;
     const diffMin = diffMs / 60000;
-    return diffMin < 60
-        ? `${Math.round(diffMin)} minutos`
-        : `${Math.round(diffMin / 60 /60)} horas`;
-        }
+
+    if (diffMin < 60) {
+      return `${Math.round(diffMin)} minutos`;
+    } else {
+      const horas = Math.floor(diffMin / 60);
+      const minutos = Math.round(diffMin % 60);
+      const minutosFormateados = minutos.toString().padStart(2, "0");
+      return `${horas}:${minutosFormateados} horas`;
+    }
+  }
 });
+
+function formatearMoneda(valor) {
+  if (valor == null || valor === "") return "";
+
+  const numero = typeof valor === 'number' ? valor : parseFloat(valor);
+  if (isNaN(numero)) return valor;
+
+  const absValor = Math.abs(numero).toLocaleString('es-AR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
+  return `${numero < 0 ? '$ -' : '$ '}${absValor}`;
+}
+
 
 function toggleSidebar() {
   const sidebar = document.querySelector('.sidebar');
@@ -265,71 +254,124 @@ function generateTable(data, tableId, camposImportantes, encabezadosLegibles, pa
 
   table.innerHTML = ""; // Limpiar tabla
 
-    // Calcular paginación
-    const totalPages = Math.ceil(data.length / pageSize);
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const pageData = data.slice(startIndex, endIndex);
+  // Calcular paginación
+  const totalPages = Math.ceil(data.length / pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const pageData = data.slice(startIndex, endIndex);
 
-    // Encabezados
-    const thead = table.createTHead();
-    const row = thead.insertRow();
-    camposImportantes.forEach(key => {
-      const th = document.createElement("th");
-      th.classList.add("sortable-header");
-      th.style.cursor = "pointer";
+  // Encabezados
+  const thead = table.createTHead();
+  const row = thead.insertRow();
+  camposImportantes.forEach(col => {
+    const key = typeof col === 'string' ? col : col.key;
+    const header = typeof col === 'object' && col.header || encabezadosLegibles[key] || key;
+    const format = typeof col === 'object' ? col.format : null;
 
-      const currentSort = sortStates[tableId];
-      const isActive = currentSort?.column === key;
-      const direction = isActive
-        ? currentSort.ascending ? " 🔼" : " 🔽"
-        : "";
+    const th = document.createElement("th");
+    th.classList.add("sortable-header");
 
-      th.innerHTML = (encabezadosLegibles[key] || key) + direction;
+    if (format === "moneda") {
+      th.style.textAlign = "center";
+    }
 
-      th.addEventListener('click', () => {
-        // Inicializar estado si no existe
-        if (!sortStates[tableId]) {
-          sortStates[tableId] = { column: null, ascending: true };
+    th.style.cursor = "pointer";
+
+    const currentSort = sortStates[tableId];
+    const isActive = currentSort?.column === key;
+    const direction = isActive
+      ? currentSort.ascending ? " 🔼" : " 🔽"
+      : "";
+
+    th.innerHTML = header + direction;
+
+    th.addEventListener('click', () => {
+      // Inicializar estado si no existe
+      if (!sortStates[tableId]) {
+        sortStates[tableId] = { column: null, ascending: true };
+      }
+
+      const current = sortStates[tableId];
+
+      if (current.column === key) {
+        current.ascending = !current.ascending;
+      } else {
+        current.column = key;
+        current.ascending = true;
+      }
+
+      // Ordenar los datos
+      data.sort((a, b) => {
+        let valA = a[key] ?? '';
+        let valB = b[key] ?? '';
+
+        // Intentar convertir ambos a número
+        const numA = parseFloat(valA);
+        const numB = parseFloat(valB);
+
+        const ambosNumerosValidos = !isNaN(numA) && !isNaN(numB);
+
+        if (ambosNumerosValidos) {
+          return current.ascending ? numA - numB : numB - numA;
         }
 
-        const current = sortStates[tableId];
-
-        if (current.column === key) {
-          current.ascending = !current.ascending;
-        } else {
-          current.column = key;
-          current.ascending = true;
-        }
-
-        // Ordenar los datos
-        data.sort((a, b) => {
-          const valA = a[key] ?? '';
-          const valB = b[key] ?? '';
-
-          if (typeof valA === 'number' && typeof valB === 'number') {
-            return current.ascending ? valA - valB : valB - valA;
-          }
-
-          return current.ascending
-            ? valA.toString().localeCompare(valB.toString())
-            : valB.toString().localeCompare(valA.toString());
-        });
-
-        // Regenerar tabla
-        generateTable(data, tableId, camposImportantes, encabezadosLegibles, 1, pageSize);
+        // Si no son numéricos, ordenar como texto
+        return current.ascending
+          ? valA.toString().localeCompare(valB.toString())
+          : valB.toString().localeCompare(valA.toString());
       });
 
-      row.appendChild(th);
+      // Regenerar tabla
+      generateTable(data, tableId, camposImportantes, encabezadosLegibles, 1, pageSize);
     });
 
-    // Filas
-    const tbody = table.createTBody();
-    pageData.forEach(item => {
+    row.appendChild(th);
+  });
+
+  // Filas
+  const tbody = table.createTBody();
+  pageData.forEach(item => {
     const tr = tbody.insertRow();
-    camposImportantes.forEach(key => {
+      
+    camposImportantes.forEach(col => {
+      const key = typeof col === 'string' ? col : col.key;
+      const format = typeof col === 'object' ? col.format : null;
+      const destacada = typeof col === 'object' ? col.destacada : false;
+
       const td = tr.insertCell();
-      td.textContent = item[key] ?? "";
+      let valor = item[key];
+
+      if (format === "moneda") {
+        const spanWrapper = document.createElement("span");
+        spanWrapper.className = "moneda-wrapper";
+
+        const spanSimbolo = document.createElement("span");
+        spanSimbolo.className = "moneda-simbolo";
+        spanSimbolo.textContent = "$";
+
+        const spanValor = document.createElement("span");
+        spanValor.className = "moneda-valor";
+        spanValor.textContent = formatearMoneda(valor).replace('$', '').trim();
+
+        td.classList.add("moneda-cell");
+        
+        spanWrapper.appendChild(spanSimbolo);
+        spanWrapper.appendChild(spanValor);
+
+        td.appendChild(spanWrapper);
+
+      } else if (format === 'numeric') {
+        td.textContent = Number(valor).toLocaleString('es-AR');
+        td.classList.add("right-align");
+      } else if (format === 'date') {
+        td.textContent = new Date(valor).toLocaleDateString('es-AR');
+      } else {
+        td.textContent = valor ?? "";
+      }
+
+      if (destacada) {
+        td.classList.add("columna-destacada");
+      }
     });
   });
 
