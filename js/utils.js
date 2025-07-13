@@ -184,6 +184,33 @@ function generateTable(data, tableId, columns, headers, page = 1, pageSize = 10)
                 td.textContent = formatearFecha(parsearFecha(valor));
             }
 
+            
+
+        
+            // Btn => un boton
+        } else if (format === 'btn') {
+            const q_corr = item.q_corr;
+            const q_practica = item.q_practica;
+
+            if (q_corr !== q_practica) {
+                const btn = document.createElement("button");
+                btn.className = "btn";
+                btn.id = key;
+                btn.textContent = "Ver Validaciones";
+
+                const c_id_practica = item.c_id_practica;
+                const codigo = item.codigo;
+
+                btn.onclick = () => {
+                    const url = `validaciones.html?codigo=${codigo}&c_id_practica=${c_id_practica}`;
+                    window.location.href = url;
+                };
+
+                td.appendChild(btn);
+            } else {
+                td.textContent = ""; // o podrías ocultarlo dejando td vacío
+            }
+            
         } else if (format === 'numeric') {
             td.textContent = Number(valor).toLocaleString('es-AR');
             td.classList.add("right-align");

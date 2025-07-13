@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
   const codigoNumerico = parseInt(urlParams.get("codigo"));
     
   const safeFetch = (url) =>
@@ -26,7 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
     { key: "f_practica", header: "Fecha Práctica", format: "date" },
     { key: "q_practica", header: "Q_PRACT", format: "numeric" },
     { key: "q_pract_correctas", header: "Q_CORR", format: "numeric" }, /* , destacada: true } */
-    { key: "c_id_practica", header: "C_ID_PRACTICA", format: "code" }    
+    { key: "c_id_practica", header: "C_ID_PRACTICA", format: "code" },
+    { key: "btnVerValidaciones", header: " ", format: "btn" }    
   ];
 
   const camposImportantesDetalle = [
