@@ -1,62 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebLiqui - Procesos</title>
-    <link rel="stylesheet" href="../css/styles.css" />
-  </head>
-  <body>
-    <div class="topbar">
-      <div class="hamburger" id="hamburger">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <div class="logo">WebLiqui</div>
-      <div class="user">
-        <span>Usuario</span>
-        <div class="avatar">U</div>
-      </div>
-    </div>
-
-    <div class="main-container" style="display: flex">
-      <div class="sidebar">
-        <h3>Menú</h3>
-        <nav>
-          <a href="./procesos.html">Procesos</a>
-          <a href="#">Liquidación</a>
-        </nav>
-      </div>
-      <div class="content">
-        <h2>Lista de Procesos</h2>
-
-        <div class="filters">
-          <label
-            >Tipo:
-            <select id="filtroTipo">
-              <option value="">Todos</option>
-              <option value="E">E</option>
-              <option value="M">M</option>
-            </select>
-          </label>
-
-          <label
-            >Período:
-            <input type="text" id="filtroPeriodo" placeholder="ej: 202301" />
-          </label>
-
-          <button id="filtroBtn" onclick="filtrar()">Filtrar</button>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WebLiqui - Procesos</title>
+        <link rel="stylesheet" href="../css/styles.css" />
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="hamburger" id="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="logo">WebLiqui</div>
+            <div class="user">
+                <span>Usuario</span>
+                <div class="avatar">U</div>
+            </div>
         </div>
 
-        <table id="tablaProcesos" class="proceso-table"></table>
-      </div>
-    </div>
+        <div class="main-container" style="display: flex">
+            <div class="sidebar">
+                <h3>Menú</h3>
+                <nav>
+                    <a href="./procesos.html">Procesos</a>
+                    <a href="#">Liquidación</a>
+                </nav>
+            </div>
+            <div class="content">
+                <h2>Lista de Procesos</h2>
 
-    <script src="../js/procesos.js"></script>
+                <div class="filters">
+                    <label
+                        >Tipo:
+                        <select id="filtroTipo">
+                            <option value="">Todos</option>
+                            <option value="E">E</option>
+                            <option value="M">M</option>
+                        </select>
+                    </label>
 
-    <!-- Mis js utiles -->
-    <script src="../js/js.js"></script>
-    <script src="../js/utils.js"></script>
-  </body>
+                    <label
+                        >Período:
+                        <input type="text" id="filtroPeriodo" placeholder="ej: 202301" />
+                    </label>
+
+                    <button id="filtroBtn" onclick="filtrar()">Filtrar</button>
+                </div>
+
+                <table id="tablaProcesos" class="proceso-table"></table>
+            </div>
+        </div>
+
+        <script src="../js/procesos.js"></script>
+
+        <!-- Mis js utiles -->
+        <script type="module" src="../js/formatters.js"></script>
+        <script type="module" src="../js/tableLogic.js"></script>
+        <script type="module" src="../js/tableUI.js"></script>
+    </body>
 </html>

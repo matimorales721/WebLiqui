@@ -1,112 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebLiqui - Detalle del Proceso</title>
-    <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Kranky&family=Monda:wght@400..700&family=Rajdhani:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="topbar">
-      <div class="topbar-left">
-        <div class="hamburger" id="hamburger" onclick="toggleSidebar()">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div class="logo">WebLiqui</div>
-      </div>
-      <div class="topbar-user">
-        <span>Martín Rodríguez</span>
-        <div class="avatar">M</div>
-      </div>
-    </div>
-
-    <div class="main-container">
-      <div class="sidebar hidden" id="sidebar">
-        <h3>Menú</h3>
-        <nav>
-          <a href="./procesos.html">Procesos</a>
-          <a href="#">Liquidación</a>
-        </nav>
-      </div>
-
-      <div class="content">
-        <a href="./procesos.html" class="btn-volver-mobile">←</a>
-        <h2>Detalle del Proceso</h2>
-
-        <div class="detalle-proceso">
-          <div class="detalle-grid">
-            <div><strong>Código:</strong> <span id="codigo"></span></div>
-            <div><strong>Tipo de ejecución:</strong> <span id="tipo"></span></div>
-            <div><strong>Período:</strong> <span id="periodo"></span></div>
-            <div><strong>Inicio:</strong> <span id="inicio"></span></div>
-            <div><strong>Fin:</strong> <span id="fin"></span></div>
-            <div><strong>Duración:</strong> <span id="duracion"></span></div>
-          </div>
-          <a id="btnLogs" class="btn">Ver Logs</a>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WebLiqui - Detalle del Proceso</title>
+        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="icon" type="image/x-icon" href="../images/favicon-ok.png" />
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="topbar-left">
+                <div class="hamburger" id="hamburger" onclick="toggleSidebar()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="logo">WebLiqui</div>
+            </div>
+            <div class="topbar-user">
+                <span>Martín Rodríguez</span>
+                <div class="avatar">M</div>
+            </div>
         </div>
 
-        <div class="tabs">
-          <div class="tab active" onclick="showTab('practicas')">Prácticas</div>
-          <div class="tab" onclick="showTab('detalle')">Detalle</div>
-          <div class="tab" onclick="showTab('cabecera')">Cabecera</div>
-          <div class="tab" onclick="showTab('aprob-cabecera')">Aprob Cabecera</div>
-        </div>
-        <div class="tabla-container">
-          <div id="grillasPorProceso">
-            <div id="practicas" class="tab-content active">
-              <div class="filters">
-                <select id="filtroConcepto_practicas"></select>
-                <select id="filtroPeriodo_practicas"></select>
-                <select id="filtroPrestador_practicas"></select>
-                <select id="filtroBeneficiario_practicas"></select>
-                <button id="filtroBtn_practicas">Filtrar</button>
-              </div>
-              <table id="tablaPracticas" class="styled-table"></table>
+        <div class="main-container">
+            <div class="sidebar hidden" id="sidebar">
+                <h3>Menú</h3>
+                <nav>
+                    <a href="./procesos.html">Procesos</a>
+                    <a href="#">Liquidación</a>
+                </nav>
             </div>
-            <div id="detalle" class="tab-content">
-              <div class="filters">
-                <select id="filtroConcepto_detalle"></select>
-                <select id="filtroPeriodo_detalle"></select>
-                <select id="filtroPrestador_detalle"></select>
-                <button id="filtroBtn_detalle">Filtrar</button>
-              </div>
-              <table id="tablaDetalle" class="styled-table"></table>
-            </div>
-            <div id="cabecera" class="tab-content">
-              <div class="filters">
-                <select id="filtroConcepto_cabecera"></select>
-                <select id="filtroPeriodo_cabecera"></select>
-                <select id="filtroPrestador_cabecera"></select>
-                <button id="filtroBtn_cabecera">Filtrar</button>
-              </div>
-              <table id="tablaCabecera" class="styled-table"></table>
-            </div>
-            <div id="aprob-cabecera" class="tab-content">
-              <div class="filters">
-                <select id="filtroConcepto_aprob_cabecera"></select>
-                <select id="filtroPeriodo_aprob_cabecera"></select>
-                <select id="filtroPrestador_aprob_cabecera"></select>
-                <button id="filtroBtn_aprob_cabecera">Filtrar</button>
-              </div>
-              <table id="tablaAprobCabecera" class="styled-table"></table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <script src="../js/proceso.js"></script>
+            <div class="content">
+                <a href="./procesos.html" class="btn-volver-mobile">←</a>
+                <h2>Detalle del Proceso</h2>
 
-    <!-- Mis js utiles -->
-    <script src="../js/js.js"></script>
-    <script src="../js/utils.js"></script>
-  </body>
+                <div class="detalle-proceso">
+                    <div class="detalle-grid">
+                        <div><strong>Código:</strong> <span id="codigo"></span></div>
+                        <div><strong>Tipo de ejecución:</strong> <span id="tipo"></span></div>
+                        <div><strong>Período:</strong> <span id="periodo"></span></div>
+                        <div><strong>Inicio:</strong> <span id="inicio"></span></div>
+                        <div><strong>Fin:</strong> <span id="fin"></span></div>
+                        <div><strong>Duración:</strong> <span id="duracion"></span></div>
+                    </div>
+                    <a id="btnLogs" class="btn">Ver Logs</a>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="showTab('practicas')">Prácticas</div>
+                    <div class="tab" onclick="showTab('detalle')">Detalle</div>
+                    <div class="tab" onclick="showTab('cabecera')">Cabecera</div>
+                    <div class="tab" onclick="showTab('aprob-cabecera')">Aprob Cabecera</div>
+                </div>
+                <div class="tabla-container">
+                    <div id="grillasPorProceso">
+                        <div id="practicas" class="tab-content active">
+                            <div class="filters">
+                                <select id="filtroConcepto_practicas"></select>
+                                <select id="filtroPeriodo_practicas"></select>
+                                <select id="filtroPrestador_practicas"></select>
+                                <select id="filtroBeneficiario_practicas"></select>
+                                <button id="filtroBtn_practicas">Filtrar</button>
+                            </div>
+                            <table id="tablaPracticas" class="styled-table"></table>
+                        </div>
+                        <div id="detalle" class="tab-content">
+                            <div class="filters">
+                                <select id="filtroConcepto_detalle"></select>
+                                <select id="filtroPeriodo_detalle"></select>
+                                <select id="filtroPrestador_detalle"></select>
+                                <button id="filtroBtn_detalle">Filtrar</button>
+                            </div>
+                            <table id="tablaDetalle" class="styled-table"></table>
+                        </div>
+                        <div id="cabecera" class="tab-content">
+                            <div class="filters">
+                                <select id="filtroConcepto_cabecera"></select>
+                                <select id="filtroPeriodo_cabecera"></select>
+                                <select id="filtroPrestador_cabecera"></select>
+                                <button id="filtroBtn_cabecera">Filtrar</button>
+                            </div>
+                            <table id="tablaCabecera" class="styled-table"></table>
+                        </div>
+                        <div id="aprob-cabecera" class="tab-content">
+                            <div class="filters">
+                                <select id="filtroConcepto_aprob_cabecera"></select>
+                                <select id="filtroPeriodo_aprob_cabecera"></select>
+                                <select id="filtroPrestador_aprob_cabecera"></select>
+                                <button id="filtroBtn_aprob_cabecera">Filtrar</button>
+                            </div>
+                            <table id="tablaAprobCabecera" class="styled-table"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module" src="../js/proceso.js"></script>
+
+        <!-- Mis js utiles -->
+        <script type="module" src="../js/formatters.js"></script>
+        <script type="module" src="../js/tableLogic.js"></script>
+        <script type="module" src="../js/tableUI.js"></script>
+    </body>
 </html>

@@ -1,0 +1,11 @@
+{
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "tabWidth": 4,
+    "useTabs": false,
+    "insertSpaces": true,
+    "detectIndentation": false,
+    "editor.formatOnSave": true
+}

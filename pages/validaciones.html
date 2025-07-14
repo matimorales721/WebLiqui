@@ -1,58 +1,59 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebLiqui - Validaciones del Proceso</title>
-    <link rel="stylesheet" href="../css/styles.css" />
-  </head>
-  <body>
-    <div class="topbar">
-      <div class="topbar-left">
-        <div class="hamburger" id="hamburger" onclick="toggleSidebar()">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div class="logo">WebLiqui</div>
-      </div>
-      <div class="topbar-user">
-        <span>Martín Rodríguez</span>
-        <div class="avatar">M</div>
-      </div>
-    </div>
-
-    <div class="main-container">
-      <div class="sidebar hidden" id="sidebar">
-        <h3>Menú</h3>
-        <nav>
-          <a href="./procesos.html">Procesos</a>
-          <a href="#">Liquidación</a>
-        </nav>
-      </div>
-
-      <div class="content">
-        <a href="./procesos.html" class="btn-volver-mobile">←</a>
-        <h2>Validaciones del Proceso</h2>
-        <div class="tabla-container">
-          <div id="validaciones" class="tab-content active">
-            <div class="filters">
-              <select id="filtroGrupo"></select>
-              <select id="filtroCodigoValidacion"></select>
-              <select id="filtroCIdPractica"></select>
-
-              <button id="filtroBtn">Filtrar</button>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WebLiqui - Validaciones del Proceso</title>
+        <link rel="stylesheet" href="../css/styles.css" />
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="topbar-left">
+                <div class="hamburger" id="hamburger" onclick="toggleSidebar()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="logo">WebLiqui</div>
             </div>
-            <table id="tablaValidaciones" class="styled-table"></table>
-          </div>
+            <div class="topbar-user">
+                <span>Martín Rodríguez</span>
+                <div class="avatar">M</div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <script src="../js/validaciones.js"></script>
+        <div class="main-container">
+            <div class="sidebar hidden" id="sidebar">
+                <h3>Menú</h3>
+                <nav>
+                    <a href="./procesos.html">Procesos</a>
+                    <a href="#">Liquidación</a>
+                </nav>
+            </div>
 
-    <!-- Mis js utiles -->
-    <script src="../js/js.js"></script>
-    <script src="../js/utils.js"></script>
-  </body>
+            <div class="content">
+                <a href="./procesos.html" class="btn-volver-mobile">←</a>
+                <h2>Validaciones del Proceso</h2>
+                <div class="tabla-container">
+                    <div id="validaciones" class="tab-content active">
+                        <div class="filters">
+                            <select id="filtroGrupo"></select>
+                            <select id="filtroCodigoValidacion"></select>
+                            <select id="filtroCIdPractica"></select>
+
+                            <button id="filtroBtn">Filtrar</button>
+                        </div>
+                        <table id="tablaValidaciones" class="styled-table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module" src="../js/validaciones.js"></script>
+
+        <!-- Mis js utiles -->
+        <script type="module" src="../js/formatters.js"></script>
+        <script type="module" src="../js/tableLogic.js"></script>
+        <script type="module" src="../js/tableUI.js"></script>
+    </body>
 </html>
