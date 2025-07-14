@@ -10,28 +10,35 @@ document.addEventListener('DOMContentLoaded', () => {
     let detalleGlobal = [];
     let cabeceraGlobal = [];
     let aprobCabeceraGlobal = [];
+    let validacionesGlobal = [];
 
     const camposImportantesPractica = [
         { key: 'c_concepto', header: 'Concepto', format: 'code' },
-        { key: 'c_periodo', header: 'Periodo', format: 'code' },
+        /* { key: 'c_periodo', header: 'Periodo', format: 'code' }, */
         { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
-        { key: 'd_prestador', header: 'Prestador' },
-        { key: 'd_modulo_pami', header: 'Modulo' },
+        /* { key: 'd_prestador', header: 'Prestador' },
+        { key: 'd_modulo_pami', header: 'Modulo' }, */
+        { key: 'c_practica', header: 'Cod. Práctica', format: 'code' },
         { key: 'd_practica', header: 'Práctica' },
-        { key: 'n_orden_rechazo', header: 'N_OP', format: 'code' },
         { key: 'n_beneficio', header: 'Beneficiario', format: 'code' },
+        { key: 'n_orden_rechazo', header: 'N_OP', format: 'code' },
         { key: 'f_practica', header: 'Fecha Práctica', format: 'date' },
         { key: 'q_practica', header: 'Q_PRACT', format: 'numeric' },
         { key: 'q_pract_correctas', header: 'Q_CORR', format: 'numeric' } /* , destacada: true } */,
         { key: 'c_id_practica', header: 'C_ID_PRACTICA', format: 'code' },
         {
             key: 'acciones',
-            header: 'Acciones',
+            header: ' ',
+            format: 'btn',
             render: (item) => {
-                if (item.q_corr !== item.q_practica) {
+                const tieneValidaciones = validacionesGlobal.some(
+                    (v) => v.c_id_practica == item.c_id_practica && v.c_proceso == codigoProceso
+                );
+
+                if (tieneValidaciones) {
                     const btn = document.createElement('button');
-                    btn.className = 'btn';
-                    btn.textContent = 'Ver Validaciones';
+                    btn.className = 'btn btn-validaciones';
+                    btn.textContent = 'Validaciones';
                     btn.onclick = () => navegarAValidaciones(codigoProceso, item.c_id_practica);
                     return btn;
                 }
@@ -72,8 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
         safeFetch(`../data/detalle-${codigoProceso}.json`),
         safeFetch(`../data/cabecera-${codigoProceso}.json`),
         safeFetch(`../data/aprob-cabecera-${codigoProceso}.json`),
+        safeFetch(`../data/validaciones-${codigoProceso}.json`),
         safeFetch(`../data/procesos.json`)
-    ]).then(([practicas, detalle, cabecera, aprobCabecera, procesos]) => {
+    ]).then(([practicas, detalle, cabecera, aprobCabecera, validaciones, procesos]) => {
         const proceso = procesos.find((p) => parseInt(p.c_proceso) === codigoProceso);
 
         if (!proceso) {
@@ -102,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         detalleGlobal = detalle;
         cabeceraGlobal = cabecera;
         aprobCabeceraGlobal = aprobCabecera;
+        validacionesGlobal = validaciones;
 
         // Prácticas
         poblarSelectUnico(practicasGlobal, 'c_concepto', 'filtroConcepto_practicas', 'Conceptos');

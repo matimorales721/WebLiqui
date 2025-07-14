@@ -90,6 +90,7 @@ export function generarTabla(data, tableId, columns, headers, page = 1, pageSize
             const render = typeof col === 'object' ? col.render : null;
 
             const td = tr.insertCell();
+
             let valor = row[key];
 
             if (typeof render === 'function') {
@@ -99,7 +100,8 @@ export function generarTabla(data, tableId, columns, headers, page = 1, pageSize
                 } else {
                     td.textContent = customContent ?? '';
                 }
-                return; // 🚨 Evita seguir con los demás formatos si ya hay render
+                td.className = 'styled-td';
+                return;
             }
 
             ///////////////////////////
@@ -125,6 +127,7 @@ export function generarTabla(data, tableId, columns, headers, page = 1, pageSize
 
                     spanWrapper.appendChild(spanCopyIcon);
                     td.appendChild(spanWrapper);
+                    td.className = 'styled-td';
                 }
 
                 // Moneda => Hereda de Code, y tiene decoraciones ($, formato)
@@ -159,6 +162,7 @@ export function generarTabla(data, tableId, columns, headers, page = 1, pageSize
 
                     spanWrapper.appendChild(spanCopyIcon);
                     td.appendChild(spanWrapper);
+                    td.className = 'styled-td';
                 }
 
                 // Date
@@ -171,15 +175,9 @@ export function generarTabla(data, tableId, columns, headers, page = 1, pageSize
                 // Numeric
             } else if (format === 'numeric') {
                 td.textContent = Number(valor).toLocaleString('es-AR');
-                td.classList.add('right-align');
+                td.classList.add('numeric-td');
 
-                //Btn
-            } else if (format === 'btn') {
-                if (valor instanceof HTMLElement) {
-                    td.appendChild(valor);
-                } else {
-                    td.textContent = '';
-                }
+                // Otros
             } else {
                 td.textContent = valor ?? '';
             }

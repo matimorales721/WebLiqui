@@ -1,0 +1,607 @@
+:root {
+    --primary-color: #1565c0;
+    --primary-light: #42a5f5;
+    --background-color: #e3f2fd;
+    --sidebar-color: #0d47a1;
+    --sidebar-hover: #1565c0;
+    --text-color: #212121;
+    --white: #fff;
+    --border-radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1565c0; /* azul fuerte */
+    padding: 0.6em 1.2em;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.logo {
+    font-family: 'Monda', sans-serif;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: white(202, 9, 9);
+}
+
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    font-weight: 500;
+    font-size: 0.95em;
+    color: white;
+}
+
+.avatar {
+    background-color: white;
+    color: #1565c0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.topbar .hamburger {
+    display: flex; /* ya no inline-block */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.hamburger div {
+    width: 22px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+}
+
+.sidebar {
+    background-color: var(--sidebar-color);
+    width: 150px;
+    color: white;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.sidebar.hidden {
+    display: none;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.main-container {
+    display: flex;
+    height: calc(100vh - 64px);
+}
+
+.main-container.full-width {
+    width: 100%;
+}
+
+.sidebar {
+    background-color: var(--sidebar-color);
+    width: 150px;
+    color: white;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h3 {
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    color: var(--primary-light);
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar nav a {
+    padding: 0.75rem 2rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    border-left: 4px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.sidebar nav a:hover {
+    background-color: var(--sidebar-hover);
+    border-left: 4px solid var(--primary-light);
+}
+
+.sidebar.hidden {
+    display: none;
+}
+
+.content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    background-color: var(--background-color);
+}
+
+table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+th,
+td {
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: right;
+}
+
+th {
+    background-color: #e1f5fe;
+}
+
+.status-completed {
+    color: green;
+}
+.status-inprogress {
+    color: orange;
+}
+.status-failed {
+    color: red;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--primary-light);
+    transform: scale(1.05);
+}
+
+.login-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-color);
+}
+
+.login-box {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.login-box input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+}
+
+.login-box button {
+    width: 100%;
+    padding: 0.8rem;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: transform 0.2s;
+}
+
+.login-box button:hover {
+    transform: scale(1.05);
+}
+
+.detalle-proceso {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    margin-bottom: 2rem;
+}
+.detalle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+.filters {
+    margin-bottom: 1.5rem;
+}
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 1rem;
+}
+.tab {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+.tab.active {
+    border-bottom: 3px solid var(--primary-color);
+    color: var(--primary-color);
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+.filters select,
+.filters input {
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.detalle-proceso {
+    background-color: #f5faff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.detalle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.btn-volver-mobile {
+    display: none;
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--primary-light);
+    transform: scale(1.05);
+}
+
+.filters select {
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 0 5px 10px 0;
+    background-color: #a1c5ee;
+    color: rgb(1, 8, 55);
+    font-size: 14px;
+    min-width: 150px;
+}
+
+.filters select:focus {
+    outline: none;
+    border-color: #0e1419;
+    background-color: #1565c0;
+    color: rgb(1, 8, 55);
+}
+
+/* Accesibilidad: foco claro */
+button:focus,
+.copy-icon:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Botón principal */
+.btn {
+    padding: 0.4em 0.9em;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 0.9em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.code-content {
+    font-family: monospace;
+}
+
+.copy-icon {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Esto conrigura la styled-table */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    background-color: #fff;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    overflow-x: auto;
+    margin: 1em 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.styled-table th,
+.styled-table td {
+    font-size: 0.95rem;
+
+    border: 1px solid #ccc;
+    text-align: left;
+    vertical-align: middle;
+}
+.styled-table th {
+    background-color: #1565c0;
+    color: white;
+    font-weight: 600;
+    position: relative;
+    user-select: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+    padding: 0.75em 1em;
+}
+
+.styled-table td {
+    height: 1.8em;
+    padding: 0.75em 0.25em;
+}
+
+.styled-table td.styled-td {
+    padding: 0.5em 0.75em;
+    font-size: 0.95em; /* Ajusta el tamaño de letra si es necesario */
+    line-height: 1.2em;
+    box-sizing: border-box;
+    overflow: hidden; /* Evita que muestre scroll */
+    vertical-align: middle;
+}
+
+.styled-table td.numeric-td {
+    padding: 0.5em 0.75em;
+    text-align: right;
+}
+
+.styled-table th:hover {
+    background-color: #e1f5fe;
+    color: #1565c0;
+}
+
+.styled-table tr:hover {
+    background-color: #f0f8ff;
+}
+
+.paginacion {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.paginacion button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.paginacion button.active-page {
+    background-color: var(--primary-light);
+    font-weight: bolder;
+    border: 2px solid white;
+}
+
+.columna-destacada {
+    background-color: #c8c4f0;
+}
+
+/* Wrappers con Estilos para columnas especiales */
+
+/*
+    Code representa que hay un valor que para el negocio representa un codigo, 
+    con este estilo será facil de copiar
+*/
+.code-wrapper {
+    border: 1px solid #d0d7e2;
+    font-weight: 600;
+    color: #333;
+    gap: 0.5em; /* Espacio entre valor y emoji */
+    position: relative;
+    white-space: nowrap; /* ❗ NO PERMITE CORTES DE LÍNEA */
+    max-width: 100%;
+    min-width: calc(0.6em * 6);
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9em;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.05);
+    align-items: center;
+    justify-content: space-between; /* o 'flex-start' si querés más control */
+    display: inline-flex;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+/* 🔧 Arregla la altura y evita scrolls indeseados en celdas con inputs */
+.code-wrapper {
+    overflow: hidden; /* 💥 Evita scroll horizontal */
+    height: 2em; /* 🔧 Altura fija que encaje visualmente */
+    padding: 0.4em 0.6em;
+}
+
+.code-wrapper .code-content {
+    vertical-align: middle;
+    word-break: break-word;
+    white-space: nowrap; /* ❗ Previene saltos de línea */
+}
+
+.code-wrapper .copy-icon {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    padding: 2px 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.code-wrapper:hover .copy-icon {
+    opacity: 1;
+}
+
+/* Especifico de Moneda */
+.moneda-wrapper.code-wrapper {
+    text-align: right;
+    min-width: 11em; /* antes era 6em aprox. */
+}
+
+/* Estilo de inputs numéricos dentro de la clase code-wrapper */
+.code-wrapper input[type='number'] {
+    height: 1.6em; /* Un poco menos que el contenedor */
+    font-size: 0.95em;
+    padding: 0 0.4em;
+    border: none;
+    background: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: right;
+    appearance: textfield; /* Oculta flechitas nativas */
+}
+
+.code-wrapper input[type='number']::-webkit-outer-spin-button,
+.code-wrapper input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* otras cosas */
+
+.moneda-simbolo {
+    font-weight: bold;
+    color: #333;
+    min-width: 1em;
+    text-align: left;
+}
+
+/* Estilo moneda */
+.moneda-wrapper {
+    background-color: #e6f7ff;
+}
+
+.moneda-simbolo {
+    font-weight: bold;
+}
+
+.moneda-content {
+    font-family: monospace;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    th,
+    td {
+        padding: 0.5em;
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        font-size: 0.8em;
+        padding: 0.3em 0.7em;
+    }
+}
+
+/* Botón rojo exclusivo para la página de Validaciones */
+.btn-validaciones {
+    background-color: #d32f2f; /* rojo fuerte */
+}
+
+.btn-validaciones:hover {
+    background-color: #b71c1c;
+}
