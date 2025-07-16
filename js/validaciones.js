@@ -23,6 +23,71 @@ document.addEventListener('DOMContentLoaded', () => {
         { key: 'c_id_practica', header: 'C_ID_PRACTICA', format: 'code' }
     ];
 
+    // Estado global de paginación validaciones
+    window.currentPageValidaciones = 1;
+    window.pageSizeValidaciones = 10;
+    window.filteredValidaciones = [];
+
+    function renderTablaValidaciones() {
+        if (filteredValidaciones.length === 0) {
+            const tbody = document.querySelector('#tablaValidaciones');
+            tbody.innerHTML = `<body><tr><td colspan='99'>No hay validaciones para esta práctica</td></tr></body>`;
+            document.getElementById('pageInfoValidaciones').textContent = '';
+            document.getElementById('prevPageValidaciones').disabled = true;
+            document.getElementById('nextPageValidaciones').disabled = true;
+            return;
+        }
+        generarTabla(filteredValidaciones, 'tablaValidaciones', camposGrillaValidaciones, undefined, currentPageValidaciones, pageSizeValidaciones);
+        const totalPages = Math.max(1, Math.ceil(filteredValidaciones.length / pageSizeValidaciones));
+        // Paginador visual
+        const paginador = document.getElementById('paginacionValidaciones');
+        if (paginador) {
+            paginador.innerHTML = '';
+            let btnWidth = 38;
+            let paginadorWidth = paginador.offsetWidth || 400;
+            let maxBtns = Math.floor(paginadorWidth / btnWidth);
+            if (maxBtns < 5) maxBtns = 5;
+            let btns = [];
+            if (totalPages <= maxBtns) {
+                for (let i = 1; i <= totalPages; i++) btns.push(i);
+            } else {
+                let start = Math.max(1, currentPageValidaciones - Math.floor(maxBtns / 2));
+                let end = start + maxBtns - 1;
+                if (end > totalPages) {
+                    end = totalPages;
+                    start = end - maxBtns + 1;
+                }
+                if (start > 1) {
+                    btns.push(1);
+                    if (start > 2) btns.push('...');
+                }
+                for (let i = start; i <= end; i++) btns.push(i);
+                if (end < totalPages) {
+                    if (end < totalPages - 1) btns.push('...');
+                    btns.push(totalPages);
+                }
+            }
+            btns.forEach(i => {
+                if (i === '...') {
+                    const span = document.createElement('span');
+                    span.textContent = '...';
+                    span.className = 'paginador-ellipsis';
+                    paginador.appendChild(span);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = 'paginador-btn' + (i === currentPageValidaciones ? ' active' : '');
+                    btn.style.margin = '4px 4px'; // separación vertical y horizontal
+                    btn.onclick = () => {
+                        currentPageValidaciones = i;
+                        renderTablaValidaciones();
+                    };
+                    paginador.appendChild(btn);
+                }
+            });
+        }
+    }
+
     Promise.all([safeFetch(`../data/validaciones-${codigo}.json`)]).then(([items]) => {
         if (!items) {
             const tbody = document.querySelector('#tablaValidaciones');
@@ -37,15 +102,28 @@ document.addEventListener('DOMContentLoaded', () => {
         poblarSelectUnico(validaciones, 'c_validacion', 'filtroCodigoValidacion', 'Validaciones');
         poblarSelectUnico(validaciones, 'c_id_practica', 'filtroCIdPractica', 'c_id_practicas');
 
-        const filtradas = validaciones.filter((p) => !c_id_practica || p.c_id_practica == c_id_practica);
+        filteredValidaciones = validaciones.filter((p) => !c_id_practica || p.c_id_practica == c_id_practica);
+        currentPageValidaciones = 1;
+        renderTablaValidaciones();
+    });
 
-        if (filtradas.length === 0) {
-            const tbody = document.querySelector('#tablaValidaciones');
-            tbody.innerHTML = `<body><tr><td colspan='99'>No hay validaciones para esta práctica</td></tr></body>`;
-            return;
+    document.getElementById('prevPageValidaciones').addEventListener('click', () => {
+        if (currentPageValidaciones > 1) {
+            currentPageValidaciones--;
+            renderTablaValidaciones();
         }
-
-        generarTabla(filtradas, 'tablaValidaciones', camposGrillaValidaciones);
+    });
+    document.getElementById('nextPageValidaciones').addEventListener('click', () => {
+        const totalPages = Math.max(1, Math.ceil(filteredValidaciones.length / pageSizeValidaciones));
+        if (currentPageValidaciones < totalPages) {
+            currentPageValidaciones++;
+            renderTablaValidaciones();
+        }
+    });
+    document.getElementById('pageSizeValidaciones').addEventListener('change', (e) => {
+        pageSizeValidaciones = parseInt(e.target.value, 10);
+        currentPageValidaciones = 1;
+        renderTablaValidaciones();
     });
 
     /* Filtros */
@@ -62,7 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 (!c_id_practica || p.c_id_practica == c_id_practica)
         );
 
-        generarTabla(filtradas, 'tablaValidaciones', camposGrillaValidaciones);
+        filteredValidaciones = filtradas;
+        currentPageValidaciones = 1;
+        renderTablaValidaciones();
     });
 });
 

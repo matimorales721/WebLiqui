@@ -81,7 +81,7 @@ export function generarTabla(data, tableId, columns, headers, page = 1, pageSize
     thead.appendChild(trHead);
     table.appendChild(thead);
 
-    data.forEach((row) => {
+    pageData.forEach((row) => {
         const tr = document.createElement('tr');
         columns.forEach((col) => {
             const key = typeof col === 'string' ? col : col.key;

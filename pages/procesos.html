@@ -46,6 +46,20 @@
                 </div>
 
                 <table id="tablaProcesos" class="styled-table"></table>
+                <div id="paginacionProcesos" class="table-pagination">
+                    <button id="prevPageBtn">Anterior</button>
+                    <span id="pageInfo"></span>
+                    <button id="nextPageBtn">Siguiente</button>
+                    <label style="margin-left:16px;">
+                        Filas por página:
+                        <select id="pageSizeSelect">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                    </label>
+                </div>
             </div>
         </div>
 

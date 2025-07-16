@@ -4,6 +4,260 @@ import { poblarSelectUnico } from './tableLogic.js';
 import { safeFetch } from './newUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    function renderTablaDetalle() {
+        generarTabla(
+            filteredDetalle,
+            'tablaDetalle',
+            camposImportantesDetalle,
+            undefined,
+            currentPageDetalle,
+            pageSizeDetalle
+        );
+        const totalPages = Math.max(1, Math.ceil(filteredDetalle.length / pageSizeDetalle));
+        // Paginador visual
+        const paginador = document.getElementById('paginadorDetalle');
+        if (paginador) {
+            paginador.innerHTML = '';
+            // Calcula cuántos botones caben en el ancho del paginador
+            let btnWidth = 38; // px, ajusta según tu CSS
+            let paginadorWidth = paginador.offsetWidth || 400;
+            let maxBtns = Math.floor(paginadorWidth / btnWidth);
+            if (maxBtns < 5) maxBtns = 5;
+            let btns = [];
+            if (totalPages <= maxBtns) {
+                for (let i = 1; i <= totalPages; i++) btns.push(i);
+            } else {
+                let start = Math.max(1, currentPageDetalle - Math.floor(maxBtns / 2));
+                let end = start + maxBtns - 1;
+                if (end > totalPages) {
+                    end = totalPages;
+                    start = end - maxBtns + 1;
+                }
+                if (start > 1) {
+                    btns.push(1);
+                    if (start > 2) btns.push('...');
+                }
+                for (let i = start; i <= end; i++) btns.push(i);
+                if (end < totalPages) {
+                    if (end < totalPages - 1) btns.push('...');
+                    btns.push(totalPages);
+                }
+            }
+            btns.forEach(i => {
+                if (i === '...') {
+                    const span = document.createElement('span');
+                    span.textContent = '...';
+                    span.className = 'paginador-ellipsis';
+                    paginador.appendChild(span);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = 'paginador-btn' + (i === currentPageDetalle ? ' active' : '');
+                    btn.style.margin = '4px 4px'; // separación vertical y horizontal mínima entre botones
+                    btn.onclick = () => {
+                        currentPageDetalle = i;
+                        renderTablaDetalle();
+                    };
+                    paginador.appendChild(btn);
+                }
+            });
+        }
+    }
+
+    function renderTablaCabecera() {
+        generarTabla(
+            filteredCabecera,
+            'tablaCabecera',
+            camposImportantesCabecera,
+            undefined,
+            currentPageCabecera,
+            pageSizeCabecera
+        );
+        const totalPages = Math.max(1, Math.ceil(filteredCabecera.length / pageSizeCabecera));
+
+        // Paginador visual
+        const paginador = document.getElementById('paginadorCabecera');
+        if (paginador) {
+            paginador.innerHTML = '';
+            let btnWidth = 38;
+            let paginadorWidth = paginador.offsetWidth || 400;
+            let maxBtns = Math.floor(paginadorWidth / btnWidth);
+            if (maxBtns < 5) maxBtns = 5;
+            let btns = [];
+            if (totalPages <= maxBtns) {
+                for (let i = 1; i <= totalPages; i++) btns.push(i);
+            } else {
+                let start = Math.max(1, currentPageCabecera - Math.floor(maxBtns / 2));
+                let end = start + maxBtns - 1;
+                if (end > totalPages) {
+                    end = totalPages;
+                    start = end - maxBtns + 1;
+                }
+                if (start > 1) {
+                    btns.push(1);
+                    if (start > 2) btns.push('...');
+                }
+                for (let i = start; i <= end; i++) btns.push(i);
+                if (end < totalPages) {
+                    if (end < totalPages - 1) btns.push('...');
+                    btns.push(totalPages);
+                }
+            }
+            btns.forEach(i => {
+                if (i === '...') {
+                    const span = document.createElement('span');
+                    span.textContent = '...';
+                    span.className = 'paginador-ellipsis';
+                    paginador.appendChild(span);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = 'paginador-btn' + (i === currentPageCabecera ? ' active' : '');
+                    btn.style.margin = '4px 4px'; // separación vertical y horizontal mínima entre botones
+                    btn.onclick = () => {
+                        currentPageCabecera = i;
+                        renderTablaCabecera();
+                    };
+                    paginador.appendChild(btn);
+                }
+            });
+        }
+    }
+
+    function renderTablaAprobCabecera() {
+        generarTabla(
+            filteredAprobCabecera,
+            'tablaAprobCabecera',
+            camposImportantesAprobCabecera,
+            undefined,
+            currentPageAprobCabecera,
+            pageSizeAprobCabecera
+        );
+        const totalPages = Math.max(1, Math.ceil(filteredAprobCabecera.length / pageSizeAprobCabecera));
+
+        // Paginador visual
+        const paginador = document.getElementById('paginadorAprobCabecera');
+        if (paginador) {
+            paginador.innerHTML = '';
+            let btnWidth = 38;
+            let paginadorWidth = paginador.offsetWidth || 400;
+            let maxBtns = Math.floor(paginadorWidth / btnWidth);
+            if (maxBtns < 5) maxBtns = 5;
+            let btns = [];
+            if (totalPages <= maxBtns) {
+                for (let i = 1; i <= totalPages; i++) btns.push(i);
+            } else {
+                let start = Math.max(1, currentPageAprobCabecera - Math.floor(maxBtns / 2));
+                let end = start + maxBtns - 1;
+                if (end > totalPages) {
+                    end = totalPages;
+                    start = end - maxBtns + 1;
+                }
+                if (start > 1) {
+                    btns.push(1);
+                    if (start > 2) btns.push('...');
+                }
+                for (let i = start; i <= end; i++) btns.push(i);
+                if (end < totalPages) {
+                    if (end < totalPages - 1) btns.push('...');
+                    btns.push(totalPages);
+                }
+            }
+            btns.forEach(i => {
+                if (i === '...') {
+                    const span = document.createElement('span');
+                    span.textContent = '...';
+                    span.className = 'paginador-ellipsis';
+                    paginador.appendChild(span);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = 'paginador-btn' + (i === currentPageAprobCabecera ? ' active' : '');
+                    btn.style.margin = '4px 4px'; // separación vertical y horizontal mínima entre botones
+                    btn.onclick = () => {
+                        currentPageAprobCabecera = i;
+                        renderTablaAprobCabecera();
+                    };
+                    paginador.appendChild(btn);
+                }
+            });
+        }
+    }
+    function renderTablaPracticas() {
+        generarTabla(
+            filteredPracticas,
+            'tablaPracticas',
+            camposImportantesPractica,
+            undefined,
+            currentPagePracticas,
+            pageSizePracticas
+        );
+        const totalPages = Math.max(1, Math.ceil(filteredPracticas.length / pageSizePracticas));
+
+        // Paginador visual
+        const paginador = document.getElementById('paginadorPracticas');
+        if (paginador) {
+            paginador.innerHTML = '';
+            let btnWidth = 38;
+            let paginadorWidth = paginador.offsetWidth || 400;
+            let maxBtns = Math.floor(paginadorWidth / btnWidth);
+            if (maxBtns < 5) maxBtns = 5;
+            let btns = [];
+            if (totalPages <= maxBtns) {
+                for (let i = 1; i <= totalPages; i++) btns.push(i);
+            } else {
+                let start = Math.max(1, currentPagePracticas - Math.floor(maxBtns / 2));
+                let end = start + maxBtns - 1;
+                if (end > totalPages) {
+                    end = totalPages;
+                    start = end - maxBtns + 1;
+                }
+                if (start > 1) {
+                    btns.push(1);
+                    if (start > 2) btns.push('...');
+                }
+                for (let i = start; i <= end; i++) btns.push(i);
+                if (end < totalPages) {
+                    if (end < totalPages - 1) btns.push('...');
+                    btns.push(totalPages);
+                }
+            }
+            btns.forEach(i => {
+                if (i === '...') {
+                    const span = document.createElement('span');
+                    span.textContent = '...';
+                    span.className = 'paginador-ellipsis';
+                    paginador.appendChild(span);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = 'paginador-btn' + (i === currentPagePracticas ? ' active' : '');
+                    btn.style.margin = '4px 4px'; // separación vertical y horizontal mínima entre botones
+                    btn.onclick = () => {
+                        currentPagePracticas = i;
+                        renderTablaPracticas();
+                    };
+                    paginador.appendChild(btn);
+                }
+            });
+        }
+    }
+    var filteredPracticas = [];
+    var currentPagePracticas = 1;
+    var pageSizePracticas = 10;
+
+    var filteredDetalle = [];
+    var currentPageDetalle = 1;
+    var pageSizeDetalle = 10;
+
+    var filteredCabecera = [];
+    var currentPageCabecera = 1;
+    var pageSizeCabecera = 10;
+
+    var filteredAprobCabecera = [];
+    var currentPageAprobCabecera = 1;
+    var pageSizeAprobCabecera = 10;
+
     const codigoProceso = getParametroProceso(); // obtiene el código directamente de la URL
 
     let practicasGlobal = [];
@@ -118,28 +372,32 @@ document.addEventListener('DOMContentLoaded', () => {
         poblarSelectUnico(practicasGlobal, 'c_prestador', 'filtroPrestador_practicas', 'Prestadores');
         poblarSelectUnico(practicasGlobal, 'n_beneficio', 'filtroBeneficiario_practicas', 'Beneficiarios');
 
-        generarTabla(practicasGlobal, 'tablaPracticas', camposImportantesPractica);
+        filteredPracticas = practicasGlobal;
+        renderTablaPracticas();
 
         // Detalle
         poblarSelectUnico(detalleGlobal, 'c_concepto', 'filtroConcepto_detalle', 'Conceptos');
         poblarSelectUnico(detalleGlobal, 'c_periodo_ex', 'filtroPeriodo_detalle', 'Periodos');
         poblarSelectUnico(detalleGlobal, 'c_prestador', 'filtroPrestador_detalle', 'Prestadores');
 
-        generarTabla(detalleGlobal, 'tablaDetalle', camposImportantesDetalle);
+        filteredDetalle = detalleGlobal;
+        renderTablaDetalle();
 
         // Cabecera
         poblarSelectUnico(cabeceraGlobal, 'c_concepto', 'filtroConcepto_cabecera', 'Conceptos');
         poblarSelectUnico(cabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_cabecera', 'Periodos');
         poblarSelectUnico(cabeceraGlobal, 'c_prestador', 'filtroPrestador_cabecera', 'Prestadores');
 
-        generarTabla(cabeceraGlobal, 'tablaCabecera', camposImportantesCabecera);
+        filteredCabecera = cabeceraGlobal;
+        renderTablaCabecera();
 
         // Aprob_Cabecera
         poblarSelectUnico(aprobCabeceraGlobal, 'c_concepto', 'filtroConcepto_aprob_cabecera', 'Conceptos');
         poblarSelectUnico(aprobCabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_aprob_cabecera', 'Periodos');
         poblarSelectUnico(aprobCabeceraGlobal, 'c_prestador', 'filtroPrestador_aprob_cabecera', 'Prestadores');
 
-        generarTabla(aprobCabeceraGlobal, 'tablaAprobCabecera', camposImportantesAprobCabecera);
+        filteredAprobCabecera = aprobCabeceraGlobal;
+        renderTablaAprobCabecera();
     });
 
     /* Filtros */
@@ -158,7 +416,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 (!periodo || p.c_periodo == periodo)
         );
 
-        generarTabla(filtradas, 'tablaPracticas', camposImportantesPractica);
+        filteredPracticas = filtradas;
+        currentPagePracticas = 1;
+        renderTablaPracticas();
     });
 
     /*  - Filtros Detalles */
@@ -174,7 +434,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 (!prestador || p.c_prestador == prestador)
         );
 
-        generarTabla(filtradas, 'tablaDetalle', camposImportantesDetalle);
+        filteredDetalle = filtradas;
+        currentPageDetalle = 1;
+        renderTablaDetalle();
     });
 
     /*  - Filtros Cabecera */
@@ -190,7 +452,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 (!periodo || p.c_periodo_ex == periodo)
         );
 
-        generarTabla(filtradas, 'tablaCabecera', camposImportantesCabecera);
+        filteredCabecera = filtradas;
+        currentPageCabecera = 1;
+        renderTablaCabecera();
     });
 
     /*  - Filtros Aprob_Cabecera */
@@ -206,7 +470,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 (!periodo || p.c_periodo_ex == periodo)
         );
 
-        generarTabla(filtradas, 'tablaAprobCabecera', camposImportantesAprobCabecera);
+        filteredAprobCabecera = filtradas;
+        currentPageAprobCabecera = 1;
+        renderTablaAprobCabecera();
     });
 });
 
@@ -219,7 +485,7 @@ function navegarAValidaciones(codigo, c_id_practica) {
 }
 
 // Extrae el código de proceso de la URL
-function getParametroProceso() {
+export function getParametroProceso() {
     const urlParams = new URLSearchParams(window.location.search);
     return parseInt(urlParams.get('codigo'));
 }
