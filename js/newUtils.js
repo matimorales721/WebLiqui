@@ -1,21 +1,3 @@
-// Inicializa el menú hamburguesa si los elementos existen
-export function initHamburgerMenu() {
-    const hamburger = document.getElementById('hamburger');
-    const sidebar = document.getElementById('sidebar');
-    if (hamburger && sidebar) {
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-    }
-}
-
-export function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    if (sidebar) {
-        sidebar.classList.toggle('hidden');
-    }
-}
-
 // Inicializa el copiado de contenido si hay íconos de copiar
 export function initCopyIconListener() {
     document.addEventListener('click', function (e) {

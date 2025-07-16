@@ -156,22 +156,7 @@ body {
     font-size: 1em;
 }
 
-.topbar .hamburger {
-    display: flex; /* ya no inline-block */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    padding: 8px;
-}
 
-.hamburger div {
-    width: 22px;
-    height: 3px;
-    background-color: white;
-    border-radius: 2px;
-}
 
 .sidebar {
     background-color: var(--sidebar-color);

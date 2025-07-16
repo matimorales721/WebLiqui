@@ -33,20 +33,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.topbar .hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-    cursor: pointer;
-    padding: 8px;
-}
-.hamburger div {
-    width: 22px;
-    height: 3px;
-    background-color: white;
-    border-radius: 2px;
-}
+
 
 /* === SIDEBAR === */
 .sidebar {
