@@ -2,34 +2,110 @@ import { generarTabla } from './tableUI.js';
 import { parsearFecha } from './formatters.js';
 import { poblarSelectUnico, crearSelectorPersonalizado } from './tableLogic.js';
 import { safeFetch, initCopyIconListener } from './newUtils.js';
+import { 
+    DateUtils, 
+    TipoEjecucionUtils, 
+    ProcesoDataManager, 
+    CamposConfigManager,
+    UrlUtils 
+} from './procesoUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializa el listener de copiado de íconos
     initCopyIconListener();
-    function renderTablaDetalle() {
-        generarTabla(
-            filteredDetalle,
-            'tablaDetalle',
-            camposImportantesDetalle,
-            undefined,
-            currentPageDetalle,
-            pageSizeDetalle
-        );
-        const totalPages = Math.max(1, Math.ceil(filteredDetalle.length / pageSizeDetalle));
-        // Paginador visual
-        const paginador = document.getElementById('paginadorDetalle');
-        if (paginador) {
+
+    // Clase para manejar pestañas de manera unificada
+    class TabManager {
+        constructor() {
+            this.tabs = {
+                practicas: {
+                    data: [],
+                    filtered: [],
+                    currentPage: 1,
+                    pageSize: 10,
+                    campos: [],
+                    filtros: ['concepto', 'periodo', 'prestador', 'beneficiario']
+                },
+                detalle: {
+                    data: [],
+                    filtered: [],
+                    currentPage: 1,
+                    pageSize: 10,
+                    campos: [],
+                    filtros: ['concepto', 'periodo_ex', 'prestador']
+                },
+                cabecera: {
+                    data: [],
+                    filtered: [],
+                    currentPage: 1,
+                    pageSize: 10,
+                    campos: [],
+                    filtros: ['concepto', 'periodo_ex', 'prestador']
+                },
+                aprob_cabecera: {
+                    data: [],
+                    filtered: [],
+                    currentPage: 1,
+                    pageSize: 10,
+                    campos: [],
+                    filtros: ['concepto', 'periodo_ex', 'prestador']
+                }
+            };
+        }
+
+        // Función genérica para renderizar tabla con paginación
+        renderTabla(tabName) {
+            const tab = this.tabs[tabName];
+            const tableId = `tabla${this.capitalize(tabName)}`;
+            const paginadorId = `paginador${this.capitalize(tabName)}`;
+
+            generarTabla(tab.filtered, tableId, tab.campos, undefined, tab.currentPage, tab.pageSize);
+            this.renderPaginador(tabName, paginadorId);
+        }
+
+        // Función genérica para renderizar paginador
+        renderPaginador(tabName, paginadorId) {
+            const tab = this.tabs[tabName];
+            const totalPages = Math.max(1, Math.ceil(tab.filtered.length / tab.pageSize));
+            const paginador = document.getElementById(paginadorId);
+            
+            if (!paginador) return;
+
             paginador.innerHTML = '';
-            // Calcula cuántos botones caben en el ancho del paginador
-            let btnWidth = 38; // px, ajusta según tu CSS
-            let paginadorWidth = paginador.offsetWidth || 400;
+            const btnWidth = 38;
+            const paginadorWidth = paginador.offsetWidth || 400;
             let maxBtns = Math.floor(paginadorWidth / btnWidth);
             if (maxBtns < 5) maxBtns = 5;
+
+            let btns = this.calcularBotonesPaginacion(tab.currentPage, totalPages, maxBtns);
+
+            btns.forEach((i) => {
+                if (i === '...') {
+                    const span = document.createElement('span');
+                    span.textContent = '...';
+                    span.className = 'paginador-ellipsis';
+                    paginador.appendChild(span);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = 'paginador-btn' + (i === tab.currentPage ? ' active' : '');
+                    btn.style.margin = '4px 4px';
+                    btn.onclick = () => {
+                        tab.currentPage = i;
+                        this.renderTabla(tabName);
+                    };
+                    paginador.appendChild(btn);
+                }
+            });
+        }
+
+        // Calcular qué botones mostrar en la paginación
+        calcularBotonesPaginacion(currentPage, totalPages, maxBtns) {
             let btns = [];
             if (totalPages <= maxBtns) {
                 for (let i = 1; i <= totalPages; i++) btns.push(i);
             } else {
-                let start = Math.max(1, currentPageDetalle - Math.floor(maxBtns / 2));
+                let start = Math.max(1, currentPage - Math.floor(maxBtns / 2));
                 let end = start + maxBtns - 1;
                 if (end > totalPages) {
                     end = totalPages;
@@ -45,220 +121,137 @@ document.addEventListener('DOMContentLoaded', () => {
                     btns.push(totalPages);
                 }
             }
-            btns.forEach((i) => {
-                if (i === '...') {
-                    const span = document.createElement('span');
-                    span.textContent = '...';
-                    span.className = 'paginador-ellipsis';
-                    paginador.appendChild(span);
-                } else {
-                    const btn = document.createElement('button');
-                    btn.textContent = i;
-                    btn.className = 'paginador-btn' + (i === currentPageDetalle ? ' active' : '');
-                    btn.style.margin = '4px 4px'; // separación vertical y horizontal mínima entre botones
-                    btn.onclick = () => {
-                        currentPageDetalle = i;
-                        renderTablaDetalle();
-                    };
-                    paginador.appendChild(btn);
+            return btns;
+        }
+
+        // Función genérica para filtrar datos
+        filtrar(tabName) {
+            const tab = this.tabs[tabName];
+            const filtros = this.obtenerValoresFiltros(tabName);
+
+            tab.filtered = tab.data.filter(item => {
+                return tab.filtros.every(filtro => {
+                    const valor = filtros[filtro];
+                    if (!valor) return true;
+
+                    const campo = filtro === 'beneficiario' ? 'n_beneficio' : 
+                                 filtro === 'periodo' ? 'c_periodo' :
+                                 filtro === 'periodo_ex' ? 'c_periodo_ex' :
+                                 `c_${filtro}`;
+
+                    if (filtro === 'concepto') {
+                        return item[campo]?.toLowerCase() === valor.toLowerCase();
+                    }
+                    return item[campo] == valor;
+                });
+            });
+
+            tab.currentPage = 1;
+            this.renderTabla(tabName);
+        }
+
+        // Obtener valores de los filtros de una pestaña
+        obtenerValoresFiltros(tabName) {
+            const tab = this.tabs[tabName];
+            const filtros = {};
+
+            tab.filtros.forEach(filtro => {
+                const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
+                const input = document.getElementById(inputId);
+                filtros[filtro] = input?.getValue ? input.getValue() : (input?.value || '');
+            });
+
+            return filtros;
+        }
+
+        // Limpiar filtros de una pestaña
+        limpiarFiltros(tabName) {
+            const tab = this.tabs[tabName];
+            
+            tab.filtros.forEach(filtro => {
+                const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
+                const input = document.getElementById(inputId);
+                if (input?.setValue) {
+                    input.setValue('');
+                } else if (input) {
+                    input.value = '';
                 }
             });
+
+            tab.filtered = tab.data;
+            tab.currentPage = 1;
+            this.renderTabla(tabName);
         }
-    }
 
-    function renderTablaCabecera() {
-        generarTabla(
-            filteredCabecera,
-            'tablaCabecera',
-            camposImportantesCabecera,
-            undefined,
-            currentPageCabecera,
-            pageSizeCabecera
-        );
-        const totalPages = Math.max(1, Math.ceil(filteredCabecera.length / pageSizeCabecera));
+        // Configurar selectores personalizados para una pestaña
+        configurarSelectores(tabName) {
+            const tab = this.tabs[tabName];
+            
+            tab.filtros.forEach(filtro => {
+                const campo = filtro === 'beneficiario' ? 'n_beneficio' : 
+                             filtro === 'periodo' ? 'c_periodo' :
+                             filtro === 'periodo_ex' ? 'c_periodo_ex' :
+                             `c_${filtro}`;
+                
+                const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
+                const dropdownId = `${filtro === 'periodo_ex' ? 'periodo' : filtro}Dropdown_${tabName}`;
+                
+                crearSelectorPersonalizado(
+                    tab.data, 
+                    campo, 
+                    inputId, 
+                    dropdownId, 
+                    'Selecciona o escribe...', 
+                    () => this.filtrar(tabName)
+                );
+            });
+        }
 
-        // Paginador visual
-        const paginador = document.getElementById('paginadorCabecera');
-        if (paginador) {
-            paginador.innerHTML = '';
-            let btnWidth = 38;
-            let paginadorWidth = paginador.offsetWidth || 400;
-            let maxBtns = Math.floor(paginadorWidth / btnWidth);
-            if (maxBtns < 5) maxBtns = 5;
-            let btns = [];
-            if (totalPages <= maxBtns) {
-                for (let i = 1; i <= totalPages; i++) btns.push(i);
-            } else {
-                let start = Math.max(1, currentPageCabecera - Math.floor(maxBtns / 2));
-                let end = start + maxBtns - 1;
-                if (end > totalPages) {
-                    end = totalPages;
-                    start = end - maxBtns + 1;
-                }
-                if (start > 1) {
-                    btns.push(1);
-                    if (start > 2) btns.push('...');
-                }
-                for (let i = start; i <= end; i++) btns.push(i);
-                if (end < totalPages) {
-                    if (end < totalPages - 1) btns.push('...');
-                    btns.push(totalPages);
-                }
+        // Configurar botón limpiar para una pestaña
+        configurarBotonLimpiar(tabName) {
+            const btnId = `limpiarFiltrosBtn_${tabName}`;
+            const btn = document.getElementById(btnId);
+            
+            if (btn) {
+                btn.addEventListener('click', () => this.limpiarFiltros(tabName));
             }
-            btns.forEach((i) => {
-                if (i === '...') {
-                    const span = document.createElement('span');
-                    span.textContent = '...';
-                    span.className = 'paginador-ellipsis';
-                    paginador.appendChild(span);
-                } else {
-                    const btn = document.createElement('button');
-                    btn.textContent = i;
-                    btn.className = 'paginador-btn' + (i === currentPageCabecera ? ' active' : '');
-                    btn.style.margin = '4px 4px'; // separación vertical y horizontal mínima entre botones
-                    btn.onclick = () => {
-                        currentPageCabecera = i;
-                        renderTablaCabecera();
-                    };
-                    paginador.appendChild(btn);
-                }
-            });
+        }
+
+        // Inicializar una pestaña
+        inicializarTab(tabName, data, campos) {
+            const tab = this.tabs[tabName];
+            tab.data = data;
+            tab.campos = campos;
+            tab.filtered = data;
+            
+            this.configurarSelectores(tabName);
+            this.renderTabla(tabName);
+            this.configurarBotonLimpiar(tabName);
+        }
+
+        // Utility function para capitalizar
+        capitalize(str) {
+            if (str === 'aprob_cabecera') return 'AprobCabecera';
+            return str.charAt(0).toUpperCase() + str.slice(1);
         }
     }
 
-    function renderTablaAprobCabecera() {
-        generarTabla(
-            filteredAprobCabecera,
-            'tablaAprobCabecera',
-            camposImportantesAprobCabecera,
-            undefined,
-            currentPageAprobCabecera,
-            pageSizeAprobCabecera
-        );
-        const totalPages = Math.max(1, Math.ceil(filteredAprobCabecera.length / pageSizeAprobCabecera));
+    // Instanciar el manager de pestañas
+    const tabManager = new TabManager();
 
-        // Paginador visual
-        const paginador = document.getElementById('paginadorAprobCabecera');
-        if (paginador) {
-            paginador.innerHTML = '';
-            let btnWidth = 38;
-            let paginadorWidth = paginador.offsetWidth || 400;
-            let maxBtns = Math.floor(paginadorWidth / btnWidth);
-            if (maxBtns < 5) maxBtns = 5;
-            let btns = [];
-            if (totalPages <= maxBtns) {
-                for (let i = 1; i <= totalPages; i++) btns.push(i);
-            } else {
-                let start = Math.max(1, currentPageAprobCabecera - Math.floor(maxBtns / 2));
-                let end = start + maxBtns - 1;
-                if (end > totalPages) {
-                    end = totalPages;
-                    start = end - maxBtns + 1;
-                }
-                if (start > 1) {
-                    btns.push(1);
-                    if (start > 2) btns.push('...');
-                }
-                for (let i = start; i <= end; i++) btns.push(i);
-                if (end < totalPages) {
-                    if (end < totalPages - 1) btns.push('...');
-                    btns.push(totalPages);
-                }
-            }
-            btns.forEach((i) => {
-                if (i === '...') {
-                    const span = document.createElement('span');
-                    span.textContent = '...';
-                    span.className = 'paginador-ellipsis';
-                    paginador.appendChild(span);
-                } else {
-                    const btn = document.createElement('button');
-                    btn.textContent = i;
-                    btn.className = 'paginador-btn' + (i === currentPageAprobCabecera ? ' active' : '');
-                    btn.style.margin = '4px 4px'; // separación vertical y horizontal mínima entre botones
-                    btn.onclick = () => {
-                        currentPageAprobCabecera = i;
-                        renderTablaAprobCabecera();
-                    };
-                    paginador.appendChild(btn);
-                }
-            });
-        }
+    // Configuración de datos compartidos
+    let camposImportantesPractica = [];
+    let camposImportantesDetalle = [];
+    let camposImportantesCabecera = [];
+    let camposImportantesAprobCabecera = [];
+
+    // Función utilitaria para cargar datos
+    function cargarDatos(url, callback) {
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => callback(data))
+            .catch((error) => console.error('Error cargando datos:', error));
     }
-    function renderTablaPracticas() {
-        generarTabla(
-            filteredPracticas,
-            'tablaPracticas',
-            camposImportantesPractica,
-            undefined,
-            currentPagePracticas,
-            pageSizePracticas
-        );
-        const totalPages = Math.max(1, Math.ceil(filteredPracticas.length / pageSizePracticas));
-
-        // Paginador visual
-        const paginador = document.getElementById('paginadorPracticas');
-        if (paginador) {
-            paginador.innerHTML = '';
-            let btnWidth = 38;
-            let paginadorWidth = paginador.offsetWidth || 400;
-            let maxBtns = Math.floor(paginadorWidth / btnWidth);
-            if (maxBtns < 5) maxBtns = 5;
-            let btns = [];
-            if (totalPages <= maxBtns) {
-                for (let i = 1; i <= totalPages; i++) btns.push(i);
-            } else {
-                let start = Math.max(1, currentPagePracticas - Math.floor(maxBtns / 2));
-                let end = start + maxBtns - 1;
-                if (end > totalPages) {
-                    end = totalPages;
-                    start = end - maxBtns + 1;
-                }
-                if (start > 1) {
-                    btns.push(1);
-                    if (start > 2) btns.push('...');
-                }
-                for (let i = start; i <= end; i++) btns.push(i);
-                if (end < totalPages) {
-                    if (end < totalPages - 1) btns.push('...');
-                    btns.push(totalPages);
-                }
-            }
-            btns.forEach((i) => {
-                if (i === '...') {
-                    const span = document.createElement('span');
-                    span.textContent = '...';
-                    span.className = 'paginador-ellipsis';
-                    paginador.appendChild(span);
-                } else {
-                    const btn = document.createElement('button');
-                    btn.textContent = i;
-                    btn.className = 'paginador-btn' + (i === currentPagePracticas ? ' active' : '');
-                    btn.style.margin = '4px 4px'; // separación vertical y horizontal mínima entre botones
-                    btn.onclick = () => {
-                        currentPagePracticas = i;
-                        renderTablaPracticas();
-                    };
-                    paginador.appendChild(btn);
-                }
-            });
-        }
-    }
-    var filteredPracticas = [];
-    var currentPagePracticas = 1;
-    var pageSizePracticas = 10;
-
-    var filteredDetalle = [];
-    var currentPageDetalle = 1;
-    var pageSizeDetalle = 10;
-
-    var filteredCabecera = [];
-    var currentPageCabecera = 1;
-    var pageSizeCabecera = 10;
-
-    var filteredAprobCabecera = [];
-    var currentPageAprobCabecera = 1;
-    var pageSizeAprobCabecera = 10;
 
     const codigoProceso = getParametroProceso(); // obtiene el código directamente de la URL
 
@@ -268,67 +261,65 @@ document.addEventListener('DOMContentLoaded', () => {
     let aprobCabeceraGlobal = [];
     let validacionesGlobal = [];
 
-    const camposImportantesPractica = [
-        { key: 'c_concepto', header: 'Concepto', format: 'code' },
-        /* { key: 'c_periodo', header: 'Periodo', format: 'code' }, */
-        { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
-        /* { key: 'd_prestador', header: 'Prestador' },
-        { key: 'd_modulo_pami', header: 'Modulo' }, */
-        { key: 'c_practica', header: 'Cod. Práctica', format: 'code' },
-        { key: 'd_practica', header: 'Práctica' },
-        { key: 'n_beneficio', header: 'Beneficiario', format: 'code' },
-        { key: 'n_orden_rechazo', header: 'N_OP', format: 'code' },
-        { key: 'f_practica', header: 'Fecha Práctica', format: 'date' },
-        { key: 'q_practica', header: 'Q_PRACT', format: 'numeric' },
-        { key: 'q_pract_correctas', header: 'Q_CORR', format: 'numeric' } /* , destacada: true } */,
-        { key: 'c_id_practica', header: 'C_ID_PRACTICA', format: 'code' },
-        {
-            key: 'acciones',
-            header: ' ',
-            format: 'btn',
-            render: (item) => {
-                const tieneValidaciones = validacionesGlobal.some(
-                    (v) => v.c_id_practica == item.c_id_practica && v.c_proceso == codigoProceso
-                );
+    // Definir campos importantes (configuración de las tablas)
+    const configuracionCampos = {
+        practicas: [
+            { key: 'c_concepto', header: 'Concepto', format: 'code' },
+            { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
+            { key: 'c_practica', header: 'Cod. Práctica', format: 'code' },
+            { key: 'd_practica', header: 'Práctica' },
+            { key: 'n_beneficio', header: 'Beneficiario', format: 'code' },
+            { key: 'n_orden_rechazo', header: 'N_OP', format: 'code' },
+            { key: 'f_practica', header: 'Fecha Práctica', format: 'date' },
+            { key: 'q_practica', header: 'Q_PRACT', format: 'numeric' },
+            { key: 'q_pract_correctas', header: 'Q_CORR', format: 'numeric' },
+            { key: 'c_id_practica', header: 'C_ID_PRACTICA', format: 'code' },
+            {
+                key: 'acciones',
+                header: ' ',
+                format: 'btn',
+                render: (item) => {
+                    const tieneValidaciones = validacionesGlobal.some(
+                        (v) => v.c_id_practica == item.c_id_practica && v.c_proceso == codigoProceso
+                    );
 
-                if (tieneValidaciones) {
-                    const btn = document.createElement('button');
-                    btn.className = 'btn btn-validaciones';
-                    btn.textContent = 'Validaciones';
-                    btn.onclick = () => navegarAValidaciones(codigoProceso, item.c_id_practica);
-                    return btn;
+                    if (tieneValidaciones) {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn btn-validaciones';
+                        btn.textContent = 'Validaciones';
+                        btn.onclick = () => navegarAValidaciones(codigoProceso, item.c_id_practica);
+                        return btn;
+                    }
+                    return document.createTextNode('');
                 }
-                return document.createTextNode('');
             }
-        }
-    ];
-
-    const camposImportantesDetalle = [
-        { key: 'c_concepto', header: 'Concepto', format: 'code' },
-        { key: 'c_periodo_ex', header: 'Periodo', format: 'code' },
-        { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
-        { key: 'd_prestador', header: 'Prestador' },
-        { key: 'd_modulo_pami', header: 'Modulo' },
-        { key: 'd_practica', header: 'Práctica' },
-        { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' }
-    ];
-
-    const camposImportantesCabecera = [
-        { key: 'c_concepto', header: 'Concepto', format: 'code' },
-        { key: 'c_periodo_ex', header: 'Periodo', format: 'code' },
-        { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
-        { key: 'd_prestador', header: 'Prestador' },
-        { key: 'd_modulo_pami', header: 'Modulo' },
-        { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' }
-    ];
-    const camposImportantesAprobCabecera = [
-        { key: 'c_concepto', header: 'Concepto', format: 'code' },
-        { key: 'c_periodo_ex', header: 'Periodo', format: 'code' },
-        { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
-        { key: 'd_prestador', header: 'Prestador' },
-        { key: 'd_modulo_pami', header: 'Modulo (7X)' },
-        { key: 'i_monto', header: 'I_MONTO', format: 'moneda' }
-    ];
+        ],
+        detalle: [
+            { key: 'c_concepto', header: 'Concepto', format: 'code' },
+            { key: 'c_periodo_ex', header: 'Periodo', format: 'code' },
+            { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
+            { key: 'd_prestador', header: 'Prestador' },
+            { key: 'd_modulo_pami', header: 'Modulo' },
+            { key: 'd_practica', header: 'Práctica' },
+            { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' }
+        ],
+        cabecera: [
+            { key: 'c_concepto', header: 'Concepto', format: 'code' },
+            { key: 'c_periodo_ex', header: 'Periodo', format: 'code' },
+            { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
+            { key: 'd_prestador', header: 'Prestador' },
+            { key: 'd_modulo_pami', header: 'Modulo' },
+            { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' }
+        ],
+        aprob_cabecera: [
+            { key: 'c_concepto', header: 'Concepto', format: 'code' },
+            { key: 'c_periodo_ex', header: 'Periodo', format: 'code' },
+            { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
+            { key: 'd_prestador', header: 'Prestador' },
+            { key: 'd_modulo_pami', header: 'Modulo (7X)' },
+            { key: 'i_monto', header: 'I_MONTO', format: 'moneda' }
+        ]
+    };
 
     Promise.all([
         safeFetch(`../data/practicas-${codigoProceso}.json`),
@@ -345,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Poblar detalles del proceso
         document.getElementById('codigo').textContent = proceso.c_proceso;
         document.getElementById('tipo').textContent =
             proceso.c_tipo_ejecucion === 'E'
@@ -362,249 +354,62 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = `logs.html?codigo=${proceso.codigo}`;
         });
 
+        // Guardar datos globales
         practicasGlobal = practicas;
         detalleGlobal = detalle;
         cabeceraGlobal = cabecera;
         aprobCabeceraGlobal = aprobCabecera;
         validacionesGlobal = validaciones;
 
-        // Funciones de filtrado automático
-        function filtrarPracticas() {
-            const filtroConceptoInput = document.getElementById('filtroConcepto_practicas');
-            const filtroPrestadorInput = document.getElementById('filtroPrestador_practicas');
-            const filtroBeneficiarioInput = document.getElementById('filtroBeneficiario_practicas');
-            const filtroPeriodoInput = document.getElementById('filtroPeriodo_practicas');
-
-            const concepto = filtroConceptoInput?.getValue ? filtroConceptoInput.getValue() : (filtroConceptoInput?.value || '');
-            const prestador = filtroPrestadorInput?.getValue ? filtroPrestadorInput.getValue() : (filtroPrestadorInput?.value || '');
-            const beneficiario = filtroBeneficiarioInput?.getValue ? filtroBeneficiarioInput.getValue() : (filtroBeneficiarioInput?.value || '');
-            const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
-
-            const filtradas = practicasGlobal.filter(
-                (p) =>
-                    (concepto === '' || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
-                    (prestador === '' || p.c_prestador == prestador) &&
-                    (beneficiario === '' || p.n_beneficio == beneficiario) &&
-                    (periodo === '' || p.c_periodo == periodo)
-            );
-
-            filteredPracticas = filtradas;
-            currentPagePracticas = 1;
-            renderTablaPracticas();
-        }
-
-        function filtrarDetalle() {
-            const filtroConceptoInput = document.getElementById('filtroConcepto_detalle');
-            const filtroPeriodoInput = document.getElementById('filtroPeriodo_detalle');
-            const filtroPrestadorInput = document.getElementById('filtroPrestador_detalle');
-
-            const concepto = filtroConceptoInput?.getValue ? filtroConceptoInput.getValue() : (filtroConceptoInput?.value || '');
-            const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
-            const prestador = filtroPrestadorInput?.getValue ? filtroPrestadorInput.getValue() : (filtroPrestadorInput?.value || '');
-
-            const filtradas = detalleGlobal.filter(
-                (p) =>
-                    (concepto === '' || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
-                    (periodo === '' || p.c_periodo_ex == periodo) &&
-                    (prestador === '' || p.c_prestador == prestador)
-            );
-
-            filteredDetalle = filtradas;
-            currentPageDetalle = 1;
-            renderTablaDetalle();
-        }
-
-        function filtrarCabecera() {
-            const filtroConceptoInput = document.getElementById('filtroConcepto_cabecera');
-            const filtroPrestadorInput = document.getElementById('filtroPrestador_cabecera');
-            const filtroPeriodoInput = document.getElementById('filtroPeriodo_cabecera');
-
-            const concepto = filtroConceptoInput?.getValue ? filtroConceptoInput.getValue() : (filtroConceptoInput?.value || '');
-            const prestador = filtroPrestadorInput?.getValue ? filtroPrestadorInput.getValue() : (filtroPrestadorInput?.value || '');
-            const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
-
-            const filtradas = cabeceraGlobal.filter(
-                (p) =>
-                    (concepto === '' || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
-                    (prestador === '' || p.c_prestador == prestador) &&
-                    (periodo === '' || p.c_periodo_ex == periodo)
-            );
-
-            filteredCabecera = filtradas;
-            currentPageCabecera = 1;
-            renderTablaCabecera();
-        }
-
-        function filtrarAprobCabecera() {
-            const filtroConceptoInput = document.getElementById('filtroConcepto_aprob_cabecera');
-            const filtroPrestadorInput = document.getElementById('filtroPrestador_aprob_cabecera');
-            const filtroPeriodoInput = document.getElementById('filtroPeriodo_aprob_cabecera');
-
-            const concepto = filtroConceptoInput?.getValue ? filtroConceptoInput.getValue() : (filtroConceptoInput?.value || '');
-            const prestador = filtroPrestadorInput?.getValue ? filtroPrestadorInput.getValue() : (filtroPrestadorInput?.value || '');
-            const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
-
-            const filtradas = aprobCabeceraGlobal.filter(
-                (p) =>
-                    (concepto === '' || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
-                    (prestador === '' || p.c_prestador == prestador) &&
-                    (periodo === '' || p.c_periodo_ex == periodo)
-            );
-
-            filteredAprobCabecera = filtradas;
-            currentPageAprobCabecera = 1;
-            renderTablaAprobCabecera();
-        }
-
-        // Aprob_Cabecera - Usar selectores personalizados con filtrado automático
-        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_concepto', 'filtroConcepto_aprob_cabecera', 'conceptoDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
-        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_aprob_cabecera', 'periodoDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
-        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_prestador', 'filtroPrestador_aprob_cabecera', 'prestadorDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
-
-        filteredAprobCabecera = aprobCabeceraGlobal;
-        renderTablaAprobCabecera();
-
-        // Cabecera - Usar selectores personalizados con filtrado automático
-        crearSelectorPersonalizado(cabeceraGlobal, 'c_concepto', 'filtroConcepto_cabecera', 'conceptoDropdown_cabecera', 'Selecciona o escribe...', filtrarCabecera);
-        crearSelectorPersonalizado(cabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_cabecera', 'periodoDropdown_cabecera', 'Selecciona o escribe...', filtrarCabecera);
-        crearSelectorPersonalizado(cabeceraGlobal, 'c_prestador', 'filtroPrestador_cabecera', 'prestadorDropdown_cabecera', 'Selecciona o escribe...', filtrarCabecera);
-
-        filteredCabecera = cabeceraGlobal;
-        renderTablaCabecera();
-
-        // Detalle - Usar selectores personalizados con filtrado automático
-        crearSelectorPersonalizado(detalleGlobal, 'c_concepto', 'filtroConcepto_detalle', 'conceptoDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
-        crearSelectorPersonalizado(detalleGlobal, 'c_periodo_ex', 'filtroPeriodo_detalle', 'periodoDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
-        crearSelectorPersonalizado(detalleGlobal, 'c_prestador', 'filtroPrestador_detalle', 'prestadorDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
-
-        filteredDetalle = detalleGlobal;
-        renderTablaDetalle();
-
-        // Prácticas - Usar selectores personalizados con filtrado automático
-        crearSelectorPersonalizado(practicasGlobal, 'c_concepto', 'filtroConcepto_practicas', 'conceptoDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
-        crearSelectorPersonalizado(practicasGlobal, 'c_periodo', 'filtroPeriodo_practicas', 'periodoDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
-        crearSelectorPersonalizado(practicasGlobal, 'c_prestador', 'filtroPrestador_practicas', 'prestadorDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
-        crearSelectorPersonalizado(practicasGlobal, 'n_beneficio', 'filtroBeneficiario_practicas', 'beneficiarioDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
-
-        filteredPracticas = practicasGlobal;
-        renderTablaPracticas();
-
-        // Agregar event listeners para botones de limpiar
-        const limpiarAprobCabeceraBtn = document.getElementById('limpiarFiltrosBtn_aprob_cabecera');
-        if (limpiarAprobCabeceraBtn) {
-            limpiarAprobCabeceraBtn.addEventListener('click', () => {
-                const inputs = ['filtroConcepto_aprob_cabecera', 'filtroPeriodo_aprob_cabecera', 'filtroPrestador_aprob_cabecera'];
-                inputs.forEach(id => {
-                    const input = document.getElementById(id);
-                    if (input?.setValue) {
-                        input.setValue('');
-                    } else if (input) {
-                        input.value = '';
-                    }
-                });
-                filteredAprobCabecera = aprobCabeceraGlobal;
-                currentPageAprobCabecera = 1;
-                renderTablaAprobCabecera();
-            });
-        }
-
-        const limpiarCabeceraBtn = document.getElementById('limpiarFiltrosBtn_cabecera');
-        if (limpiarCabeceraBtn) {
-            limpiarCabeceraBtn.addEventListener('click', () => {
-                const inputs = ['filtroConcepto_cabecera', 'filtroPeriodo_cabecera', 'filtroPrestador_cabecera'];
-                inputs.forEach(id => {
-                    const input = document.getElementById(id);
-                    if (input?.setValue) {
-                        input.setValue('');
-                    } else if (input) {
-                        input.value = '';
-                    }
-                });
-                filteredCabecera = cabeceraGlobal;
-                currentPageCabecera = 1;
-                renderTablaCabecera();
-            });
-        }
-
-        const limpiarDetalleBtn = document.getElementById('limpiarFiltrosBtn_detalle');
-        if (limpiarDetalleBtn) {
-            limpiarDetalleBtn.addEventListener('click', () => {
-                const inputs = ['filtroConcepto_detalle', 'filtroPeriodo_detalle', 'filtroPrestador_detalle'];
-                inputs.forEach(id => {
-                    const input = document.getElementById(id);
-                    if (input?.setValue) {
-                        input.setValue('');
-                    } else if (input) {
-                        input.value = '';
-                    }
-                });
-                filteredDetalle = detalleGlobal;
-                currentPageDetalle = 1;
-                renderTablaDetalle();
-            });
-        }
-
-        const limpiarPracticasBtn = document.getElementById('limpiarFiltrosBtn_practicas');
-        if (limpiarPracticasBtn) {
-            limpiarPracticasBtn.addEventListener('click', () => {
-                const inputs = ['filtroConcepto_practicas', 'filtroPeriodo_practicas', 'filtroPrestador_practicas', 'filtroBeneficiario_practicas'];
-                inputs.forEach(id => {
-                    const input = document.getElementById(id);
-                    if (input?.setValue) {
-                        input.setValue('');
-                    } else if (input) {
-                        input.value = '';
-                    }
-                });
-                filteredPracticas = practicasGlobal;
-                currentPagePracticas = 1;
-                renderTablaPracticas();
-            });
-        }
+        // Inicializar pestañas usando el TabManager
+        tabManager.inicializarTab('aprob_cabecera', aprobCabeceraGlobal, configuracionCampos.aprob_cabecera);
+        tabManager.inicializarTab('cabecera', cabeceraGlobal, configuracionCampos.cabecera);
+        tabManager.inicializarTab('detalle', detalleGlobal, configuracionCampos.detalle);
+        tabManager.inicializarTab('practicas', practicasGlobal, configuracionCampos.practicas);
     });
 });
+
 // Navega a la página de validaciones con los parámetros correctos
 function navegarAValidaciones(codigo, c_id_practica) {
-    const url = `validaciones.html?codigo=${encodeURIComponent(codigo)}&c_id_practica=${encodeURIComponent(
-        c_id_practica
-    )}`;
-    window.location.href = url;
+    UrlUtils.navegarAValidaciones(codigo, c_id_practica);
 }
 
 // Extrae el código de proceso de la URL
 export function getParametroProceso() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return parseInt(urlParams.get('codigo'));
+    return UrlUtils.getParametroProceso();
 }
 
 // Función para construir URL de vuelta a procesos con filtros
 function construirUrlVueltaProcesos() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const filtroTipo = urlParams.get('filtroTipo');
-    const filtroPeriodo = urlParams.get('filtroPeriodo');
-    
-    let url = 'procesos.html';
-    const params = new URLSearchParams();
-    
-    if (filtroTipo) {
-        params.append('filtroTipo', filtroTipo);
-    }
-    if (filtroPeriodo) {
-        params.append('filtroPeriodo', filtroPeriodo);
-    }
-    
-    if (params.toString()) {
-        url += '?' + params.toString();
-    }
-    
-    return url;
+    return UrlUtils.construirUrlVueltaProcesos();
 }
 
 window.showTab = (tabId) => {
+    // Remover clase active de todos los contenidos de pestañas
     document.querySelectorAll('.tab-content').forEach((t) => t.classList.remove('active'));
+    
+    // Remover clase active de todas las pestañas
     document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
+    
+    // Activar el contenido de la pestaña correspondiente
+    const tabContent = document.getElementById(tabId);
+    if (tabContent) {
+        tabContent.classList.add('active');
+    }
+    
+    // Activar la pestaña correspondiente usando un selector más específico
+    // Buscar exactamente la coincidencia entre comillas simples
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        const onclickContent = tab.getAttribute('onclick');
+        if (onclickContent) {
+            // Buscar exactamente showTab('tabId') - coincidencia exacta
+            const match = onclickContent.match(/showTab\('([^']+)'\)/);
+            if (match && match[1] === tabId) {
+                tab.classList.add('active');
+            }
+        }
+    });
 };
 
 // Inicializar botones de vuelta a procesos cuando el DOM esté listo
@@ -628,17 +433,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function calcularDuracion(inicio, fin) {
-    const inicioDate = parsearFecha(inicio);
-    const finDate = parsearFecha(fin);
-    const diffMs = finDate - inicioDate;
-    const diffMin = diffMs / 60000;
-
-    if (diffMin < 60) {
-        return `${Math.round(diffMin)} minutos`;
-    } else {
-        const horas = Math.floor(diffMin / 60);
-        const minutos = Math.round(diffMin % 60);
-        const minutosFormateados = minutos.toString().padStart(2, '0');
-        return `${horas}:${minutosFormateados} horas`;
-    }
+    return DateUtils.calcularDuracionLegible(inicio, fin);
 }
