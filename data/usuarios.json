@@ -11,7 +11,7 @@
     {
         "id": 2,
         "usuario": "usuario1",
-        "password": "usuario123",
+        "password": "123",
         "nombre": "Usuario Uno",
         "email": "usuario1@webliqui.com",
         "rol": "user",
