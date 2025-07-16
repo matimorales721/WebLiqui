@@ -198,6 +198,18 @@
                                         <div class="custom-select-dropdown" id="prestadorDropdown_detalle"></div>
                                     </div>
                                 </label>
+                                <label
+                                    >Modulo:
+                                    <div class="custom-select-wrapper">
+                                        <input
+                                            type="text"
+                                            id="filtroModulo_detalle"
+                                            placeholder="Selecciona o escribe..."
+                                            readonly
+                                        />
+                                        <div class="custom-select-dropdown" id="moduloDropdown_detalle"></div>
+                                    </div>
+                                </label>
                                 <button id="limpiarFiltrosBtn_detalle">Limpiar</button>
                             </div>
                             <table id="tablaDetalle" class="styled-table"></table>
@@ -242,6 +254,30 @@
                                     </div>
                                 </label>
                                 <label
+                                    >Módulo:
+                                    <div class="custom-select-wrapper">
+                                        <input
+                                            type="text"
+                                            id="filtroModulo_practicas"
+                                            placeholder="Selecciona o escribe..."
+                                            readonly
+                                        />
+                                        <div class="custom-select-dropdown" id="moduloDropdown_practicas"></div>
+                                    </div>
+                                </label>
+                                <label
+                                    >Práctica:
+                                    <div class="custom-select-wrapper">
+                                        <input
+                                            type="text"
+                                            id="filtroPractica_practicas"
+                                            placeholder="Selecciona o escribe..."
+                                            readonly
+                                        />
+                                        <div class="custom-select-dropdown" id="practicaDropdown_practicas"></div>
+                                    </div>
+                                </label>
+                                <label
                                     >Beneficiario:
                                     <div class="custom-select-wrapper">
                                         <input
@@ -265,21 +301,15 @@
 
         <script type="module" src="../js/proceso.js"></script>
         <script type="module">
-            // Clase utilitaria para manejar los detalles del proceso
-            class ProcesoManager {
-                constructor() {
-                    this.init();
-                }
+            import { DateUtils, TipoEjecucionUtils, ProcesoDataManager, UrlUtils } from '../js/procesoUtils.js';
 
+            // Clase optimizada usando utilidades existentes
+            class ProcesoDetailManager {
                 async init() {
                     try {
-                        const mod = await import('../js/proceso.js');
-                        const codigoProceso = mod.getParametroProceso();
-
-                        const response = await fetch('../data/procesos.json');
-                        const json = await response.json();
-                        const procesos = json.results[0].items;
-                        const proceso = procesos.find((p) => parseInt(p.c_proceso) === codigoProceso);
+                        const codigoProceso = UrlUtils.getParametroProceso();
+                        const dataManager = new ProcesoDataManager(codigoProceso);
+                        const proceso = await dataManager.obtenerDatosProceso();
 
                         if (!proceso) {
                             console.warn('Proceso no encontrado');
@@ -293,42 +323,28 @@
                 }
 
                 poblarDatosProceso(proceso) {
-                    // Elementos del DOM
-                    const elementos = {
-                        codigo: document.getElementById('codigo'),
-                        tipo: document.getElementById('tipo'),
-                        periodo: document.getElementById('periodo'),
-                        inicio: document.getElementById('inicio'),
-                        fin: document.getElementById('fin'),
-                        duracion: document.getElementById('duracion'),
-                        btnLogs: document.getElementById('btnLogs')
-                    };
+                    const elementos = this.obtenerElementosDOM();
 
-                    // Poblar datos básicos
+                    // Poblar datos básicos usando utilidades
                     if (elementos.codigo) elementos.codigo.textContent = proceso.c_proceso;
-
-                    if (elementos.tipo) {
-                        elementos.tipo.textContent = this.formatearTipoEjecucion(proceso.c_tipo_ejecucion);
-                    }
-
+                    if (elementos.tipo)
+                        elementos.tipo.textContent = TipoEjecucionUtils.formatear(proceso.c_tipo_ejecucion);
                     if (elementos.periodo) elementos.periodo.textContent = proceso.c_periodo;
 
-                    // Formatear fecha/hora de inicio sin segundos y agregar "hs" solo para mostrar
+                    // Formatear fechas con datos puros + "hs" solo para UI
                     if (elementos.inicio && proceso.f_inicio) {
-                        const fechaFormateada = this.formatearFechaHora(proceso.f_inicio);
+                        const fechaFormateada = DateUtils.formatearFechaHora(proceso.f_inicio);
                         elementos.inicio.textContent = fechaFormateada + ' hs';
                     }
 
-                    // Formatear fecha/hora de fin y agregar "hs" solo para mostrar
                     if (elementos.fin && proceso.f_fin) {
-                        const fechaFormateada = this.formatearFechaHora(proceso.f_fin);
+                        const fechaFormateada = DateUtils.formatearFechaHora(proceso.f_fin);
                         elementos.fin.textContent = fechaFormateada + ' hs';
                     }
 
-                    // Calcular y mostrar duración agregando "hs" solo para mostrar
                     if (elementos.duracion) {
-                        const duracionCalculada = this.calcularDuracion(proceso.f_inicio, proceso.f_fin);
-                        elementos.duracion.textContent = duracionCalculada + ' hs';
+                        const duracion = DateUtils.calcularDuracion(proceso.f_inicio, proceso.f_fin);
+                        elementos.duracion.textContent = duracion + ' hs';
                     }
 
                     // Configurar botón de logs
@@ -339,86 +355,22 @@
                     }
                 }
 
-                formatearTipoEjecucion(tipo) {
-                    const tipos = {
-                        E: 'Excepción',
-                        M: 'Mensual'
+                obtenerElementosDOM() {
+                    return {
+                        codigo: document.getElementById('codigo'),
+                        tipo: document.getElementById('tipo'),
+                        periodo: document.getElementById('periodo'),
+                        inicio: document.getElementById('inicio'),
+                        fin: document.getElementById('fin'),
+                        duracion: document.getElementById('duracion'),
+                        btnLogs: document.getElementById('btnLogs')
                     };
-                    return tipos[tipo] || tipo;
-                }
-
-                formatearFechaHora(fechaHora) {
-                    if (!fechaHora) return '';
-
-                    try {
-                        // Formato de entrada: "23/06/2025 21:23:50"
-                        const partes = fechaHora.split(' ');
-                        if (partes.length >= 2) {
-                            const [fecha, hora] = partes;
-                            const horaPartes = hora.split(':');
-                            if (horaPartes.length >= 2) {
-                                return `${fecha} ${horaPartes[0]}:${horaPartes[1]}`;
-                            }
-                        }
-                        return fechaHora;
-                    } catch (error) {
-                        console.warn('Error formateando fecha/hora:', fechaHora, error);
-                        return fechaHora;
-                    }
-                }
-
-                calcularDuracion(inicio, fin) {
-                    if (!inicio || !fin) return '';
-
-                    try {
-                        // Convertir formato de fecha "23/06/2025 21:23:50" a formato ISO
-                        const inicioISO = this.convertirFechaAISO(inicio);
-                        const finISO = this.convertirFechaAISO(fin);
-
-                        const inicioDate = new Date(inicioISO);
-                        const finDate = new Date(finISO);
-
-                        // Verificar que las fechas sean válidas
-                        if (isNaN(inicioDate.getTime()) || isNaN(finDate.getTime())) {
-                            console.warn('Fechas inválidas:', inicio, fin);
-                            return '';
-                        }
-
-                        const diffMs = finDate - inicioDate;
-                        const minutos = Math.floor(diffMs / 60000);
-                        const horas = Math.floor(minutos / 60);
-                        const minRest = minutos % 60;
-
-                        return `${horas.toString().padStart(2, '0')}:${minRest.toString().padStart(2, '0')}`;
-                    } catch (error) {
-                        console.error('Error calculando duración:', error);
-                        return '';
-                    }
-                }
-
-                convertirFechaAISO(fechaString) {
-                    if (!fechaString) return null;
-
-                    try {
-                        // Formato de entrada: "23/06/2025 21:23:50"
-                        // Formato de salida: "2025-06-23T21:23:50"
-                        const partes = fechaString.split(' ');
-                        if (partes.length !== 2) return fechaString;
-
-                        const [fecha, hora] = partes;
-                        const [dia, mes, ano] = fecha.split('/');
-
-                        return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}T${hora}`;
-                    } catch (error) {
-                        console.warn('Error convirtiendo fecha:', fechaString, error);
-                        return fechaString;
-                    }
                 }
             }
 
             // Inicializar cuando el DOM esté listo
             document.addEventListener('DOMContentLoaded', () => {
-                new ProcesoManager();
+                new ProcesoDetailManager().init();
             });
         </script>
 

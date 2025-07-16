@@ -1,4 +1,5 @@
 // Utilidades reutilizables para el manejo de procesos
+import { logger } from './logging.js';
 
 /**
  * Clase para manejar operaciones comunes de fecha y tiempo
@@ -10,8 +11,11 @@ export class DateUtils {
      * @returns {string} Fecha/hora formateada sin segundos
      */
     static formatearFechaHora(fechaHora) {
-        if (!fechaHora) return '';
-        
+        // Validar que el input sea un string válido
+        if (!fechaHora || typeof fechaHora !== 'string') {
+            return '';
+        }
+
         try {
             // Formato de entrada: "23/06/2025 21:23:50"
             const partes = fechaHora.split(' ');
@@ -24,8 +28,8 @@ export class DateUtils {
             }
             return fechaHora;
         } catch (error) {
-            console.warn('Error formateando fecha/hora:', fechaHora, error);
-            return fechaHora;
+            logger.warn('Error formateando fecha/hora', error, { fechaHora });
+            return '';
         }
     }
 
@@ -37,21 +41,22 @@ export class DateUtils {
      */
     static calcularDuracion(inicio, fin) {
         if (!inicio || !fin) return '';
-        
+
         try {
             const inicioDate = this.parsearFecha(inicio);
             const finDate = this.parsearFecha(fin);
-            
+
             if (!inicioDate || !finDate) return '';
-            
+
             const diffMs = finDate - inicioDate;
             const minutos = Math.floor(diffMs / 60000);
             const horas = Math.floor(minutos / 60);
             const minRest = minutos % 60;
-            
+
             return `${horas.toString().padStart(2, '0')}:${minRest.toString().padStart(2, '0')}`;
         } catch (error) {
             console.error('Error calculando duración:', error);
+            logger.error('Error calculando duración', error);
             return '';
         }
     }
@@ -64,11 +69,11 @@ export class DateUtils {
      */
     static calcularDuracionLegible(inicio, fin) {
         if (!inicio || !fin) return '';
-        
+
         try {
             const inicioDate = this.parsearFecha(inicio);
             const finDate = this.parsearFecha(fin);
-            
+
             if (!inicioDate || !finDate) return '';
 
             const diffMs = finDate - inicioDate;
@@ -84,6 +89,7 @@ export class DateUtils {
             }
         } catch (error) {
             console.error('Error calculando duración legible:', error);
+            logger.error('Error calculando duración legible', error);
             return '';
         }
     }
@@ -94,8 +100,11 @@ export class DateUtils {
      * @returns {Date|null} Objeto Date o null si es inválido
      */
     static parsearFecha(fechaString) {
-        if (!fechaString) return null;
-        
+        // Validar que el input sea un string válido
+        if (!fechaString || typeof fechaString !== 'string') {
+            return null;
+        }
+
         try {
             // Formato de entrada: "23/06/2025 21:23:50"
             const partes = fechaString.split(' ');
@@ -104,17 +113,17 @@ export class DateUtils {
                 const fecha = new Date(fechaString);
                 return isNaN(fecha.getTime()) ? null : fecha;
             }
-            
+
             const [fecha, hora] = partes;
             const [dia, mes, ano] = fecha.split('/');
-            
+
             // Crear formato ISO: "2025-06-23T21:23:50"
             const fechaISO = `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}T${hora}`;
             const fechaObj = new Date(fechaISO);
-            
+
             return isNaN(fechaObj.getTime()) ? null : fechaObj;
         } catch (error) {
-            console.warn('Error parseando fecha:', fechaString, error);
+            logger.warn('Error parseando fecha', error, { fechaString });
             return null;
         }
     }
@@ -125,8 +134,8 @@ export class DateUtils {
  */
 export class TipoEjecucionUtils {
     static tipos = {
-        'E': 'Excepción',
-        'M': 'Mensual'
+        E: 'Excepción',
+        M: 'Mensual'
     };
 
     /**
@@ -135,7 +144,8 @@ export class TipoEjecucionUtils {
      * @returns {string} Tipo de ejecución formateado
      */
     static formatear(tipo) {
-        return this.tipos[tipo] || tipo;
+        // Convertir a string si no lo es y retornar el tipo formateado o el valor como string
+        return this.tipos[tipo] || String(tipo);
     }
 }
 
@@ -154,7 +164,7 @@ export class ProcesoDataManager {
      */
     async obtenerDatosProceso() {
         const cacheKey = `proceso_${this.codigoProceso}`;
-        
+
         if (this.cache.has(cacheKey)) {
             return this.cache.get(cacheKey);
         }
@@ -164,11 +174,11 @@ export class ProcesoDataManager {
             const json = await response.json();
             const procesos = json.results[0].items;
             const proceso = procesos.find((p) => parseInt(p.c_proceso) === this.codigoProceso);
-            
+
             if (proceso) {
                 this.cache.set(cacheKey, proceso);
             }
-            
+
             return proceso;
         } catch (error) {
             console.error('Error obteniendo datos del proceso:', error);
@@ -182,9 +192,9 @@ export class ProcesoDataManager {
      * @returns {Promise<Object>} Objeto con todos los datos cargados
      */
     async cargarDatosMultiples(tipos = ['practicas', 'detalle', 'cabecera', 'aprob-cabecera', 'validaciones']) {
-        const promises = tipos.map(tipo => this.cargarDatosTipo(tipo));
+        const promises = tipos.map((tipo) => this.cargarDatosTipo(tipo));
         const resultados = await Promise.allSettled(promises);
-        
+
         const datos = {};
         tipos.forEach((tipo, index) => {
             const resultado = resultados[index];
@@ -195,7 +205,7 @@ export class ProcesoDataManager {
                 datos[tipo.replace('-', '_')] = [];
             }
         });
-        
+
         return datos;
     }
 
@@ -231,7 +241,7 @@ export async function safeFetch(url) {
             throw new Error(`HTTP ${response.status}`);
         }
         const data = await response.json();
-        
+
         // Manejo diferente según el tipo de datos
         if (url.includes('procesos.json')) {
             return data.results?.[0]?.items || [];
@@ -330,21 +340,21 @@ export class UrlUtils {
         const urlParams = new URLSearchParams(window.location.search);
         const filtroTipo = urlParams.get('filtroTipo');
         const filtroPeriodo = urlParams.get('filtroPeriodo');
-        
+
         let url = 'procesos.html';
         const params = new URLSearchParams();
-        
+
         if (filtroTipo) {
             params.append('filtroTipo', filtroTipo);
         }
         if (filtroPeriodo) {
             params.append('filtroPeriodo', filtroPeriodo);
         }
-        
+
         if (params.toString()) {
             url += '?' + params.toString();
         }
-        
+
         return url;
     }
 
@@ -354,7 +364,9 @@ export class UrlUtils {
      * @param {string} cIdPractica - ID de la práctica
      */
     static navegarAValidaciones(codigo, cIdPractica) {
-        const url = `validaciones.html?codigo=${encodeURIComponent(codigo)}&c_id_practica=${encodeURIComponent(cIdPractica)}`;
+        const url = `validaciones.html?codigo=${encodeURIComponent(codigo)}&c_id_practica=${encodeURIComponent(
+            cIdPractica
+        )}`;
         window.location.href = url;
     }
 }

@@ -53,27 +53,45 @@ export function generarTabla(data, tableId, columns, headers, page = 1, pageSize
             }
 
             // Ordenar los datos
-            key.sort((a, b) => {
+            data.sort((a, b) => {
                 let valA = a[key] ?? '';
                 let valB = b[key] ?? '';
 
-                // Intentar convertir ambos a número
-                const numA = parseFloat(valA);
-                const numB = parseFloat(valB);
+                // Convertir a string para comparación consistente
+                valA = valA.toString().trim();
+                valB = valB.toString().trim();
 
-                const ambosNumerosValidos = !isNaN(numA) && !isNaN(numB);
+                // Detectar si son códigos de período (formato YYYYMM)
+                const isPeriodA = /^\d{6}$/.test(valA);
+                const isPeriodB = /^\d{6}$/.test(valB);
 
-                if (ambosNumerosValidos) {
+                if (isPeriodA && isPeriodB) {
+                    // Ordenar períodos como números enteros
+                    const numA = parseInt(valA, 10);
+                    const numB = parseInt(valB, 10);
                     return current.ascending ? numA - numB : numB - numA;
                 }
 
-                // Si no son numéricos, ordenar como texto
-                return current.ascending
-                    ? valA.toString().localeCompare(valB.toString())
-                    : valB.toString().localeCompare(valA.toString());
+                // Detectar si son números (incluyendo decimales y códigos)
+                const numA = parseFloat(valA);
+                const numB = parseFloat(valB);
+                const ambosNumerosValidos = !isNaN(numA) && !isNaN(numB) && valA !== '' && valB !== '';
+
+                if (ambosNumerosValidos) {
+                    // Para números, usar comparación numérica
+                    const result = numA - numB;
+                    return current.ascending ? result : -result;
+                }
+
+                // Para texto, usar comparación con localización
+                const result = valA.localeCompare(valB, 'es', {
+                    numeric: true,
+                    sensitivity: 'base'
+                });
+                return current.ascending ? result : -result;
             });
             // Regenerar tabla
-            generateTable(key, tableId, columns, headers, 1, pageSize);
+            generarTabla(data, tableId, columns, headers, 1, pageSize);
         });
 
         trHead.appendChild(th);

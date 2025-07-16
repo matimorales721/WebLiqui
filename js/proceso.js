@@ -2,13 +2,7 @@ import { generarTabla } from './tableUI.js';
 import { parsearFecha } from './formatters.js';
 import { poblarSelectUnico, crearSelectorPersonalizado } from './tableLogic.js';
 import { safeFetch, initCopyIconListener } from './newUtils.js';
-import { 
-    DateUtils, 
-    TipoEjecucionUtils, 
-    ProcesoDataManager, 
-    CamposConfigManager,
-    UrlUtils 
-} from './procesoUtils.js';
+import { DateUtils, TipoEjecucionUtils, ProcesoDataManager, CamposConfigManager, UrlUtils } from './procesoUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializa el listener de copiado de íconos
@@ -24,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentPage: 1,
                     pageSize: 10,
                     campos: [],
-                    filtros: ['concepto', 'periodo', 'prestador', 'beneficiario']
+                    filtros: ['concepto', 'periodo', 'prestador', 'modulo', 'practica', 'beneficiario']
                 },
                 detalle: {
                     data: [],
@@ -32,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentPage: 1,
                     pageSize: 10,
                     campos: [],
-                    filtros: ['concepto', 'periodo_ex', 'prestador']
+                    filtros: ['concepto', 'periodo_ex', 'prestador', 'modulo']
                 },
                 cabecera: {
                     data: [],
@@ -68,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tab = this.tabs[tabName];
             const totalPages = Math.max(1, Math.ceil(tab.filtered.length / tab.pageSize));
             const paginador = document.getElementById(paginadorId);
-            
+
             if (!paginador) return;
 
             paginador.innerHTML = '';
@@ -129,15 +123,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const tab = this.tabs[tabName];
             const filtros = this.obtenerValoresFiltros(tabName);
 
-            tab.filtered = tab.data.filter(item => {
-                return tab.filtros.every(filtro => {
+            tab.filtered = tab.data.filter((item) => {
+                return tab.filtros.every((filtro) => {
                     const valor = filtros[filtro];
                     if (!valor) return true;
 
-                    const campo = filtro === 'beneficiario' ? 'n_beneficio' : 
-                                 filtro === 'periodo' ? 'c_periodo' :
-                                 filtro === 'periodo_ex' ? 'c_periodo_ex' :
-                                 `c_${filtro}`;
+                    const campo =
+                        filtro === 'beneficiario'
+                            ? 'n_beneficio'
+                            : filtro === 'periodo'
+                            ? 'c_periodo'
+                            : filtro === 'periodo_ex'
+                            ? 'c_periodo_ex'
+                            : filtro === 'modulo'
+                            ? tabName === 'detalle' || tabName === 'cabecera'
+                                ? 'c_modulo_pami_4x'
+                                : tabName === 'aprob_cabecera'
+                                ? 'c_modulo_pami_7x'
+                                : 'c_modulo_pami_4x'
+                            : filtro === 'practica'
+                            ? 'c_practica'
+                            : `c_${filtro}`;
 
                     if (filtro === 'concepto') {
                         return item[campo]?.toLowerCase() === valor.toLowerCase();
@@ -155,10 +161,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const tab = this.tabs[tabName];
             const filtros = {};
 
-            tab.filtros.forEach(filtro => {
+            tab.filtros.forEach((filtro) => {
                 const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
                 const input = document.getElementById(inputId);
-                filtros[filtro] = input?.getValue ? input.getValue() : (input?.value || '');
+                filtros[filtro] = input?.getValue ? input.getValue() : input?.value || '';
             });
 
             return filtros;
@@ -167,8 +173,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Limpiar filtros de una pestaña
         limpiarFiltros(tabName) {
             const tab = this.tabs[tabName];
-            
-            tab.filtros.forEach(filtro => {
+
+            tab.filtros.forEach((filtro) => {
                 const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
                 const input = document.getElementById(inputId);
                 if (input?.setValue) {
@@ -186,23 +192,30 @@ document.addEventListener('DOMContentLoaded', () => {
         // Configurar selectores personalizados para una pestaña
         configurarSelectores(tabName) {
             const tab = this.tabs[tabName];
-            
-            tab.filtros.forEach(filtro => {
-                const campo = filtro === 'beneficiario' ? 'n_beneficio' : 
-                             filtro === 'periodo' ? 'c_periodo' :
-                             filtro === 'periodo_ex' ? 'c_periodo_ex' :
-                             `c_${filtro}`;
-                
+
+            tab.filtros.forEach((filtro) => {
+                const campo =
+                    filtro === 'beneficiario'
+                        ? 'n_beneficio'
+                        : filtro === 'periodo'
+                        ? 'c_periodo'
+                        : filtro === 'periodo_ex'
+                        ? 'c_periodo_ex'
+                        : filtro === 'modulo'
+                        ? tabName === 'detalle' || tabName === 'cabecera'
+                            ? 'c_modulo_pami_4x'
+                            : tabName === 'aprob_cabecera'
+                            ? 'c_modulo_pami_7x'
+                            : 'c_modulo_pami_4x'
+                        : filtro === 'practica'
+                        ? 'c_practica'
+                        : `c_${filtro}`;
+
                 const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
                 const dropdownId = `${filtro === 'periodo_ex' ? 'periodo' : filtro}Dropdown_${tabName}`;
-                
-                crearSelectorPersonalizado(
-                    tab.data, 
-                    campo, 
-                    inputId, 
-                    dropdownId, 
-                    'Selecciona o escribe...', 
-                    () => this.filtrar(tabName)
+
+                crearSelectorPersonalizado(tab.data, campo, inputId, dropdownId, 'Selecciona o escribe...', () =>
+                    this.filtrar(tabName)
                 );
             });
         }
@@ -211,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         configurarBotonLimpiar(tabName) {
             const btnId = `limpiarFiltrosBtn_${tabName}`;
             const btn = document.getElementById(btnId);
-            
+
             if (btn) {
                 btn.addEventListener('click', () => this.limpiarFiltros(tabName));
             }
@@ -223,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tab.data = data;
             tab.campos = campos;
             tab.filtered = data;
-            
+
             this.configurarSelectores(tabName);
             this.renderTabla(tabName);
             this.configurarBotonLimpiar(tabName);
@@ -265,7 +278,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const configuracionCampos = {
         practicas: [
             { key: 'c_concepto', header: 'Concepto', format: 'code' },
+            { key: 'c_periodo', header: 'Periodo', format: 'code' },
             { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
+            { key: 'c_modulo_pami_4x', header: 'Cod. Módulo', format: 'code' },
+            { key: 'd_modulo_pami', header: 'Módulo', format: 'text' },
             { key: 'c_practica', header: 'Cod. Práctica', format: 'code' },
             { key: 'd_practica', header: 'Práctica' },
             { key: 'n_beneficio', header: 'Beneficiario', format: 'code' },
@@ -299,8 +315,12 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'c_periodo_ex', header: 'Periodo', format: 'code' },
             { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
             { key: 'd_prestador', header: 'Prestador' },
+            { key: 'c_modulo_pami_4x', header: 'Cod. Modulo', format: 'code' },
             { key: 'd_modulo_pami', header: 'Modulo' },
+            { key: 'c_practica', header: 'Cod. Práctica', format: 'code' },
             { key: 'd_practica', header: 'Práctica' },
+            { key: 'q_pract_correctas', header: 'Q_CORR', format: 'numeric' },
+            { key: 'i_valor_practica', header: 'Valor Práctica', format: 'moneda' },
             { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' }
         ],
         cabecera: [
@@ -308,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'c_periodo_ex', header: 'Periodo', format: 'code' },
             { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
             { key: 'd_prestador', header: 'Prestador' },
+            { key: 'c_modulo_pami_4x', header: 'Cod. Modulo', format: 'code' },
             { key: 'd_modulo_pami', header: 'Modulo' },
             { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' }
         ],
@@ -316,6 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'c_periodo_ex', header: 'Periodo', format: 'code' },
             { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
             { key: 'd_prestador', header: 'Prestador' },
+            { key: 'c_modulo_pami_7x', header: 'Cod. Modulo', format: 'code' },
             { key: 'd_modulo_pami', header: 'Modulo (7X)' },
             { key: 'i_monto', header: 'I_MONTO', format: 'moneda' }
         ]
@@ -387,20 +409,20 @@ function construirUrlVueltaProcesos() {
 window.showTab = (tabId) => {
     // Remover clase active de todos los contenidos de pestañas
     document.querySelectorAll('.tab-content').forEach((t) => t.classList.remove('active'));
-    
+
     // Remover clase active de todas las pestañas
     document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
-    
+
     // Activar el contenido de la pestaña correspondiente
     const tabContent = document.getElementById(tabId);
     if (tabContent) {
         tabContent.classList.add('active');
     }
-    
+
     // Activar la pestaña correspondiente usando un selector más específico
     // Buscar exactamente la coincidencia entre comillas simples
     const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
+    tabs.forEach((tab) => {
         const onclickContent = tab.getAttribute('onclick');
         if (onclickContent) {
             // Buscar exactamente showTab('tabId') - coincidencia exacta
@@ -421,7 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = construirUrlVueltaProcesos();
         });
     }
-    
+
     // Configurar botón de volver a procesos (móvil)
     const btnVolverMobile = document.getElementById('btnVolverProcesosMobile');
     if (btnVolverMobile) {

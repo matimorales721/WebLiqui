@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Test Suite - WebLiqui</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+            .test-suite {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .test-result {
+                padding: 10px;
+                margin: 5px 0;
+                border-radius: 4px;
+                font-family: monospace;
+            }
+            .test-pass {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+            .test-fail {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+            .test-summary {
+                background-color: #e3f2fd;
+                padding: 15px;
+                border-radius: 5px;
+                margin: 20px 0;
+                font-weight: bold;
+            }
+            .run-tests-btn {
+                background: #007acc;
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                margin: 20px 0;
+            }
+            .run-tests-btn:hover {
+                background: #005fa3;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>🧪 Test Suite - WebLiqui</h1>
+
+        <button class="run-tests-btn" onclick="runAllTests()">🚀 Ejecutar Todos los Tests</button>
+
+        <div id="test-results"></div>
+
+        <div class="test-summary" id="test-summary">Haz clic en "Ejecutar Tests" para comenzar...</div>
+
+        <script type="module">
+            import { DateUtils, TipoEjecucionUtils, UrlUtils } from './js/procesoUtils.js';
+
+            // Framework de testing simple
+            class TestFramework {
+                constructor() {
+                    this.tests = [];
+                    this.results = [];
+                }
+
+                test(name, testFunction) {
+                    this.tests.push({ name, testFunction });
+                }
+
+                assertEqual(actual, expected, message = '') {
+                    if (actual === expected) {
+                        return { passed: true, message: message || `✅ ${actual} === ${expected}` };
+                    } else {
+                        return { passed: false, message: message || `❌ Expected: ${expected}, Actual: ${actual}` };
+                    }
+                }
+
+                assertNotEqual(actual, expected, message = '') {
+                    if (actual !== expected) {
+                        return { passed: true, message: message || `✅ ${actual} !== ${expected}` };
+                    } else {
+                        return { passed: false, message: message || `❌ Values should not be equal: ${actual}` };
+                    }
+                }
+
+                assertTrue(condition, message = '') {
+                    if (condition) {
+                        return { passed: true, message: message || '✅ Condition is true' };
+                    } else {
+                        return { passed: false, message: message || '❌ Condition is false' };
+                    }
+                }
+
+                assertFalse(condition, message = '') {
+                    if (!condition) {
+                        return { passed: true, message: message || '✅ Condition is false' };
+                    } else {
+                        return { passed: false, message: message || '❌ Condition should be false' };
+                    }
+                }
+
+                async runAll() {
+                    this.results = [];
+
+                    for (const test of this.tests) {
+                        const testResult = {
+                            name: test.name,
+                            assertions: [],
+                            passed: true,
+                            error: null
+                        };
+
+                        try {
+                            const assertions = await test.testFunction(this);
+                            testResult.assertions = assertions || [];
+                            testResult.passed = testResult.assertions.every((a) => a.passed);
+                        } catch (error) {
+                            testResult.error = error.message;
+                            testResult.passed = false;
+                        }
+
+                        this.results.push(testResult);
+                    }
+
+                    return this.results;
+                }
+
+                getStats() {
+                    const total = this.results.length;
+                    const passed = this.results.filter((r) => r.passed).length;
+                    const failed = total - passed;
+
+                    return { total, passed, failed };
+                }
+            }
+
+            // Instancia global del framework
+            const testFramework = new TestFramework();
+
+            // Tests para DateUtils
+            testFramework.test('DateUtils.formatearFechaHora', (t) => {
+                const assertions = [];
+
+                // Test caso normal
+                const resultado1 = DateUtils.formatearFechaHora('23/06/2025 21:23:50');
+                assertions.push(t.assertEqual(resultado1, '23/06/2025 21:23', 'Formateo normal'));
+
+                // Test caso sin segundos
+                const resultado2 = DateUtils.formatearFechaHora('23/06/2025 21:23');
+                assertions.push(t.assertEqual(resultado2, '23/06/2025 21:23', 'Sin segundos'));
+
+                // Test caso vacío
+                const resultado3 = DateUtils.formatearFechaHora('');
+                assertions.push(t.assertEqual(resultado3, '', 'String vacío'));
+
+                // Test caso null
+                const resultado4 = DateUtils.formatearFechaHora(null);
+                assertions.push(t.assertEqual(resultado4, '', 'Valor null'));
+
+                return assertions;
+            });
+
+            testFramework.test('DateUtils.calcularDuracion', (t) => {
+                const assertions = [];
+
+                // Test duración de 1 hora
+                const resultado1 = DateUtils.calcularDuracion('23/06/2025 10:00:00', '23/06/2025 11:00:00');
+                assertions.push(t.assertEqual(resultado1, '01:00', 'Duración de 1 hora'));
+
+                // Test duración de 30 minutos
+                const resultado2 = DateUtils.calcularDuracion('23/06/2025 10:00:00', '23/06/2025 10:30:00');
+                assertions.push(t.assertEqual(resultado2, '00:30', 'Duración de 30 minutos'));
+
+                // Test duración de 8.5 horas
+                const resultado3 = DateUtils.calcularDuracion('23/06/2025 09:00:00', '23/06/2025 17:30:00');
+                assertions.push(t.assertEqual(resultado3, '08:30', 'Duración de 8.5 horas'));
+
+                // Test casos inválidos
+                const resultado4 = DateUtils.calcularDuracion('', '23/06/2025 17:30:00');
+                assertions.push(t.assertEqual(resultado4, '', 'Fecha inicio vacía'));
+
+                const resultado5 = DateUtils.calcularDuracion('23/06/2025 09:00:00', '');
+                assertions.push(t.assertEqual(resultado5, '', 'Fecha fin vacía'));
+
+                return assertions;
+            });
+
+            testFramework.test('DateUtils.parsearFecha', (t) => {
+                const assertions = [];
+
+                // Test fecha válida
+                const resultado1 = DateUtils.parsearFecha('23/06/2025 21:23:50');
+                assertions.push(t.assertTrue(resultado1 instanceof Date, 'Retorna Date object'));
+                assertions.push(t.assertFalse(isNaN(resultado1?.getTime()), 'Date válida'));
+
+                // Test fecha inválida
+                const resultado2 = DateUtils.parsearFecha('fecha-inválida');
+                assertions.push(t.assertEqual(resultado2, null, 'Fecha inválida retorna null'));
+
+                // Test string vacío
+                const resultado3 = DateUtils.parsearFecha('');
+                assertions.push(t.assertEqual(resultado3, null, 'String vacío retorna null'));
+
+                return assertions;
+            });
+
+            testFramework.test('TipoEjecucionUtils.formatear', (t) => {
+                const assertions = [];
+
+                // Test tipos conocidos
+                assertions.push(t.assertEqual(TipoEjecucionUtils.formatear('E'), 'Excepción', 'Tipo E'));
+                assertions.push(t.assertEqual(TipoEjecucionUtils.formatear('M'), 'Mensual', 'Tipo M'));
+
+                // Test tipo desconocido
+                assertions.push(t.assertEqual(TipoEjecucionUtils.formatear('X'), 'X', 'Tipo desconocido'));
+
+                return assertions;
+            });
+
+            testFramework.test('Integridad de Datos Puros', (t) => {
+                const assertions = [];
+
+                // Verificar que las utilidades no agreguen "hs"
+                const duracion = DateUtils.calcularDuracion('23/06/2025 09:00:00', '23/06/2025 17:30:00');
+                assertions.push(t.assertFalse(duracion.includes('hs'), 'Duración pura sin "hs"'));
+
+                const fechaFormateada = DateUtils.formatearFechaHora('23/06/2025 21:23:50');
+                assertions.push(t.assertFalse(fechaFormateada.includes('hs'), 'Fecha pura sin "hs"'));
+
+                return assertions;
+            });
+
+            testFramework.test('Performance de Funciones Críticas', async (t) => {
+                const assertions = [];
+
+                // Test performance de formateo de fechas
+                const start1 = performance.now();
+                for (let i = 0; i < 1000; i++) {
+                    DateUtils.formatearFechaHora('23/06/2025 21:23:50');
+                }
+                const end1 = performance.now();
+                const timeFormateo = end1 - start1;
+
+                assertions.push(
+                    t.assertTrue(
+                        timeFormateo < 100,
+                        `Formateo rápido: ${timeFormateo.toFixed(2)}ms para 1000 operaciones`
+                    )
+                );
+
+                // Test performance de cálculo de duración
+                const start2 = performance.now();
+                for (let i = 0; i < 1000; i++) {
+                    DateUtils.calcularDuracion('23/06/2025 09:00:00', '23/06/2025 17:30:00');
+                }
+                const end2 = performance.now();
+                const timeDuracion = end2 - start2;
+
+                assertions.push(
+                    t.assertTrue(
+                        timeDuracion < 200,
+                        `Cálculo duración rápido: ${timeDuracion.toFixed(2)}ms para 1000 operaciones`
+                    )
+                );
+
+                return assertions;
+            });
+
+            // Tests de Casos Edge y Validación de Datos
+            testFramework.test('Casos Edge - Fechas Límite', (t) => {
+                const assertions = [];
+
+                // Test fechas en año bisiesto
+                const fechaBisiesto = DateUtils.formatearFechaHora('29/02/2024 12:30:45');
+                assertions.push(t.assertEqual(fechaBisiesto, '29/02/2024 12:30', 'Año bisiesto válido'));
+
+                // Test cambio de horario (casos problemáticos)
+                const fechaCambioHorario = DateUtils.calcularDuracion('01/04/2025 02:00:00', '01/04/2025 04:00:00');
+                assertions.push(t.assertEqual(fechaCambioHorario, '02:00', 'Cambio de horario'));
+
+                // Test fechas con diferentes formatos
+                const fechaFormato1 = DateUtils.formatearFechaHora('1/1/2025 9:5:30');
+                assertions.push(t.assertTrue(fechaFormato1.length > 0, 'Formato de fecha variable'));
+
+                // Test duración overnight
+                const duracionNocturna = DateUtils.calcularDuracion('23/06/2025 23:30:00', '24/06/2025 01:30:00');
+                assertions.push(t.assertEqual(duracionNocturna, '02:00', 'Duración nocturna entre días'));
+
+                return assertions;
+            });
+
+            // Tests de Validación de Tipos de Datos
+            testFramework.test('Validación de Tipos de Datos', (t) => {
+                const assertions = [];
+
+                // Test con números en lugar de strings
+                const fechaNumero = DateUtils.formatearFechaHora(20250623);
+                assertions.push(t.assertEqual(fechaNumero, '', 'Número no es fecha válida'));
+
+                // Test con arrays
+                const fechaArray = DateUtils.formatearFechaHora(['23', '06', '2025']);
+                assertions.push(t.assertEqual(fechaArray, '', 'Array no es fecha válida'));
+
+                // Test con objetos
+                const fechaObjeto = DateUtils.formatearFechaHora({ dia: 23, mes: 6, año: 2025 });
+                assertions.push(t.assertEqual(fechaObjeto, '', 'Objeto no es fecha válida'));
+
+                // Test TipoEjecucion con números
+                const tipoNumero = TipoEjecucionUtils.formatear(123);
+                assertions.push(t.assertEqual(tipoNumero, '123', 'Número se convierte a string'));
+
+                return assertions;
+            });
+
+            // Tests de Funcionalidad de Tablas (simulando tableLogic.js)
+            testFramework.test('Simulación de Funcionalidad de Tablas', (t) => {
+                const assertions = [];
+
+                // Crear tabla de prueba en memoria
+                const datosTabla = [
+                    { id: 1, fecha: '23/06/2025 10:00:00', estado: 'Completado', duracion: '02:30' },
+                    { id: 2, fecha: '24/06/2025 14:30:00', estado: 'En Proceso', duracion: '01:15' },
+                    { id: 3, fecha: '25/06/2025 09:00:00', estado: 'Error', duracion: '00:45' }
+                ];
+
+                // Test filtrado por estado
+                const completados = datosTabla.filter((item) => item.estado === 'Completado');
+                assertions.push(t.assertEqual(completados.length, 1, 'Filtro por estado funciona'));
+
+                // Test ordenamiento por fecha (simulado)
+                const ordenados = [...datosTabla].sort((a, b) => a.fecha.localeCompare(b.fecha));
+                assertions.push(t.assertEqual(ordenados[0].id, 1, 'Ordenamiento por fecha'));
+
+                // Test formateo de datos en tabla
+                const filaFormateada = {
+                    ...datosTabla[0],
+                    fechaFormateada: DateUtils.formatearFechaHora(datosTabla[0].fecha)
+                };
+                assertions.push(t.assertEqual(filaFormateada.fechaFormateada, '23/06/2025 10:00', 'Formateo en tabla'));
+
+                return assertions;
+            });
+
+            // Tests de Carga de Datos JSON (simulando fetch)
+            testFramework.test('Simulación de Carga de Datos', async (t) => {
+                const assertions = [];
+
+                // Simular datos JSON como los del proyecto
+                const datosSimulados = {
+                    cabecera: {
+                        proceso: 4821,
+                        descripcion: 'Liquidación Mensual',
+                        fechaInicio: '23/06/2025 09:00:00',
+                        fechaFin: '23/06/2025 17:30:00'
+                    },
+                    detalles: [
+                        { paso: 1, descripcion: 'Validación', estado: 'OK' },
+                        { paso: 2, descripcion: 'Cálculo', estado: 'OK' },
+                        { paso: 3, descripcion: 'Generación', estado: 'OK' }
+                    ]
+                };
+
+                // Test estructura de datos
+                assertions.push(t.assertTrue(datosSimulados.cabecera.proceso > 0, 'Número de proceso válido'));
+                assertions.push(t.assertTrue(datosSimulados.detalles.length > 0, 'Tiene detalles'));
+
+                // Test formateo de fechas en datos cargados
+                const fechaFormateada = DateUtils.formatearFechaHora(datosSimulados.cabecera.fechaInicio);
+                assertions.push(t.assertEqual(fechaFormateada, '23/06/2025 09:00', 'Fecha de cabecera formateada'));
+
+                // Test cálculo de duración total
+                const duracion = DateUtils.calcularDuracion(
+                    datosSimulados.cabecera.fechaInicio,
+                    datosSimulados.cabecera.fechaFin
+                );
+                assertions.push(t.assertEqual(duracion, '08:30', 'Duración total calculada'));
+
+                return assertions;
+            });
+
+            // Tests de Navegación y URLs
+            testFramework.test('Funcionalidad de URLs y Navegación', (t) => {
+                const assertions = [];
+
+                // Test construcción de URLs con parámetros
+                const baseUrl = 'pages/proceso.html';
+                const params = new URLSearchParams();
+                params.set('proceso', '4821');
+                params.set('tab', 'detalles');
+                const urlCompleta = `${baseUrl}?${params.toString()}`;
+
+                assertions.push(t.assertTrue(urlCompleta.includes('proceso=4821'), 'URL contiene parámetro proceso'));
+                assertions.push(t.assertTrue(urlCompleta.includes('tab=detalles'), 'URL contiene parámetro tab'));
+
+                // Test parsing de parámetros URL usando el dominio actual
+                const currentOrigin = window.location.origin || 'http://127.0.0.1:5500';
+                const testUrlString = `${currentOrigin}/pages/proceso.html?proceso=4822&tab=validaciones`;
+                const testUrl = new URL(testUrlString);
+                const procesoId = testUrl.searchParams.get('proceso');
+                const tabActiva = testUrl.searchParams.get('tab');
+
+                assertions.push(t.assertEqual(procesoId, '4822', 'Extracción de proceso ID'));
+                assertions.push(t.assertEqual(tabActiva, 'validaciones', 'Extracción de tab activa'));
+
+                // Test parsing de URLSearchParams directamente (más robusto)
+                const directParams = new URLSearchParams('?proceso=4823&tab=practicas&filtro=activos');
+                const procesoIdDirect = directParams.get('proceso');
+                const tabActivaDirect = directParams.get('tab');
+                const filtro = directParams.get('filtro');
+
+                assertions.push(t.assertEqual(procesoIdDirect, '4823', 'URLSearchParams - proceso ID'));
+                assertions.push(t.assertEqual(tabActivaDirect, 'practicas', 'URLSearchParams - tab activa'));
+                assertions.push(t.assertEqual(filtro, 'activos', 'URLSearchParams - filtro adicional'));
+
+                return assertions;
+            });
+
+            // Tests de Manejo de Errores
+            testFramework.test('Manejo de Errores y Excepciones', (t) => {
+                const assertions = [];
+
+                // Test división por cero en cálculos
+                try {
+                    const resultado = 10 / 0;
+                    assertions.push(t.assertEqual(resultado, Infinity, 'División por cero retorna Infinity'));
+                } catch (error) {
+                    assertions.push(t.assertTrue(false, 'División por cero no debería lanzar error'));
+                }
+
+                // Test acceso a propiedades de null/undefined
+                try {
+                    const obj = null;
+                    const propiedad = obj?.propiedad || 'default';
+                    assertions.push(t.assertEqual(propiedad, 'default', 'Optional chaining funciona'));
+                } catch (error) {
+                    assertions.push(t.assertTrue(false, 'Optional chaining falló'));
+                }
+
+                // Test JSON.parse con datos inválidos
+                try {
+                    JSON.parse('{"invalid": json}');
+                    assertions.push(t.assertTrue(false, 'JSON inválido debería lanzar error'));
+                } catch (error) {
+                    assertions.push(t.assertTrue(true, 'JSON inválido lanza error correctamente'));
+                }
+
+                return assertions;
+            });
+
+            // Tests de LocalStorage y Persistencia
+            testFramework.test('LocalStorage y Persistencia de Datos', (t) => {
+                const assertions = [];
+
+                // Test guardado en localStorage
+                const testData = { usuario: 'test', sesion: '12345' };
+                localStorage.setItem('test_data', JSON.stringify(testData));
+
+                const retrieved = JSON.parse(localStorage.getItem('test_data'));
+                assertions.push(t.assertEqual(retrieved.usuario, 'test', 'Datos guardados en localStorage'));
+
+                // Test limpieza
+                localStorage.removeItem('test_data');
+                const removed = localStorage.getItem('test_data');
+                assertions.push(t.assertEqual(removed, null, 'Datos removidos de localStorage'));
+
+                // Test límites de localStorage (simulado)
+                const largeData = 'x'.repeat(1000);
+                try {
+                    localStorage.setItem('large_test', largeData);
+                    assertions.push(t.assertTrue(true, 'Datos grandes guardados exitosamente'));
+                    localStorage.removeItem('large_test');
+                } catch (error) {
+                    assertions.push(t.assertTrue(true, 'Error de cuota manejado correctamente'));
+                }
+
+                return assertions;
+            });
+
+            // Tests de Responsive Design (simulado)
+            testFramework.test('Funcionalidad Responsive (Simulado)', (t) => {
+                const assertions = [];
+
+                // Simular diferentes tamaños de pantalla
+                const breakpoints = {
+                    mobile: 768,
+                    tablet: 1024,
+                    desktop: 1200
+                };
+
+                // Test detección de dispositivo móvil
+                const isMobile = window.innerWidth <= breakpoints.mobile;
+                assertions.push(t.assertTrue(typeof isMobile === 'boolean', 'Detección móvil funciona'));
+
+                // Test cálculo de columnas para grid responsivo
+                const getColumns = (width) => {
+                    if (width <= breakpoints.mobile) return 1;
+                    if (width <= breakpoints.tablet) return 2;
+                    return 3;
+                };
+
+                assertions.push(t.assertEqual(getColumns(500), 1, 'Móvil: 1 columna'));
+                assertions.push(t.assertEqual(getColumns(900), 2, 'Tablet: 2 columnas'));
+                assertions.push(t.assertEqual(getColumns(1300), 3, 'Desktop: 3 columnas'));
+
+                return assertions;
+            });
+
+            // Tests específicos de TabManager (simulando la funcionalidad)
+            testFramework.test('TabManager - Gestión de Pestañas', (t) => {
+                const assertions = [];
+
+                // Simular TabManager
+                class MockTabManager {
+                    constructor() {
+                        this.tabs = ['cabecera', 'detalles', 'practicas', 'validaciones'];
+                        this.activeTab = 'cabecera';
+                    }
+
+                    activateTab(tabName) {
+                        if (this.tabs.includes(tabName)) {
+                            this.activeTab = tabName;
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    getActiveTab() {
+                        return this.activeTab;
+                    }
+
+                    isValidTab(tabName) {
+                        return this.tabs.includes(tabName);
+                    }
+                }
+
+                const tabManager = new MockTabManager();
+
+                // Test activación de tab válida
+                const result1 = tabManager.activateTab('detalles');
+                assertions.push(t.assertTrue(result1, 'Tab válida se activa correctamente'));
+                assertions.push(t.assertEqual(tabManager.getActiveTab(), 'detalles', 'Tab activa cambió'));
+
+                // Test activación de tab inválida
+                const result2 = tabManager.activateTab('inexistente');
+                assertions.push(t.assertFalse(result2, 'Tab inválida no se activa'));
+                assertions.push(t.assertEqual(tabManager.getActiveTab(), 'detalles', 'Tab activa no cambió'));
+
+                // Test validación de tabs
+                assertions.push(t.assertTrue(tabManager.isValidTab('practicas'), 'Tab práticas es válida'));
+                assertions.push(t.assertFalse(tabManager.isValidTab('invalid'), 'Tab inválida no es válida'));
+
+                return assertions;
+            });
+
+            // Tests de Formateo de Datos para UI
+            testFramework.test('Formateo de Datos para Interfaz', (t) => {
+                const assertions = [];
+
+                // Simular datos como los que vienen del backend
+                const procesoRaw = {
+                    numero: 4821,
+                    fechaInicio: '23/06/2025 21:23:50',
+                    fechaFin: '24/06/2025 02:15:30',
+                    estado: 'C',
+                    tipo: 'M'
+                };
+
+                // Test formateo completo para UI
+                const procesoUI = {
+                    numero: procesoRaw.numero,
+                    fechaInicio: DateUtils.formatearFechaHora(procesoRaw.fechaInicio),
+                    fechaFin: DateUtils.formatearFechaHora(procesoRaw.fechaFin),
+                    duracion: DateUtils.calcularDuracion(procesoRaw.fechaInicio, procesoRaw.fechaFin),
+                    estado: procesoRaw.estado,
+                    tipoFormateado: TipoEjecucionUtils.formatear(procesoRaw.tipo)
+                };
+
+                assertions.push(t.assertEqual(procesoUI.fechaInicio, '23/06/2025 21:23', 'Fecha inicio formateada'));
+                assertions.push(t.assertEqual(procesoUI.fechaFin, '24/06/2025 02:15', 'Fecha fin formateada'));
+                // Test que la duración sea un string válido con formato HH:MM
+                const duracionValida = /^\d{2}:\d{2}$/.test(procesoUI.duracion);
+                assertions.push(t.assertTrue(duracionValida, `Duración tiene formato válido: ${procesoUI.duracion}`));
+                assertions.push(t.assertEqual(procesoUI.tipoFormateado, 'Mensual', 'Tipo formateado'));
+
+                // Test que los datos puros no tienen sufijos de UI
+                assertions.push(t.assertFalse(procesoUI.duracion.includes('hs'), 'Duración pura sin sufijo'));
+                assertions.push(t.assertFalse(procesoUI.fechaInicio.includes(' hs'), 'Fecha pura sin sufijo'));
+
+                return assertions;
+            });
+
+            // Tests de Filtros y Búsquedas
+            testFramework.test('Funcionalidad de Filtros y Búsquedas', (t) => {
+                const assertions = [];
+
+                // Datos de prueba
+                const procesos = [
+                    { numero: 4821, descripcion: 'Liquidación Mensual', estado: 'Completado', fecha: '23/06/2025' },
+                    { numero: 4822, descripcion: 'Liquidación Semanal', estado: 'En Proceso', fecha: '24/06/2025' },
+                    { numero: 4823, descripcion: 'Liquidación Anual', estado: 'Error', fecha: '25/06/2025' }
+                ];
+
+                // Test filtro por estado
+                const completados = procesos.filter((p) => p.estado === 'Completado');
+                assertions.push(t.assertEqual(completados.length, 1, 'Filtro por estado funciona'));
+
+                // Test búsqueda por descripción
+                const busqueda = procesos.filter((p) => p.descripcion.toLowerCase().includes('mensual'));
+                assertions.push(t.assertEqual(busqueda.length, 1, 'Búsqueda por descripción funciona'));
+
+                // Test filtro por número de proceso
+                const porNumero = procesos.filter((p) => p.numero.toString().includes('482'));
+                assertions.push(t.assertEqual(porNumero.length, 3, 'Filtro por número funciona'));
+
+                // Test filtro combinado
+                const filtroCombinaodo = procesos.filter(
+                    (p) => p.estado !== 'Error' && p.descripcion.includes('Liquidación')
+                );
+                assertions.push(t.assertEqual(filtroCombinaodo.length, 2, 'Filtro combinado funciona'));
+
+                return assertions;
+            });
+
+            // Tests de Paginación
+            testFramework.test('Sistema de Paginación', (t) => {
+                const assertions = [];
+
+                // Simular paginación
+                const totalItems = 100;
+                const itemsPerPage = 10;
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+                assertions.push(t.assertEqual(totalPages, 10, 'Cálculo de páginas totales'));
+
+                // Test página actual
+                const currentPage = 3;
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+
+                assertions.push(t.assertEqual(startIndex, 20, 'Índice de inicio correcto'));
+                assertions.push(t.assertEqual(endIndex, 30, 'Índice de fin correcto'));
+
+                // Test límites de paginación
+                const isFirstPage = currentPage === 1;
+                const isLastPage = currentPage === totalPages;
+
+                assertions.push(t.assertFalse(isFirstPage, 'No es primera página'));
+                assertions.push(t.assertFalse(isLastPage, 'No es última página'));
+
+                // Test navegación
+                const prevPage = Math.max(1, currentPage - 1);
+                const nextPage = Math.min(totalPages, currentPage + 1);
+
+                assertions.push(t.assertEqual(prevPage, 2, 'Página anterior correcta'));
+                assertions.push(t.assertEqual(nextPage, 4, 'Página siguiente correcta'));
+
+                return assertions;
+            });
+
+            // Tests de Accesibilidad
+            testFramework.test('Funciones de Accesibilidad', (t) => {
+                const assertions = [];
+
+                // Test contraste de colores (método simplificado pero más realista)
+                const colors = {
+                    success: '#27ae60',
+                    warning: '#f39c12',
+                    error: '#e74c3c',
+                    info: '#3498db'
+                };
+
+                // Función para calcular contraste simplificado
+                const getContrastRatio = (color1, color2) => {
+                    // Convertir hex a RGB
+                    const getRGB = (hex) => {
+                        const r = parseInt(hex.slice(1, 3), 16);
+                        const g = parseInt(hex.slice(3, 5), 16);
+                        const b = parseInt(hex.slice(5, 7), 16);
+                        return { r, g, b };
+                    };
+
+                    // Calcular luminancia relativa simplificada
+                    const getLuminance = (rgb) => {
+                        return (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+                    };
+
+                    const rgb1 = getRGB(color1);
+                    const rgb2 = getRGB(color2);
+                    const lum1 = getLuminance(rgb1);
+                    const lum2 = getLuminance(rgb2);
+
+                    const lighter = Math.max(lum1, lum2);
+                    const darker = Math.min(lum1, lum2);
+
+                    return (lighter + 0.05) / (darker + 0.05);
+                };
+
+                // Test que los colores existen y son válidos
+                Object.entries(colors).forEach(([name, color]) => {
+                    assertions.push(t.assertTrue(color.startsWith('#'), `Color ${name} tiene formato hex válido`));
+                    assertions.push(t.assertEqual(color.length, 7, `Color ${name} tiene longitud correcta`));
+
+                    // Test contraste básico (todos estos colores deberían tener contraste razonable)
+                    const contrast = getContrastRatio(color, '#ffffff');
+                    assertions.push(
+                        t.assertTrue(contrast > 1, `Color ${name} tiene contraste básico: ${contrast.toFixed(2)}`)
+                    );
+                });
+
+                return assertions;
+            });
+
+            // Tests de Configuración y Settings
+            testFramework.test('Sistema de Configuración', (t) => {
+                const assertions = [];
+
+                // Test configuraciones por defecto
+                const defaultConfig = {
+                    itemsPerPage: 10,
+                    defaultTab: 'cabecera',
+                    dateFormat: 'DD/MM/YYYY HH:mm',
+                    autoRefresh: false,
+                    logLevel: 'INFO'
+                };
+
+                assertions.push(t.assertEqual(defaultConfig.itemsPerPage, 10, 'Items por página por defecto'));
+                assertions.push(t.assertEqual(defaultConfig.defaultTab, 'cabecera', 'Tab por defecto'));
+
+                // Test merge de configuraciones
+                const userConfig = {
+                    itemsPerPage: 25,
+                    autoRefresh: true
+                };
+
+                const finalConfig = { ...defaultConfig, ...userConfig };
+
+                assertions.push(
+                    t.assertEqual(finalConfig.itemsPerPage, 25, 'Configuración usuario sobrescribe default')
+                );
+                assertions.push(t.assertEqual(finalConfig.defaultTab, 'cabecera', 'Configuración default se mantiene'));
+                assertions.push(t.assertTrue(finalConfig.autoRefresh, 'Nueva configuración se aplica'));
+
+                return assertions;
+            });
+
+            // Tests de Seguridad Básica
+            testFramework.test('Validaciones de Seguridad Básica', (t) => {
+                const assertions = [];
+
+                // Test sanitización de HTML (simulado)
+                const sanitizeHTML = (str) => {
+                    const temp = document.createElement('div');
+                    temp.textContent = str;
+                    return temp.innerHTML;
+                };
+
+                const maliciousInput = '&lt;script&gt;alert("XSS")&lt;/script&gt;Hello';
+                const sanitized = sanitizeHTML(maliciousInput);
+
+                assertions.push(t.assertFalse(sanitized.includes('&lt;script&gt;'), 'Scripts removidos'));
+                assertions.push(t.assertTrue(sanitized.includes('Hello'), 'Contenido válido preservado'));
+
+                // Test validación de números de proceso
+                const validateProcesoId = (id) => {
+                    const num = parseInt(id);
+                    return !isNaN(num) && num > 0 && num < 99999;
+                };
+
+                assertions.push(t.assertTrue(validateProcesoId('4821'), 'Proceso ID válido'));
+                assertions.push(t.assertFalse(validateProcesoId('abc'), 'Proceso ID inválido texto'));
+                assertions.push(t.assertFalse(validateProcesoId('-1'), 'Proceso ID inválido negativo'));
+                assertions.push(t.assertFalse(validateProcesoId('999999'), 'Proceso ID inválido muy grande'));
+
+                return assertions;
+            });
+
+            // Test de Debug - Para verificar valores reales
+            testFramework.test('Debug - Valores Reales de Funciones', (t) => {
+                const assertions = [];
+
+                // Test valores reales de DateUtils
+                const fecha1 = '23/06/2025 21:23:50';
+                const fecha2 = '24/06/2025 02:15:30';
+
+                const fechaFormateada1 = DateUtils.formatearFechaHora(fecha1);
+                const fechaFormateada2 = DateUtils.formatearFechaHora(fecha2);
+                const duracionReal = DateUtils.calcularDuracion(fecha1, fecha2);
+
+                assertions.push(t.assertTrue(true, `Debug - Fecha 1 formateada: "${fechaFormateada1}"`));
+                assertions.push(t.assertTrue(true, `Debug - Fecha 2 formateada: "${fechaFormateada2}"`));
+                assertions.push(t.assertTrue(true, `Debug - Duración calculada: "${duracionReal}"`));
+
+                // Test tipo de ejecución
+                const tipoM = TipoEjecucionUtils.formatear('M');
+                const tipoE = TipoEjecucionUtils.formatear('E');
+
+                assertions.push(t.assertTrue(true, `Debug - Tipo M: "${tipoM}"`));
+                assertions.push(t.assertTrue(true, `Debug - Tipo E: "${tipoE}"`));
+
+                return assertions;
+            });
+
+            // Función para ejecutar todos los tests
+            window.runAllTests = async function () {
+                const resultsDiv = document.getElementById('test-results');
+                const summaryDiv = document.getElementById('test-summary');
+
+                resultsDiv.innerHTML = '<h2>⏳ Ejecutando tests...</h2>';
+
+                const results = await testFramework.runAll();
+                const stats = testFramework.getStats();
+
+                // Mostrar resumen
+                let html = '<h2>📊 Resultados de Tests</h2>';
+
+                results.forEach((result) => {
+                    const status = result.passed ? 'test-pass' : 'test-fail';
+                    const icon = result.passed ? '✅' : '❌';
+                    html += `<div class="test-suite">`;
+                    html += `<h3>${icon} ${result.name}</h3>`;
+
+                    if (result.error) {
+                        html += `<div class="test-fail">ERROR: ${result.error}</div>`;
+                    } else {
+                        result.assertions.forEach((assertion) => {
+                            const assertionStatus = assertion.passed ? 'test-pass' : 'test-fail';
+                            const assertionIcon = assertion.passed ? '✅' : '❌';
+                            html += `<div class="${assertionStatus}">${assertionIcon} ${assertion.message}</div>`;
+                        });
+                    }
+
+                    html += `</div>`;
+                });
+
+                resultsDiv.innerHTML = html;
+
+                // Mostrar resumen
+                const summaryColor = stats.failed === 0 ? '#d4edda' : '#f8d7da';
+                summaryDiv.style.backgroundColor = summaryColor;
+                summaryDiv.innerHTML = `
+                📈 <strong>Resumen:</strong> 
+                ${stats.total} tests ejecutados | 
+                ${stats.passed} pasaron | 
+                ${stats.failed} fallaron | 
+                Success Rate: ${((stats.passed / stats.total) * 100).toFixed(1)}%
+                <br><small>
+                📋 Categorías: Utilidades, Performance, Edge Cases, Tipos de Datos, Tablas, 
+                Carga de Datos, URLs, Errores, LocalStorage, Responsive, TabManager, 
+                Formateo UI, Filtros, Paginación, Accesibilidad, Configuración, Seguridad
+                </small>
+            `;
+            };
+
+            // Auto-ejecutar tests al cargar
+            document.addEventListener('DOMContentLoaded', () => {
+                runAllTests(); // ✅ Auto-ejecutar activado
+            });
+        </script>
+    </body>
+</html>

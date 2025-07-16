@@ -1,0 +1,30 @@
+{
+    "name": "webliqui-ia",
+    "version": "1.0.0",
+    "description": "Sistema de liquidaciones WebLiqui con IA",
+    "scripts": {
+        "test": "node scripts/run-tests.js",
+        "test:watch": "nodemon --exec \"npm run test\" --watch js/ --watch test-suite.html",
+        "serve": "python -m http.server 8000",
+        "dev": "concurrently \"npm run serve\" \"npm run test:watch\"",
+        "precommit": "npm run test",
+        "build": "echo 'Build completed'",
+        "deploy": "npm run test && npm run build"
+    },
+    "devDependencies": {
+        "puppeteer": "^21.0.0",
+        "concurrently": "^8.2.0",
+        "nodemon": "^3.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/matimorales721/WebLiqui_IA.git"
+    },
+    "keywords": [
+        "liquidaciones",
+        "testing",
+        "automation"
+    ],
+    "author": "matimorales721",
+    "license": "MIT"
+}

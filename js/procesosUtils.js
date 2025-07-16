@@ -31,7 +31,7 @@ export class ProcesosManager {
      */
     configurarFiltros() {
         const { crearSelectorPersonalizado } = window.tableLogic || {};
-        
+
         if (crearSelectorPersonalizado) {
             // Crear selector de tipo con callback automático
             crearSelectorPersonalizado(
@@ -82,10 +82,10 @@ export class ProcesosManager {
         const filtroTipoInput = document.getElementById('filtroTipo');
         const filtroPeriodoInput = document.getElementById('filtroPeriodo');
 
-        const tipo = filtroTipoInput?.getValue ? filtroTipoInput.getValue() : (filtroTipoInput?.value || '');
-        const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
+        const tipo = filtroTipoInput?.getValue ? filtroTipoInput.getValue() : filtroTipoInput?.value || '';
+        const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : filtroPeriodoInput?.value || '';
 
-        this.filteredData = this.allData.filter(proceso => {
+        this.filteredData = this.allData.filter((proceso) => {
             const coincideTipo = !tipo || proceso.c_tipo_ejecucion === tipo;
             const coincidePeriodo = !periodo || proceso.c_periodo === periodo;
             return coincideTipo && coincidePeriodo;
@@ -101,8 +101,8 @@ export class ProcesosManager {
      */
     limpiarFiltros() {
         const inputs = ['filtroTipo', 'filtroPeriodo'];
-        
-        inputs.forEach(inputId => {
+
+        inputs.forEach((inputId) => {
             const input = document.getElementById(inputId);
             if (input?.setValue) {
                 input.setValue('');
@@ -122,7 +122,7 @@ export class ProcesosManager {
      */
     renderTabla() {
         const { generarTabla } = window.tableUI || {};
-        
+
         if (generarTabla) {
             const columnas = this.obtenerConfiguracionColumnas();
             generarTabla(this.filteredData, 'tablaProcesos', columnas, undefined, this.currentPage, this.pageSize);
@@ -158,21 +158,21 @@ export class ProcesosManager {
      */
     crearBotonesAccion(item) {
         const fragment = document.createDocumentFragment();
-        
+
         // Botón Ver
         const btnDetalle = document.createElement('a');
         btnDetalle.className = 'btn';
         btnDetalle.href = this.construirUrlDetalle(item.c_proceso);
         btnDetalle.textContent = 'Ver';
-        
+
         // Espacio entre botones
         const espacio = document.createElement('span');
         espacio.style.display = 'inline-block';
         espacio.style.width = '12px';
-        
+
         fragment.appendChild(btnDetalle);
         fragment.appendChild(espacio);
-        
+
         return fragment;
     }
 
@@ -184,10 +184,10 @@ export class ProcesosManager {
     construirUrlDetalle(codigoProceso) {
         const filtroTipoInput = document.getElementById('filtroTipo');
         const filtroPeriodoInput = document.getElementById('filtroPeriodo');
-        
+
         const currentFilters = {
-            tipo: filtroTipoInput?.getValue ? filtroTipoInput.getValue() : (filtroTipoInput?.value || ''),
-            periodo: filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '')
+            tipo: filtroTipoInput?.getValue ? filtroTipoInput.getValue() : filtroTipoInput?.value || '',
+            periodo: filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : filtroPeriodoInput?.value || ''
         };
 
         let url = `proceso.html?codigo=${codigoProceso}`;
@@ -207,11 +207,11 @@ export class ProcesosManager {
     renderPaginador() {
         const totalPages = Math.max(1, Math.ceil(this.filteredData.length / this.pageSize));
         const paginador = document.getElementById('paginador');
-        
+
         if (!paginador) return;
 
         paginador.innerHTML = '';
-        
+
         const btnWidth = 38;
         const paginadorWidth = paginador.offsetWidth || 400;
         let maxBtns = Math.floor(paginadorWidth / btnWidth);
@@ -310,18 +310,18 @@ export class ProcesosManager {
     guardarFiltrosEnURL() {
         const filtroTipoInput = document.getElementById('filtroTipo');
         const filtroPeriodoInput = document.getElementById('filtroPeriodo');
-        
-        const tipo = filtroTipoInput?.getValue ? filtroTipoInput.getValue() : (filtroTipoInput?.value || '');
-        const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
+
+        const tipo = filtroTipoInput?.getValue ? filtroTipoInput.getValue() : filtroTipoInput?.value || '';
+        const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : filtroPeriodoInput?.value || '';
 
         const url = new URL(window.location);
-        
+
         if (tipo) {
             url.searchParams.set('filtroTipo', tipo);
         } else {
             url.searchParams.delete('filtroTipo');
         }
-        
+
         if (periodo) {
             url.searchParams.set('filtroPeriodo', periodo);
         } else {

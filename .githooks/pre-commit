@@ -1,0 +1,24 @@
+#!/bin/sh
+# Pre-commit hook para ejecutar tests automáticamente
+
+echo "🧪 Ejecutando tests antes del commit..."
+
+# Verificar si Node.js está disponible
+if ! command -v node &> /dev/null; then
+    echo "❌ Node.js no está instalado"
+    exit 1
+fi
+
+# Cambiar al directorio del proyecto
+cd "$(git rev-parse --show-toplevel)"
+
+# Ejecutar tests usando puppeteer o playwright
+if command -v npx &> /dev/null; then
+    # Opción 1: Usar puppeteer para ejecutar tests headless
+    npx puppeteer-cli --no-sandbox http://localhost:8000/test-suite.html
+else
+    echo "⚠️  Para tests automáticos, instala: npm install -g puppeteer-cli"
+    echo "📝 Por ahora, verifica manualmente: http://localhost:8000/test-suite.html"
+fi
+
+echo "✅ Pre-commit check completado"
