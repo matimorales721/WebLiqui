@@ -10,7 +10,6 @@
     <body>
         <div class="topbar">
             <div class="topbar-left">
-                
                 <div class="logo">WebLiqui</div>
             </div>
             <div class="topbar-user">
@@ -29,17 +28,42 @@
             </div>
 
             <div class="content">
+                <button class="btn btn-volver" onclick="window.location.href='procesos.html'">
+                    ← Volver a Procesos
+                </button>
+                <h2 class="detalle-proceso-titulo">Detalle del Proceso</h2>
                 <a href="./procesos.html" class="btn-volver-mobile">←</a>
-                <h2>Detalle del Proceso</h2>
 
-                <div class="detalle-proceso">
-                    <div class="detalle-grid">
-                        <div><strong>Código:</strong> <span id="codigo"></span></div>
-                        <div><strong>Tipo de ejecución:</strong> <span id="tipo"></span></div>
-                        <div><strong>Período:</strong> <span id="periodo"></span></div>
-                        <div><strong>Inicio:</strong> <span id="inicio"></span></div>
-                        <div><strong>Fin:</strong> <span id="fin"></span></div>
-                        <div><strong>Duración:</strong> <span id="duracion"></span></div>
+                <div class="detalle-proceso-card wide">
+                    <div class="detalle-proceso-codigo-principal">
+                        <span class="detalle-proceso-label">Proceso:</span>
+                        <span class="detalle-proceso-value" id="detalleCodigo"><span id="codigo"></span></span>
+                    </div>
+                    <div class="detalle-proceso-row">
+                        <span>
+                            <span class="detalle-proceso-label">Tipo de Ejecución:</span>
+                            <span class="detalle-proceso-value" id="detalleTipo"><span id="tipo"></span></span>
+                        </span>
+                        <span>
+                            <span class="detalle-proceso-label">Período:</span>
+                            <span class="detalle-proceso-value" id="detallePeriodo"><span id="periodo"></span></span>
+                        </span>
+                    </div>
+                    <div class="detalle-proceso-row">
+                        <span>
+                            <span class="detalle-proceso-label">Inicio:</span>
+                            <span class="detalle-proceso-value" id="detalleHora"><span id="inicio"></span></span>
+                        </span>
+                        <span>
+                            <span class="detalle-proceso-label">Fin:</span>
+                            <span class="detalle-proceso-value" id="detalleHora"><span id="fin"></span></span>
+                        </span>
+                    </div>
+                    <div class="detalle-proceso-row">
+                        <span>
+                            <span class="detalle-proceso-label">Duración:</span>
+                            <span class="detalle-proceso-value" id="detalleDuracion"><span id="duracion"></span></span>
+                        </span>
                     </div>
                     <a id="btnLogs" class="btn">Ver Logs</a>
                 </div>
@@ -95,6 +119,56 @@
         </div>
 
         <script type="module" src="../js/proceso.js"></script>
+        <script>
+            // Poblar la tarjeta con los datos reales del proceso
+            import('../js/proceso.js').then((mod) => {
+                document.addEventListener('DOMContentLoaded', () => {
+                    const codigoProceso = mod.getParametroProceso();
+                    fetch('../data/procesos.json')
+                        .then((res) => res.json())
+                        .then((json) => {
+                            const procesos = json.results[0].items;
+                            const proceso = procesos.find((p) => parseInt(p.c_proceso) === codigoProceso);
+                            if (!proceso) return;
+                            document.getElementById('detalleCodigo').textContent = proceso.c_proceso;
+                            document.getElementById('detalleTipo').textContent =
+                                proceso.c_tipo_ejecucion === 'E'
+                                    ? 'Excepción'
+                                    : proceso.c_tipo_ejecucion === 'M'
+                                    ? 'Mensual'
+                                    : proceso.c_tipo_ejecucion;
+                            document.getElementById('detallePeriodo').textContent = proceso.c_periodo;
+                            // Formatear fecha y hora sin segundos
+                            let fechaHora = proceso.f_inicio;
+                            if (fechaHora) {
+                                let fh = fechaHora.split(':');
+                                if (fh.length >= 2) {
+                                    fechaHora = fh[0] + ':' + fh[1];
+                                }
+                            }
+                            document.getElementById('detalleHora').textContent = fechaHora;
+                            // Calcular duración si existe fin
+                            if (proceso.f_inicio && proceso.f_fin) {
+                                const inicioDate = new Date(proceso.f_inicio);
+                                const finDate = new Date(proceso.f_fin);
+                                const diffMs = finDate - inicioDate;
+                                const minutos = Math.floor(diffMs / 60000);
+                                const horas = Math.floor(minutos / 60);
+                                const minRest = minutos % 60;
+                                document.getElementById('detalleDuracion').textContent = `${horas
+                                    .toString()
+                                    .padStart(2, '0')}:${minRest.toString().padStart(2, '0')}`;
+                            } else {
+                                document.getElementById('detalleDuracion').textContent = '';
+                            }
+                            // Botón logs
+                            document.getElementById('btnLogs').onclick = function () {
+                                window.location.href = `logs.html?codigo=${proceso.c_proceso}`;
+                            };
+                        });
+                });
+            });
+        </script>
 
         <!-- Mis js utiles -->
         <script type="module" src="../js/formatters.js"></script>
