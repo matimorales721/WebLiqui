@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "usuario": "admin",
+        "password": "123",
+        "nombre": "Administrador",
+        "email": "admin@webliqui.com",
+        "rol": "admin",
+        "activo": true
+    },
+    {
+        "id": 2,
+        "usuario": "usuario1",
+        "password": "usuario123",
+        "nombre": "Usuario Uno",
+        "email": "usuario1@webliqui.com",
+        "rol": "user",
+        "activo": true
+    }
+]
