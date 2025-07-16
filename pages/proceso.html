@@ -69,14 +69,89 @@
                 </div>
 
                 <div class="tabs">
-                    <div class="tab active" onclick="showTab('practicas')">Prácticas</div>
-                    <div class="tab" onclick="showTab('detalle')">Detalle</div>
+                    <div class="tab active" onclick="showTab('aprob-cabecera')">Aprob Cabecera</div>
                     <div class="tab" onclick="showTab('cabecera')">Cabecera</div>
-                    <div class="tab" onclick="showTab('aprob-cabecera')">Aprob Cabecera</div>
+                    <div class="tab" onclick="showTab('detalle')">Detalle</div>
+                    <div class="tab" onclick="showTab('practicas')">Prácticas</div>
                 </div>
                 <div class="tabla-container">
                     <div id="grillasPorProceso">
-                        <div id="practicas" class="tab-content active">
+                        <div id="aprob-cabecera" class="tab-content active">
+                            <div class="filters">
+                                <label>Concepto:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroConcepto_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="conceptoDropdown_aprob_cabecera"></div>
+                                    </div>
+                                </label>
+                                <label>Período:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPeriodo_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="periodoDropdown_aprob_cabecera"></div>
+                                    </div>
+                                </label>
+                                <label>Prestador:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPrestador_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="prestadorDropdown_aprob_cabecera"></div>
+                                    </div>
+                                </label>
+                                <button id="limpiarFiltrosBtn_aprob_cabecera">Limpiar</button>
+                            </div>
+                            <table id="tablaAprobCabecera" class="styled-table"></table>
+                            <div id="paginadorAprobCabecera"></div>
+                        </div>
+                        <div id="cabecera" class="tab-content">
+                            <div class="filters">
+                                <label>Concepto:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroConcepto_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="conceptoDropdown_cabecera"></div>
+                                    </div>
+                                </label>
+                                <label>Período:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPeriodo_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="periodoDropdown_cabecera"></div>
+                                    </div>
+                                </label>
+                                <label>Prestador:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPrestador_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="prestadorDropdown_cabecera"></div>
+                                    </div>
+                                </label>
+                                <button id="limpiarFiltrosBtn_cabecera">Limpiar</button>
+                            </div>
+                            <table id="tablaCabecera" class="styled-table"></table>
+                            <div id="paginadorCabecera"></div>
+                        </div>
+                        <div id="detalle" class="tab-content">
+                            <div class="filters">
+                                <label>Concepto:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroConcepto_detalle" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="conceptoDropdown_detalle"></div>
+                                    </div>
+                                </label>
+                                <label>Período:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPeriodo_detalle" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="periodoDropdown_detalle"></div>
+                                    </div>
+                                </label>
+                                <label>Prestador:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPrestador_detalle" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="prestadorDropdown_detalle"></div>
+                                    </div>
+                                </label>
+                                <button id="limpiarFiltrosBtn_detalle">Limpiar</button>
+                            </div>
+                            <table id="tablaDetalle" class="styled-table"></table>
+                            <div id="paginadorDetalle"></div>
+                        </div>
+                        <div id="practicas" class="tab-content">
                             <div class="filters">
                                 <label>Concepto:
                                     <div class="custom-select-wrapper">
@@ -106,81 +181,6 @@
                             </div>
                             <table id="tablaPracticas" class="styled-table"></table>
                             <div id="paginadorPracticas"></div>
-                        </div>
-                        <div id="detalle" class="tab-content">
-                            <div class="filters">
-                                <label>Concepto:
-                                    <div class="custom-select-wrapper">
-                                        <input type="text" id="filtroConcepto_detalle" placeholder="Selecciona o escribe..." readonly />
-                                        <div class="custom-select-dropdown" id="conceptoDropdown_detalle"></div>
-                                    </div>
-                                </label>
-                                <label>Período:
-                                    <div class="custom-select-wrapper">
-                                        <input type="text" id="filtroPeriodo_detalle" placeholder="Selecciona o escribe..." readonly />
-                                        <div class="custom-select-dropdown" id="periodoDropdown_detalle"></div>
-                                    </div>
-                                </label>
-                                <label>Prestador:
-                                    <div class="custom-select-wrapper">
-                                        <input type="text" id="filtroPrestador_detalle" placeholder="Selecciona o escribe..." readonly />
-                                        <div class="custom-select-dropdown" id="prestadorDropdown_detalle"></div>
-                                    </div>
-                                </label>
-                                <button id="limpiarFiltrosBtn_detalle">Limpiar</button>
-                            </div>
-                            <table id="tablaDetalle" class="styled-table"></table>
-                            <div id="paginadorDetalle"></div>
-                        </div>
-                        <div id="cabecera" class="tab-content">
-                            <div class="filters">
-                                <label>Concepto:
-                                    <div class="custom-select-wrapper">
-                                        <input type="text" id="filtroConcepto_cabecera" placeholder="Selecciona o escribe..." readonly />
-                                        <div class="custom-select-dropdown" id="conceptoDropdown_cabecera"></div>
-                                    </div>
-                                </label>
-                                <label>Período:
-                                    <div class="custom-select-wrapper">
-                                        <input type="text" id="filtroPeriodo_cabecera" placeholder="Selecciona o escribe..." readonly />
-                                        <div class="custom-select-dropdown" id="periodoDropdown_cabecera"></div>
-                                    </div>
-                                </label>
-                                <label>Prestador:
-                                    <div class="custom-select-wrapper">
-                                        <input type="text" id="filtroPrestador_cabecera" placeholder="Selecciona o escribe..." readonly />
-                                        <div class="custom-select-dropdown" id="prestadorDropdown_cabecera"></div>
-                                    </div>
-                                </label>
-                                <button id="limpiarFiltrosBtn_cabecera">Limpiar</button>
-                            </div>
-                            <table id="tablaCabecera" class="styled-table"></table>
-                            <div id="paginadorCabecera"></div>
-                        </div>
-                        <div id="aprob-cabecera" class="tab-content">
-                            <div class="filters">
-                                <label>Concepto:
-                                    <div class="custom-select-wrapper">
-                                        <input type="text" id="filtroConcepto_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
-                                        <div class="custom-select-dropdown" id="conceptoDropdown_aprob_cabecera"></div>
-                                    </div>
-                                </label>
-                                <label>Período:
-                                    <div class="custom-select-wrapper">
-                                        <input type="text" id="filtroPeriodo_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
-                                        <div class="custom-select-dropdown" id="periodoDropdown_aprob_cabecera"></div>
-                                    </div>
-                                </label>
-                                <label>Prestador:
-                                    <div class="custom-select-wrapper">
-                                        <input type="text" id="filtroPrestador_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
-                                        <div class="custom-select-dropdown" id="prestadorDropdown_aprob_cabecera"></div>
-                                    </div>
-                                </label>
-                                <button id="limpiarFiltrosBtn_aprob_cabecera">Limpiar</button>
-                            </div>
-                            <table id="tablaAprobCabecera" class="styled-table"></table>
-                            <div id="paginadorAprobCabecera"></div>
                         </div>
                     </div>
                 </div>

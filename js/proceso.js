@@ -456,22 +456,13 @@ document.addEventListener('DOMContentLoaded', () => {
             renderTablaAprobCabecera();
         }
 
-        // Prácticas - Usar selectores personalizados con filtrado automático
-        crearSelectorPersonalizado(practicasGlobal, 'c_concepto', 'filtroConcepto_practicas', 'conceptoDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
-        crearSelectorPersonalizado(practicasGlobal, 'c_periodo', 'filtroPeriodo_practicas', 'periodoDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
-        crearSelectorPersonalizado(practicasGlobal, 'c_prestador', 'filtroPrestador_practicas', 'prestadorDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
-        crearSelectorPersonalizado(practicasGlobal, 'n_beneficio', 'filtroBeneficiario_practicas', 'beneficiarioDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
+        // Aprob_Cabecera - Usar selectores personalizados con filtrado automático
+        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_concepto', 'filtroConcepto_aprob_cabecera', 'conceptoDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
+        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_aprob_cabecera', 'periodoDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
+        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_prestador', 'filtroPrestador_aprob_cabecera', 'prestadorDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
 
-        filteredPracticas = practicasGlobal;
-        renderTablaPracticas();
-
-        // Detalle - Usar selectores personalizados con filtrado automático
-        crearSelectorPersonalizado(detalleGlobal, 'c_concepto', 'filtroConcepto_detalle', 'conceptoDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
-        crearSelectorPersonalizado(detalleGlobal, 'c_periodo_ex', 'filtroPeriodo_detalle', 'periodoDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
-        crearSelectorPersonalizado(detalleGlobal, 'c_prestador', 'filtroPrestador_detalle', 'prestadorDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
-
-        filteredDetalle = detalleGlobal;
-        renderTablaDetalle();
+        filteredAprobCabecera = aprobCabeceraGlobal;
+        renderTablaAprobCabecera();
 
         // Cabecera - Usar selectores personalizados con filtrado automático
         crearSelectorPersonalizado(cabeceraGlobal, 'c_concepto', 'filtroConcepto_cabecera', 'conceptoDropdown_cabecera', 'Selecciona o escribe...', filtrarCabecera);
@@ -481,19 +472,28 @@ document.addEventListener('DOMContentLoaded', () => {
         filteredCabecera = cabeceraGlobal;
         renderTablaCabecera();
 
-        // Aprob_Cabecera - Usar selectores personalizados con filtrado automático
-        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_concepto', 'filtroConcepto_aprob_cabecera', 'conceptoDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
-        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_aprob_cabecera', 'periodoDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
-        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_prestador', 'filtroPrestador_aprob_cabecera', 'prestadorDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
+        // Detalle - Usar selectores personalizados con filtrado automático
+        crearSelectorPersonalizado(detalleGlobal, 'c_concepto', 'filtroConcepto_detalle', 'conceptoDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
+        crearSelectorPersonalizado(detalleGlobal, 'c_periodo_ex', 'filtroPeriodo_detalle', 'periodoDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
+        crearSelectorPersonalizado(detalleGlobal, 'c_prestador', 'filtroPrestador_detalle', 'prestadorDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
 
-        filteredAprobCabecera = aprobCabeceraGlobal;
-        renderTablaAprobCabecera();
+        filteredDetalle = detalleGlobal;
+        renderTablaDetalle();
+
+        // Prácticas - Usar selectores personalizados con filtrado automático
+        crearSelectorPersonalizado(practicasGlobal, 'c_concepto', 'filtroConcepto_practicas', 'conceptoDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
+        crearSelectorPersonalizado(practicasGlobal, 'c_periodo', 'filtroPeriodo_practicas', 'periodoDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
+        crearSelectorPersonalizado(practicasGlobal, 'c_prestador', 'filtroPrestador_practicas', 'prestadorDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
+        crearSelectorPersonalizado(practicasGlobal, 'n_beneficio', 'filtroBeneficiario_practicas', 'beneficiarioDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
+
+        filteredPracticas = practicasGlobal;
+        renderTablaPracticas();
 
         // Agregar event listeners para botones de limpiar
-        const limpiarPracticasBtn = document.getElementById('limpiarFiltrosBtn_practicas');
-        if (limpiarPracticasBtn) {
-            limpiarPracticasBtn.addEventListener('click', () => {
-                const inputs = ['filtroConcepto_practicas', 'filtroPeriodo_practicas', 'filtroPrestador_practicas', 'filtroBeneficiario_practicas'];
+        const limpiarAprobCabeceraBtn = document.getElementById('limpiarFiltrosBtn_aprob_cabecera');
+        if (limpiarAprobCabeceraBtn) {
+            limpiarAprobCabeceraBtn.addEventListener('click', () => {
+                const inputs = ['filtroConcepto_aprob_cabecera', 'filtroPeriodo_aprob_cabecera', 'filtroPrestador_aprob_cabecera'];
                 inputs.forEach(id => {
                     const input = document.getElementById(id);
                     if (input?.setValue) {
@@ -502,27 +502,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         input.value = '';
                     }
                 });
-                filteredPracticas = practicasGlobal;
-                currentPagePracticas = 1;
-                renderTablaPracticas();
-            });
-        }
-
-        const limpiarDetalleBtn = document.getElementById('limpiarFiltrosBtn_detalle');
-        if (limpiarDetalleBtn) {
-            limpiarDetalleBtn.addEventListener('click', () => {
-                const inputs = ['filtroConcepto_detalle', 'filtroPeriodo_detalle', 'filtroPrestador_detalle'];
-                inputs.forEach(id => {
-                    const input = document.getElementById(id);
-                    if (input?.setValue) {
-                        input.setValue('');
-                    } else if (input) {
-                        input.value = '';
-                    }
-                });
-                filteredDetalle = detalleGlobal;
-                currentPageDetalle = 1;
-                renderTablaDetalle();
+                filteredAprobCabecera = aprobCabeceraGlobal;
+                currentPageAprobCabecera = 1;
+                renderTablaAprobCabecera();
             });
         }
 
@@ -544,10 +526,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const limpiarAprobCabeceraBtn = document.getElementById('limpiarFiltrosBtn_aprob_cabecera');
-        if (limpiarAprobCabeceraBtn) {
-            limpiarAprobCabeceraBtn.addEventListener('click', () => {
-                const inputs = ['filtroConcepto_aprob_cabecera', 'filtroPeriodo_aprob_cabecera', 'filtroPrestador_aprob_cabecera'];
+        const limpiarDetalleBtn = document.getElementById('limpiarFiltrosBtn_detalle');
+        if (limpiarDetalleBtn) {
+            limpiarDetalleBtn.addEventListener('click', () => {
+                const inputs = ['filtroConcepto_detalle', 'filtroPeriodo_detalle', 'filtroPrestador_detalle'];
                 inputs.forEach(id => {
                     const input = document.getElementById(id);
                     if (input?.setValue) {
@@ -556,9 +538,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         input.value = '';
                     }
                 });
-                filteredAprobCabecera = aprobCabeceraGlobal;
-                currentPageAprobCabecera = 1;
-                renderTablaAprobCabecera();
+                filteredDetalle = detalleGlobal;
+                currentPageDetalle = 1;
+                renderTablaDetalle();
+            });
+        }
+
+        const limpiarPracticasBtn = document.getElementById('limpiarFiltrosBtn_practicas');
+        if (limpiarPracticasBtn) {
+            limpiarPracticasBtn.addEventListener('click', () => {
+                const inputs = ['filtroConcepto_practicas', 'filtroPeriodo_practicas', 'filtroPrestador_practicas', 'filtroBeneficiario_practicas'];
+                inputs.forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input?.setValue) {
+                        input.setValue('');
+                    } else if (input) {
+                        input.value = '';
+                    }
+                });
+                filteredPracticas = practicasGlobal;
+                currentPagePracticas = 1;
+                renderTablaPracticas();
             });
         }
     });
