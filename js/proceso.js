@@ -1,6 +1,6 @@
 import { generarTabla } from './tableUI.js';
 import { parsearFecha } from './formatters.js';
-import { poblarSelectUnico } from './tableLogic.js';
+import { poblarSelectUnico, crearSelectorPersonalizado } from './tableLogic.js';
 import { safeFetch, initCopyIconListener } from './newUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -368,116 +368,201 @@ document.addEventListener('DOMContentLoaded', () => {
         aprobCabeceraGlobal = aprobCabecera;
         validacionesGlobal = validaciones;
 
-        // Prácticas
-        poblarSelectUnico(practicasGlobal, 'c_concepto', 'filtroConcepto_practicas', 'Conceptos');
-        poblarSelectUnico(practicasGlobal, 'c_periodo', 'filtroPeriodo_practicas', 'Periodos');
-        poblarSelectUnico(practicasGlobal, 'c_prestador', 'filtroPrestador_practicas', 'Prestadores');
-        poblarSelectUnico(practicasGlobal, 'n_beneficio', 'filtroBeneficiario_practicas', 'Beneficiarios');
+        // Funciones de filtrado automático
+        function filtrarPracticas() {
+            const filtroConceptoInput = document.getElementById('filtroConcepto_practicas');
+            const filtroPrestadorInput = document.getElementById('filtroPrestador_practicas');
+            const filtroBeneficiarioInput = document.getElementById('filtroBeneficiario_practicas');
+            const filtroPeriodoInput = document.getElementById('filtroPeriodo_practicas');
+
+            const concepto = filtroConceptoInput?.getValue ? filtroConceptoInput.getValue() : (filtroConceptoInput?.value || '');
+            const prestador = filtroPrestadorInput?.getValue ? filtroPrestadorInput.getValue() : (filtroPrestadorInput?.value || '');
+            const beneficiario = filtroBeneficiarioInput?.getValue ? filtroBeneficiarioInput.getValue() : (filtroBeneficiarioInput?.value || '');
+            const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
+
+            const filtradas = practicasGlobal.filter(
+                (p) =>
+                    (concepto === '' || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
+                    (prestador === '' || p.c_prestador == prestador) &&
+                    (beneficiario === '' || p.n_beneficio == beneficiario) &&
+                    (periodo === '' || p.c_periodo == periodo)
+            );
+
+            filteredPracticas = filtradas;
+            currentPagePracticas = 1;
+            renderTablaPracticas();
+        }
+
+        function filtrarDetalle() {
+            const filtroConceptoInput = document.getElementById('filtroConcepto_detalle');
+            const filtroPeriodoInput = document.getElementById('filtroPeriodo_detalle');
+            const filtroPrestadorInput = document.getElementById('filtroPrestador_detalle');
+
+            const concepto = filtroConceptoInput?.getValue ? filtroConceptoInput.getValue() : (filtroConceptoInput?.value || '');
+            const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
+            const prestador = filtroPrestadorInput?.getValue ? filtroPrestadorInput.getValue() : (filtroPrestadorInput?.value || '');
+
+            const filtradas = detalleGlobal.filter(
+                (p) =>
+                    (concepto === '' || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
+                    (periodo === '' || p.c_periodo_ex == periodo) &&
+                    (prestador === '' || p.c_prestador == prestador)
+            );
+
+            filteredDetalle = filtradas;
+            currentPageDetalle = 1;
+            renderTablaDetalle();
+        }
+
+        function filtrarCabecera() {
+            const filtroConceptoInput = document.getElementById('filtroConcepto_cabecera');
+            const filtroPrestadorInput = document.getElementById('filtroPrestador_cabecera');
+            const filtroPeriodoInput = document.getElementById('filtroPeriodo_cabecera');
+
+            const concepto = filtroConceptoInput?.getValue ? filtroConceptoInput.getValue() : (filtroConceptoInput?.value || '');
+            const prestador = filtroPrestadorInput?.getValue ? filtroPrestadorInput.getValue() : (filtroPrestadorInput?.value || '');
+            const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
+
+            const filtradas = cabeceraGlobal.filter(
+                (p) =>
+                    (concepto === '' || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
+                    (prestador === '' || p.c_prestador == prestador) &&
+                    (periodo === '' || p.c_periodo_ex == periodo)
+            );
+
+            filteredCabecera = filtradas;
+            currentPageCabecera = 1;
+            renderTablaCabecera();
+        }
+
+        function filtrarAprobCabecera() {
+            const filtroConceptoInput = document.getElementById('filtroConcepto_aprob_cabecera');
+            const filtroPrestadorInput = document.getElementById('filtroPrestador_aprob_cabecera');
+            const filtroPeriodoInput = document.getElementById('filtroPeriodo_aprob_cabecera');
+
+            const concepto = filtroConceptoInput?.getValue ? filtroConceptoInput.getValue() : (filtroConceptoInput?.value || '');
+            const prestador = filtroPrestadorInput?.getValue ? filtroPrestadorInput.getValue() : (filtroPrestadorInput?.value || '');
+            const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : (filtroPeriodoInput?.value || '');
+
+            const filtradas = aprobCabeceraGlobal.filter(
+                (p) =>
+                    (concepto === '' || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
+                    (prestador === '' || p.c_prestador == prestador) &&
+                    (periodo === '' || p.c_periodo_ex == periodo)
+            );
+
+            filteredAprobCabecera = filtradas;
+            currentPageAprobCabecera = 1;
+            renderTablaAprobCabecera();
+        }
+
+        // Prácticas - Usar selectores personalizados con filtrado automático
+        crearSelectorPersonalizado(practicasGlobal, 'c_concepto', 'filtroConcepto_practicas', 'conceptoDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
+        crearSelectorPersonalizado(practicasGlobal, 'c_periodo', 'filtroPeriodo_practicas', 'periodoDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
+        crearSelectorPersonalizado(practicasGlobal, 'c_prestador', 'filtroPrestador_practicas', 'prestadorDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
+        crearSelectorPersonalizado(practicasGlobal, 'n_beneficio', 'filtroBeneficiario_practicas', 'beneficiarioDropdown_practicas', 'Selecciona o escribe...', filtrarPracticas);
 
         filteredPracticas = practicasGlobal;
         renderTablaPracticas();
 
-        // Detalle
-        poblarSelectUnico(detalleGlobal, 'c_concepto', 'filtroConcepto_detalle', 'Conceptos');
-        poblarSelectUnico(detalleGlobal, 'c_periodo_ex', 'filtroPeriodo_detalle', 'Periodos');
-        poblarSelectUnico(detalleGlobal, 'c_prestador', 'filtroPrestador_detalle', 'Prestadores');
+        // Detalle - Usar selectores personalizados con filtrado automático
+        crearSelectorPersonalizado(detalleGlobal, 'c_concepto', 'filtroConcepto_detalle', 'conceptoDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
+        crearSelectorPersonalizado(detalleGlobal, 'c_periodo_ex', 'filtroPeriodo_detalle', 'periodoDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
+        crearSelectorPersonalizado(detalleGlobal, 'c_prestador', 'filtroPrestador_detalle', 'prestadorDropdown_detalle', 'Selecciona o escribe...', filtrarDetalle);
 
         filteredDetalle = detalleGlobal;
         renderTablaDetalle();
 
-        // Cabecera
-        poblarSelectUnico(cabeceraGlobal, 'c_concepto', 'filtroConcepto_cabecera', 'Conceptos');
-        poblarSelectUnico(cabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_cabecera', 'Periodos');
-        poblarSelectUnico(cabeceraGlobal, 'c_prestador', 'filtroPrestador_cabecera', 'Prestadores');
+        // Cabecera - Usar selectores personalizados con filtrado automático
+        crearSelectorPersonalizado(cabeceraGlobal, 'c_concepto', 'filtroConcepto_cabecera', 'conceptoDropdown_cabecera', 'Selecciona o escribe...', filtrarCabecera);
+        crearSelectorPersonalizado(cabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_cabecera', 'periodoDropdown_cabecera', 'Selecciona o escribe...', filtrarCabecera);
+        crearSelectorPersonalizado(cabeceraGlobal, 'c_prestador', 'filtroPrestador_cabecera', 'prestadorDropdown_cabecera', 'Selecciona o escribe...', filtrarCabecera);
 
         filteredCabecera = cabeceraGlobal;
         renderTablaCabecera();
 
-        // Aprob_Cabecera
-        poblarSelectUnico(aprobCabeceraGlobal, 'c_concepto', 'filtroConcepto_aprob_cabecera', 'Conceptos');
-        poblarSelectUnico(aprobCabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_aprob_cabecera', 'Periodos');
-        poblarSelectUnico(aprobCabeceraGlobal, 'c_prestador', 'filtroPrestador_aprob_cabecera', 'Prestadores');
+        // Aprob_Cabecera - Usar selectores personalizados con filtrado automático
+        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_concepto', 'filtroConcepto_aprob_cabecera', 'conceptoDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
+        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_periodo_ex', 'filtroPeriodo_aprob_cabecera', 'periodoDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
+        crearSelectorPersonalizado(aprobCabeceraGlobal, 'c_prestador', 'filtroPrestador_aprob_cabecera', 'prestadorDropdown_aprob_cabecera', 'Selecciona o escribe...', filtrarAprobCabecera);
 
         filteredAprobCabecera = aprobCabeceraGlobal;
         renderTablaAprobCabecera();
-    });
 
-    /* Filtros */
-    /*  - Filtros Prácticas */
-    document.getElementById('filtroBtn_practicas').addEventListener('click', () => {
-        const concepto = document.getElementById('filtroConcepto_practicas').value.toLowerCase();
-        const prestador = document.getElementById('filtroPrestador_practicas').value.toLowerCase();
-        const beneficiario = document.getElementById('filtroBeneficiario_practicas').value.toLowerCase();
-        const periodo = document.getElementById('filtroPeriodo_practicas').value.toLowerCase();
+        // Agregar event listeners para botones de limpiar
+        const limpiarPracticasBtn = document.getElementById('limpiarFiltrosBtn_practicas');
+        if (limpiarPracticasBtn) {
+            limpiarPracticasBtn.addEventListener('click', () => {
+                const inputs = ['filtroConcepto_practicas', 'filtroPeriodo_practicas', 'filtroPrestador_practicas', 'filtroBeneficiario_practicas'];
+                inputs.forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input?.setValue) {
+                        input.setValue('');
+                    } else if (input) {
+                        input.value = '';
+                    }
+                });
+                filteredPracticas = practicasGlobal;
+                currentPagePracticas = 1;
+                renderTablaPracticas();
+            });
+        }
 
-        const filtradas = practicasGlobal.filter(
-            (p) =>
-                (!concepto || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
-                (!prestador || p.c_prestador == prestador) &&
-                (!beneficiario || p.n_beneficio == beneficiario) &&
-                (!periodo || p.c_periodo == periodo)
-        );
+        const limpiarDetalleBtn = document.getElementById('limpiarFiltrosBtn_detalle');
+        if (limpiarDetalleBtn) {
+            limpiarDetalleBtn.addEventListener('click', () => {
+                const inputs = ['filtroConcepto_detalle', 'filtroPeriodo_detalle', 'filtroPrestador_detalle'];
+                inputs.forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input?.setValue) {
+                        input.setValue('');
+                    } else if (input) {
+                        input.value = '';
+                    }
+                });
+                filteredDetalle = detalleGlobal;
+                currentPageDetalle = 1;
+                renderTablaDetalle();
+            });
+        }
 
-        filteredPracticas = filtradas;
-        currentPagePracticas = 1;
-        renderTablaPracticas();
-    });
+        const limpiarCabeceraBtn = document.getElementById('limpiarFiltrosBtn_cabecera');
+        if (limpiarCabeceraBtn) {
+            limpiarCabeceraBtn.addEventListener('click', () => {
+                const inputs = ['filtroConcepto_cabecera', 'filtroPeriodo_cabecera', 'filtroPrestador_cabecera'];
+                inputs.forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input?.setValue) {
+                        input.setValue('');
+                    } else if (input) {
+                        input.value = '';
+                    }
+                });
+                filteredCabecera = cabeceraGlobal;
+                currentPageCabecera = 1;
+                renderTablaCabecera();
+            });
+        }
 
-    /*  - Filtros Detalles */
-    document.getElementById('filtroBtn_detalle').addEventListener('click', () => {
-        const concepto = document.getElementById('filtroConcepto_detalle').value.toLowerCase();
-        const periodo = document.getElementById('filtroPeriodo_detalle').value.toLowerCase();
-        const prestador = document.getElementById('filtroPrestador_detalle').value.toLowerCase();
-
-        const filtradas = detalleGlobal.filter(
-            (p) =>
-                (!concepto || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
-                (!periodo || p.c_periodo_ex == periodo) &&
-                (!prestador || p.c_prestador == prestador)
-        );
-
-        filteredDetalle = filtradas;
-        currentPageDetalle = 1;
-        renderTablaDetalle();
-    });
-
-    /*  - Filtros Cabecera */
-    document.getElementById('filtroBtn_cabecera').addEventListener('click', () => {
-        const concepto = document.getElementById('filtroConcepto_cabecera').value.toLowerCase();
-        const prestador = document.getElementById('filtroPrestador_cabecera').value.toLowerCase();
-        const periodo = document.getElementById('filtroPeriodo_cabecera').value.toLowerCase();
-
-        const filtradas = cabeceraGlobal.filter(
-            (p) =>
-                (!concepto || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
-                (!prestador || p.c_prestador == prestador) &&
-                (!periodo || p.c_periodo_ex == periodo)
-        );
-
-        filteredCabecera = filtradas;
-        currentPageCabecera = 1;
-        renderTablaCabecera();
-    });
-
-    /*  - Filtros Aprob_Cabecera */
-    document.getElementById('filtroBtn_aprob_cabecera').addEventListener('click', () => {
-        const concepto = document.getElementById('filtroConcepto_aprob_cabecera').value.toLowerCase();
-        const prestador = document.getElementById('filtroPrestador_aprob_cabecera').value.toLowerCase();
-        const periodo = document.getElementById('filtroPeriodo_aprob_cabecera').value.toLowerCase();
-
-        const filtradas = aprobCabeceraGlobal.filter(
-            (p) =>
-                (!concepto || p.c_concepto?.toLowerCase() == concepto?.toLowerCase()) &&
-                (!prestador || p.c_prestador == prestador) &&
-                (!periodo || p.c_periodo_ex == periodo)
-        );
-
-        filteredAprobCabecera = filtradas;
-        currentPageAprobCabecera = 1;
-        renderTablaAprobCabecera();
+        const limpiarAprobCabeceraBtn = document.getElementById('limpiarFiltrosBtn_aprob_cabecera');
+        if (limpiarAprobCabeceraBtn) {
+            limpiarAprobCabeceraBtn.addEventListener('click', () => {
+                const inputs = ['filtroConcepto_aprob_cabecera', 'filtroPeriodo_aprob_cabecera', 'filtroPrestador_aprob_cabecera'];
+                inputs.forEach(id => {
+                    const input = document.getElementById(id);
+                    if (input?.setValue) {
+                        input.setValue('');
+                    } else if (input) {
+                        input.value = '';
+                    }
+                });
+                filteredAprobCabecera = aprobCabeceraGlobal;
+                currentPageAprobCabecera = 1;
+                renderTablaAprobCabecera();
+            });
+        }
     });
 });
-
 // Navega a la página de validaciones con los parámetros correctos
 function navegarAValidaciones(codigo, c_id_practica) {
     const url = `validaciones.html?codigo=${encodeURIComponent(codigo)}&c_id_practica=${encodeURIComponent(

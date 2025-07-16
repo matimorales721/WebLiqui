@@ -78,41 +78,106 @@
                     <div id="grillasPorProceso">
                         <div id="practicas" class="tab-content active">
                             <div class="filters">
-                                <select id="filtroConcepto_practicas"></select>
-                                <select id="filtroPeriodo_practicas"></select>
-                                <select id="filtroPrestador_practicas"></select>
-                                <select id="filtroBeneficiario_practicas"></select>
-                                <button id="filtroBtn_practicas">Filtrar</button>
+                                <label>Concepto:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroConcepto_practicas" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="conceptoDropdown_practicas"></div>
+                                    </div>
+                                </label>
+                                <label>Período:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPeriodo_practicas" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="periodoDropdown_practicas"></div>
+                                    </div>
+                                </label>
+                                <label>Prestador:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPrestador_practicas" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="prestadorDropdown_practicas"></div>
+                                    </div>
+                                </label>
+                                <label>Beneficiario:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroBeneficiario_practicas" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="beneficiarioDropdown_practicas"></div>
+                                    </div>
+                                </label>
+                                <button id="limpiarFiltrosBtn_practicas">Limpiar</button>
                             </div>
                             <table id="tablaPracticas" class="styled-table"></table>
                             <div id="paginadorPracticas"></div>
                         </div>
                         <div id="detalle" class="tab-content">
                             <div class="filters">
-                                <select id="filtroConcepto_detalle"></select>
-                                <select id="filtroPeriodo_detalle"></select>
-                                <select id="filtroPrestador_detalle"></select>
-                                <button id="filtroBtn_detalle">Filtrar</button>
+                                <label>Concepto:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroConcepto_detalle" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="conceptoDropdown_detalle"></div>
+                                    </div>
+                                </label>
+                                <label>Período:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPeriodo_detalle" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="periodoDropdown_detalle"></div>
+                                    </div>
+                                </label>
+                                <label>Prestador:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPrestador_detalle" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="prestadorDropdown_detalle"></div>
+                                    </div>
+                                </label>
+                                <button id="limpiarFiltrosBtn_detalle">Limpiar</button>
                             </div>
                             <table id="tablaDetalle" class="styled-table"></table>
                             <div id="paginadorDetalle"></div>
                         </div>
                         <div id="cabecera" class="tab-content">
                             <div class="filters">
-                                <select id="filtroConcepto_cabecera"></select>
-                                <select id="filtroPeriodo_cabecera"></select>
-                                <select id="filtroPrestador_cabecera"></select>
-                                <button id="filtroBtn_cabecera">Filtrar</button>
+                                <label>Concepto:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroConcepto_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="conceptoDropdown_cabecera"></div>
+                                    </div>
+                                </label>
+                                <label>Período:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPeriodo_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="periodoDropdown_cabecera"></div>
+                                    </div>
+                                </label>
+                                <label>Prestador:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPrestador_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="prestadorDropdown_cabecera"></div>
+                                    </div>
+                                </label>
+                                <button id="limpiarFiltrosBtn_cabecera">Limpiar</button>
                             </div>
                             <table id="tablaCabecera" class="styled-table"></table>
                             <div id="paginadorCabecera"></div>
                         </div>
                         <div id="aprob-cabecera" class="tab-content">
                             <div class="filters">
-                                <select id="filtroConcepto_aprob_cabecera"></select>
-                                <select id="filtroPeriodo_aprob_cabecera"></select>
-                                <select id="filtroPrestador_aprob_cabecera"></select>
-                                <button id="filtroBtn_aprob_cabecera">Filtrar</button>
+                                <label>Concepto:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroConcepto_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="conceptoDropdown_aprob_cabecera"></div>
+                                    </div>
+                                </label>
+                                <label>Período:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPeriodo_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="periodoDropdown_aprob_cabecera"></div>
+                                    </div>
+                                </label>
+                                <label>Prestador:
+                                    <div class="custom-select-wrapper">
+                                        <input type="text" id="filtroPrestador_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
+                                        <div class="custom-select-dropdown" id="prestadorDropdown_aprob_cabecera"></div>
+                                    </div>
+                                </label>
+                                <button id="limpiarFiltrosBtn_aprob_cabecera">Limpiar</button>
                             </div>
                             <table id="tablaAprobCabecera" class="styled-table"></table>
                             <div id="paginadorAprobCabecera"></div>
