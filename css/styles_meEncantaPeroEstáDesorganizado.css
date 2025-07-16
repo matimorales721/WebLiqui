@@ -444,14 +444,52 @@ button:hover {
 
 .filters {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8fbff;
+    border-radius: 8px;
+    border: 1px solid #e1e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+
+.filters label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: #374151;
+    font-size: 14px;
+    gap: 0.25rem;
+}
+
 .filters select,
 .filters input {
-    padding: 0.5rem;
-    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    margin: 0 5px 10px 0;
+    background-color: #f8fbff;
+    color: rgb(1, 8, 55);
+    font-size: 14px;
+    min-width: 150px;
+    width: 150px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filters input:focus {
+    outline: none;
+    border-color: #1565c0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(21, 101, 192, 0.2);
+    transform: translateY(-1px);
+}
+
+.filters input::placeholder {
+    color: #6b7280;
+    font-style: italic;
 }
 
 .detalle-proceso {
@@ -485,22 +523,178 @@ button:hover {
     transform: scale(1.05);
 }
 
-.filters select {
-    padding: 6px 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+/* Selector personalizado */
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+}
+
+.custom-select-wrapper input {
+    width: 100%;
+    padding: 8px 32px 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background-color: #f8fbff;
+    color: rgb(1, 8, 55);
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+.custom-select-wrapper input:focus {
+    outline: none;
+    border-color: #1565c0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(21, 101, 192, 0.2);
+    transform: translateY(-1px);
+}
+
+.custom-select-wrapper input.editing {
+    background-image: none;
+    cursor: text;
+}
+
+.custom-select-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.custom-select-dropdown.show {
+    display: block;
+}
+
+.custom-select-option {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.2s ease;
+}
+
+.custom-select-option:hover {
+    background-color: #f8fbff;
+}
+
+.custom-select-option:last-child {
+    border-bottom: none;
+}
+
+.custom-select-option.selected {
+    background-color: #e3f2fd;
+    font-weight: 500;
+}
+
+/* Estilos obsoletos del datalist - ya no se usan
+.filters select,
+.filters input[list] {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
     margin: 0 5px 10px 0;
-    background-color: #a1c5ee;
+    background-color: #f8fbff;
     color: rgb(1, 8, 55);
     font-size: 14px;
     min-width: 150px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+*/
+
+/* Estilos obsoletos del datalist - ya no se usan
+.filters select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 32px;
+}
+
+.filters input[list] {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 32px;
+}
+*/
+
+/* Estilos obsoletos para ocultar flechas nativas del datalist - ya no se usan
+.filters input[list]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.filters input[list]::-webkit-list-button {
+    display: none;
+}
+
+.filters input[list]::-webkit-clear-button {
+    display: none;
+}
+*/
+
+/* Estilos para el datalist */
+datalist {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+/* Estilos para las opciones del datalist */
+datalist option {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+datalist option:hover {
+    background-color: #f8fbff;
+}
+
+datalist option:last-child {
+    border-bottom: none;
+}
+
+/* Mejorar la apariencia del input cuando está enfocado y muestra opciones */
+.filters input[list]:focus {
+    outline: none;
+    border-color: #1565c0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(21, 101, 192, 0.2);
+    transform: translateY(-1px);
+    position: relative;
+    z-index: 999;
 }
 
 .filters select:focus {
     outline: none;
-    border-color: #0e1419;
-    background-color: #1565c0;
-    color: rgb(1, 8, 55);
+    border-color: #1565c0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(21, 101, 192, 0.2);
+    transform: translateY(-1px);
 }
 
 /* Accesibilidad: foco claro */
@@ -751,3 +945,25 @@ button:focus,
 .btn-validaciones:hover {
     background-color: #b71c1c;
 }
+
+/* Estilos específicos para Firefox */
+@-moz-document url-prefix() {
+    .filters input[list] {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        background-size: 16px;
+        padding-right: 32px;
+    }
+}
+
+/* Estilos para Edge y navegadores basados en Chromium */
+.filters input[list]::-ms-clear {
+    display: none;
+}
+
+.filters input[list]::-ms-reveal {
+    display: none;
+}
+
+/* Mejorar la validación visual */

@@ -1,8 +1,10 @@
 import { generarTabla } from './tableUI.js';
 import { poblarSelectUnico } from './tableLogic.js';
-import { safeFetch } from './newUtils.js';
+import { safeFetch, initCopyIconListener } from './newUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa el listener de copiado de íconos
+    initCopyIconListener();
     const urlParams = new URLSearchParams(window.location.search);
     const codigo = urlParams.get('codigo');
     const c_id_practica = urlParams.get('c_id_practica');
@@ -37,7 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('nextPageValidaciones').disabled = true;
             return;
         }
-        generarTabla(filteredValidaciones, 'tablaValidaciones', camposGrillaValidaciones, undefined, currentPageValidaciones, pageSizeValidaciones);
+        generarTabla(
+            filteredValidaciones,
+            'tablaValidaciones',
+            camposGrillaValidaciones,
+            undefined,
+            currentPageValidaciones,
+            pageSizeValidaciones
+        );
         const totalPages = Math.max(1, Math.ceil(filteredValidaciones.length / pageSizeValidaciones));
         // Paginador visual
         const paginador = document.getElementById('paginacionValidaciones');
@@ -67,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btns.push(totalPages);
                 }
             }
-            btns.forEach(i => {
+            btns.forEach((i) => {
                 if (i === '...') {
                     const span = document.createElement('span');
                     span.textContent = '...';

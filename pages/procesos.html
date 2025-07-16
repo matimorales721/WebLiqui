@@ -30,11 +30,12 @@
                 <div class="filters">
                     <label
                         >Tipo:
-                        <select id="filtroTipo">
-                            <option value="">Todos</option>
-                            <option value="E">E</option>
-                            <option value="M">M</option>
-                        </select>
+                        <div class="custom-select-wrapper">
+                            <input type="text" id="filtroTipo" placeholder="Selecciona o escribe..." readonly />
+                            <div class="custom-select-dropdown" id="tipoDropdown">
+                                <!-- Las opciones se generan dinámicamente -->
+                            </div>
+                        </div>
                     </label>
 
                     <label
@@ -42,23 +43,12 @@
                         <input type="text" id="filtroPeriodo" placeholder="ej: 202301" />
                     </label>
 
-                    <button id="filtroBtn" onclick="filtrar()">Filtrar</button>
+                    <button id="limpiarFiltrosBtn">Limpiar</button>
                 </div>
 
                 <table id="tablaProcesos" class="styled-table"></table>
                 <div id="paginacionProcesos" class="table-pagination">
-                    <button id="prevPageBtn">Anterior</button>
-                    <span id="pageInfo"></span>
-                    <button id="nextPageBtn">Siguiente</button>
-                    <label style="margin-left:16px;">
-                        Filas por página:
-                        <select id="pageSizeSelect">
-                            <option value="5">5</option>
-                            <option value="10" selected>10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                        </select>
-                    </label>
+                    <!-- Los botones de paginación se generan dinámicamente -->
                 </div>
             </div>
         </div>

@@ -1,13 +1,17 @@
-import { poblarSelectUnico } from './tableLogic.js';
+import { poblarSelectUnico, crearSelectorPersonalizado } from './tableLogic.js';
 import { generarTabla } from './tableUI.js';
-import { safeFetch } from './newUtils.js';
+import { safeFetch, initCopyIconListener } from './newUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa el listener de copiado de íconos
+    initCopyIconListener();
     Promise.all([safeFetch('../data/procesos.json')]).then(([procesos]) => {
         if (!procesos || !procesos.length) return;
 
-        poblarSelectUnico(procesos, 'c_tipo_ejecucion', 'filtroTipo', 'Tipo');
-        poblarSelectUnico(procesos, 'c_periodo', 'filtroPeriodo', 'Período');
+        // Definir columnas primero
+        let currentPage = 1;
+        let pageSize = 10;
+        let filteredData = procesos;
 
         const columnas = [
             { key: 'c_proceso', header: 'Proceso', format: 'code' },
@@ -23,7 +27,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 render: (item) => {
                     const btnDetalle = document.createElement('a');
                     btnDetalle.className = 'btn';
-                    btnDetalle.href = `proceso.html?codigo=${item.c_proceso}`;
+
+                    // Crear URL con filtros actuales
+                    const filtroTipoInput = document.getElementById('filtroTipo');
+                    const currentFilters = {
+                        tipo: filtroTipoInput?.getValue ? filtroTipoInput.getValue() : (filtroTipoInput?.value || ''),
+                        periodo: document.getElementById('filtroPeriodo')?.value || ''
+                    };
+
+                    let url = `proceso.html?codigo=${item.c_proceso}`;
+                    if (currentFilters.tipo) {
+                        url += `&filtroTipo=${encodeURIComponent(currentFilters.tipo)}`;
+                    }
+                    if (currentFilters.periodo) {
+                        url += `&filtroPeriodo=${encodeURIComponent(currentFilters.periodo)}`;
+                    }
+
+                    btnDetalle.href = url;
                     btnDetalle.textContent = 'Ver';
                     const espacio = document.createElement('span');
                     espacio.style.display = 'inline-block';
@@ -42,10 +62,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         ];
 
-        // Estado de paginación
-        let currentPage = 1;
-        let pageSize = 10;
-        let filteredData = procesos;
+        // Función para ejecutar filtrado
+        function ejecutarFiltrado() {
+            const filtroTipoInput = document.getElementById('filtroTipo');
+            const tipo = filtroTipoInput.getValue ? filtroTipoInput.getValue() : filtroTipoInput.value;
+            const periodo = document.getElementById('filtroPeriodo').value.trim();
+
+            // Guardar filtros en localStorage
+            saveFilters(tipo, periodo);
+
+            filteredData = procesos.filter(
+                (p) =>
+                    (tipo === '' || p.c_tipo_ejecucion === tipo) &&
+                    (periodo === '' || p.c_periodo.toString().includes(periodo))
+            );
+            currentPage = 1;
+            renderTablaProcesos();
+        }
 
         function renderTablaProcesos() {
             generarTabla(filteredData, 'tablaProcesos', columnas, undefined, currentPage, pageSize);
@@ -54,6 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const paginador = document.getElementById('paginacionProcesos');
             if (paginador) {
                 paginador.innerHTML = '';
+
+                // Botones de páginas
                 let btnWidth = 38;
                 let paginadorWidth = paginador.offsetWidth || 400;
                 let maxBtns = Math.floor(paginadorWidth / btnWidth);
@@ -78,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         btns.push(totalPages);
                     }
                 }
-                btns.forEach(i => {
+                btns.forEach((i) => {
                     if (i === '...') {
                         const span = document.createElement('span');
                         span.textContent = '...';
@@ -88,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const btn = document.createElement('button');
                         btn.textContent = i;
                         btn.className = 'paginador-btn' + (i === currentPage ? ' active' : '');
-                        btn.style.margin = '4px 4px'; // separación vertical y horizontal
+                        btn.style.margin = '4px 4px';
                         btn.onclick = () => {
                             currentPage = i;
                             renderTablaProcesos();
@@ -99,31 +134,67 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Crear selector personalizado y poblar filtros
+        crearSelectorPersonalizado(procesos, 'c_tipo_ejecucion', 'filtroTipo', 'tipoDropdown', 'Selecciona o escribe...', ejecutarFiltrado);
+        poblarSelectUnico(procesos, 'c_periodo', 'filtroPeriodo', 'Período');
+
+        // Agregar filtrado automático para el input de período
+        let debounceTimer;
+        const filtroPeriodoInput = document.getElementById('filtroPeriodo');
+        if (filtroPeriodoInput) {
+            filtroPeriodoInput.addEventListener('input', () => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(ejecutarFiltrado, 300);
+            });
+            
+            filtroPeriodoInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    clearTimeout(debounceTimer);
+                    ejecutarFiltrado();
+                }
+            });
+        }
+
+        // Recuperar filtros guardados de localStorage o URL
+        const savedFilters = getSavedFilters();
+        
+        // Esperar a que se cree el selector personalizado
+        setTimeout(() => {
+            const filtroTipoInput = document.getElementById('filtroTipo');
+            if (savedFilters.tipo && filtroTipoInput.setValue) {
+                filtroTipoInput.setValue(savedFilters.tipo);
+            }
+            if (savedFilters.periodo) {
+                document.getElementById('filtroPeriodo').value = savedFilters.periodo;
+            }
+        }, 100);
+
         // Inicializar tabla y controles
         renderTablaProcesos();
 
-        document.getElementById('prevPageBtn').addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
+        // Event listener para botón de limpiar filtros
+        const limpiarFiltrosBtn = document.getElementById('limpiarFiltrosBtn');
+        if (limpiarFiltrosBtn) {
+            limpiarFiltrosBtn.addEventListener('click', () => {
+                const filtroTipoInput = document.getElementById('filtroTipo');
+                if (filtroTipoInput.setValue) {
+                    filtroTipoInput.setValue('');
+                } else {
+                    filtroTipoInput.value = '';
+                }
+                document.getElementById('filtroPeriodo').value = '';
+                clearFilters();
+                filteredData = procesos;
+                currentPage = 1;
                 renderTablaProcesos();
-            }
-        });
-        document.getElementById('nextPageBtn').addEventListener('click', () => {
-            const totalPages = Math.max(1, Math.ceil(filteredData.length / pageSize));
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderTablaProcesos();
-            }
-        });
-        document.getElementById('pageSizeSelect').addEventListener('change', (e) => {
-            pageSize = parseInt(e.target.value, 10);
-            currentPage = 1;
-            renderTablaProcesos();
-        });
+            });
+        }
 
-        document.getElementById('filtroBtn').addEventListener('click', () => {
-            const tipo = document.getElementById('filtroTipo').value;
-            const periodo = document.getElementById('filtroPeriodo').value.trim();
+        // Aplicar filtros guardados si existen
+        if (savedFilters.tipo || savedFilters.periodo) {
+            const tipo = savedFilters.tipo || '';
+            const periodo = savedFilters.periodo || '';
+
             filteredData = procesos.filter(
                 (p) =>
                     (tipo === '' || p.c_tipo_ejecucion === tipo) &&
@@ -131,6 +202,45 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             currentPage = 1;
             renderTablaProcesos();
-        });
+        }
     });
 });
+
+// Funciones para manejo de estado de filtros
+// Este sistema permite que los filtros se mantengan cuando el usuario navega
+// entre páginas. Los filtros se guardan en localStorage y también se pasan
+// como parámetros de URL para mayor robustez.
+function saveFilters(tipo, periodo) {
+    const filters = {
+        tipo: tipo || '',
+        periodo: periodo || ''
+    };
+    localStorage.setItem('procesos_filters', JSON.stringify(filters));
+}
+
+function getSavedFilters() {
+    // Primero intentar obtener de URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlFilters = {
+        tipo: urlParams.get('filtroTipo') || '',
+        periodo: urlParams.get('filtroPeriodo') || ''
+    };
+
+    // Si hay filtros en URL, usarlos y guardarlos
+    if (urlFilters.tipo || urlFilters.periodo) {
+        saveFilters(urlFilters.tipo, urlFilters.periodo);
+        return urlFilters;
+    }
+
+    // Si no hay filtros en URL, intentar obtener de localStorage
+    try {
+        const saved = localStorage.getItem('procesos_filters');
+        return saved ? JSON.parse(saved) : { tipo: '', periodo: '' };
+    } catch (e) {
+        return { tipo: '', periodo: '' };
+    }
+}
+
+function clearFilters() {
+    localStorage.removeItem('procesos_filters');
+}

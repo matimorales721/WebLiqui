@@ -1,9 +1,11 @@
 import { generarTabla } from './tableUI.js';
 import { parsearFecha } from './formatters.js';
 import { poblarSelectUnico } from './tableLogic.js';
-import { safeFetch } from './newUtils.js';
+import { safeFetch, initCopyIconListener } from './newUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa el listener de copiado de íconos
+    initCopyIconListener();
     function renderTablaDetalle() {
         generarTabla(
             filteredDetalle,
@@ -43,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btns.push(totalPages);
                 }
             }
-            btns.forEach(i => {
+            btns.forEach((i) => {
                 if (i === '...') {
                     const span = document.createElement('span');
                     span.textContent = '...';
@@ -103,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btns.push(totalPages);
                 }
             }
-            btns.forEach(i => {
+            btns.forEach((i) => {
                 if (i === '...') {
                     const span = document.createElement('span');
                     span.textContent = '...';
@@ -163,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btns.push(totalPages);
                 }
             }
-            btns.forEach(i => {
+            btns.forEach((i) => {
                 if (i === '...') {
                     const span = document.createElement('span');
                     span.textContent = '...';
@@ -222,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     btns.push(totalPages);
                 }
             }
-            btns.forEach(i => {
+            btns.forEach((i) => {
                 if (i === '...') {
                     const span = document.createElement('span');
                     span.textContent = '...';
@@ -490,12 +492,55 @@ export function getParametroProceso() {
     return parseInt(urlParams.get('codigo'));
 }
 
+// Función para construir URL de vuelta a procesos con filtros
+function construirUrlVueltaProcesos() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const filtroTipo = urlParams.get('filtroTipo');
+    const filtroPeriodo = urlParams.get('filtroPeriodo');
+    
+    let url = 'procesos.html';
+    const params = new URLSearchParams();
+    
+    if (filtroTipo) {
+        params.append('filtroTipo', filtroTipo);
+    }
+    if (filtroPeriodo) {
+        params.append('filtroPeriodo', filtroPeriodo);
+    }
+    
+    if (params.toString()) {
+        url += '?' + params.toString();
+    }
+    
+    return url;
+}
+
 window.showTab = (tabId) => {
     document.querySelectorAll('.tab-content').forEach((t) => t.classList.remove('active'));
     document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
     document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
 };
+
+// Inicializar botones de vuelta a procesos cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+    // Configurar botón de volver a procesos (escritorio)
+    const btnVolver = document.getElementById('btnVolverProcesos');
+    if (btnVolver) {
+        btnVolver.addEventListener('click', () => {
+            window.location.href = construirUrlVueltaProcesos();
+        });
+    }
+    
+    // Configurar botón de volver a procesos (móvil)
+    const btnVolverMobile = document.getElementById('btnVolverProcesosMobile');
+    if (btnVolverMobile) {
+        btnVolverMobile.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = construirUrlVueltaProcesos();
+        });
+    }
+});
 
 function calcularDuracion(inicio, fin) {
     const inicioDate = parsearFecha(inicio);
