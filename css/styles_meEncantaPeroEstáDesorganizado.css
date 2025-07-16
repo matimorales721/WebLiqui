@@ -1,3 +1,94 @@
+/* === LOGIN MODERNO === */
+.login-bg {
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--background-color) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100vw;
+}
+
+.login-box {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 32px rgba(21, 101, 192, 0.15);
+    padding: 2.5rem 2rem 2rem 2rem;
+    min-width: 320px;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: stretch;
+}
+.login-box h2 {
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #f3f6f9;
+    border-radius: 6px;
+    border: 1px solid #d0d7e2;
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.5rem;
+    transition: border-color 0.2s;
+}
+
+.input-group:focus-within {
+    border-color: var(--primary-light);
+}
+
+.input-icon {
+    margin-right: 0.7rem;
+    color: var(--primary-light);
+    display: flex;
+    align-items: center;
+}
+
+.login-box input[type='text'],
+.login-box input[type='password'] {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1em;
+    color: var(--text-color);
+    width: 100%;
+    padding: 0.4em 0.5em;
+}
+
+.login-box input[type='text']:focus,
+.login-box input[type='password']:focus {
+    background: #e3f2fd;
+}
+
+.login-box button {
+    margin-top: 0.5rem;
+    font-size: 1.05em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(21, 101, 192, 0.08);
+}
+
+@media (max-width: 600px) {
+    .login-box {
+        min-width: 90vw;
+        max-width: 95vw;
+        padding: 1.2rem 0.5rem;
+    }
+}
 :root {
     --primary-color: #1565c0;
     --primary-light: #42a5f5;

@@ -6,14 +6,56 @@
         <title>WebLiqui - Login</title>
         <link rel="stylesheet" href="../css/styles_meEncantaPeroEstáDesorganizado.css" />
         <link rel="icon" type="image/x-icon" href="../images/favicon-ok.png" />
+        <script src="https://kit.fontawesome.com/a65ea7f353.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="login-container">
-            <div class="login-box">
-                <h2>WebLiqui</h2>
-                <input type="text" id="usuario" placeholder="Nombre de usuario" />
-                <input type="password" id="password" placeholder="Contraseña" />
-                <button id="loginBtn">Ingresar</button>
+        <div class="login-bg">
+            <div class="login-container">
+                <div class="login-box">
+                    <h2 style="display: flex; align-items: center; justify-content: center; gap: 0.7em">
+                        <i class="fa-solid fa-user"></i>
+                        WebLiqui
+                    </h2>
+                    <div class="input-group">
+                        <span class="input-icon">
+                            <!-- Icono usuario -->
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <circle cx="10" cy="7" r="4" />
+                                <path
+                                    d="M2 18c0-3.5 4-5.5 8-5.5s8 2 8 5.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                />
+                            </svg>
+                        </span>
+                        <input type="text" id="usuario" placeholder="Nombre de usuario" autocomplete="username" />
+                    </div>
+                    <div class="input-group">
+                        <span class="input-icon">
+                            <!-- Icono candado -->
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <rect x="5" y="9" width="10" height="7" rx="2" />
+                                <path d="M7 9V7a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.5" />
+                                <circle cx="10" cy="13" r="1" />
+                            </svg>
+                        </span>
+                        <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password" />
+                    </div>
+                    <button id="loginBtn">Ingresar</button>
+                </div>
             </div>
         </div>
         <script type="module" src="../js/login.js"></script>

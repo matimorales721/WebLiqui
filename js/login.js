@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const loginButton = document.getElementById('loginBtn');
 
-    loginButton.addEventListener('click', async () => {
+    async function intentarLogin() {
         const usuario = usuarioInput.value.trim();
         const password = passwordInput.value.trim();
 
@@ -28,6 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             alert('Error al validar usuario.');
             console.error(error);
+        }
+    }
+
+    loginButton.addEventListener('click', intentarLogin);
+    usuarioInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            intentarLogin();
+        }
+    });
+    passwordInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            intentarLogin();
         }
     });
 });

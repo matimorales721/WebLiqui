@@ -4,7 +4,7 @@
         "usuario": "admin",
         "password": "123",
         "nombre": "Administrador",
-        "email": "admin@webliqui.com",
+        "email": "admin@test.com",
         "rol": "admin",
         "activo": true
     },
@@ -13,7 +13,7 @@
         "usuario": "usuario1",
         "password": "123",
         "nombre": "Usuario Uno",
-        "email": "usuario1@webliqui.com",
+        "email": "usuario1@test.com",
         "rol": "user",
         "activo": true
     }
