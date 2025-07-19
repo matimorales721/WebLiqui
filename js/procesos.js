@@ -14,17 +14,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // Crear instancia del manager
     const procesosManager = new ProcesosManager();
 
-    // Cargar datos y inicializar
-    Promise.all([safeFetch('../data/procesos.json')])
-        .then(([procesos]) => {
+    // Intentamos primero con el backend
+    safeFetch('http://localhost:3000/api/pxp/procesos')
+        .then((procesos) => {
             if (!procesos || !procesos.length) {
-                console.warn('No se encontraron datos de procesos');
-                return;
+                throw new Error('Backend vacío o sin procesos');
             }
-
             procesosManager.inicializar(procesos);
         })
         .catch((error) => {
-            console.error('Error cargando datos de procesos:', error);
+            console.warn('No se pudo cargar desde backend, intentando fallback local:', error);
+
+            // Fallback al archivo local
+            safeFetch('../data/procesos.json')
+                .then((procesos) => {
+                    if (!procesos || !procesos.length) {
+                        console.warn('No se encontraron datos de procesos en el archivo local');
+                        return;
+                    }
+                    procesosManager.inicializar(procesos);
+                })
+                .catch((error) => {
+                    console.error('Error cargando datos de procesos desde archivo local:', error);
+                });
         });
 });

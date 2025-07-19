@@ -195,6 +195,10 @@ export function generarTabla(data, tableId, columns, headers, page = 1, pageSize
                 td.textContent = Number(valor).toLocaleString('es-AR');
                 td.classList.add('numeric-td');
 
+                // Hour
+            } else if (format === 'hour') {
+                td.textContent = valor == ':' || valor == null || valor === '' ? '' : valor + ' hs.';
+
                 // Otros
             } else {
                 td.textContent = valor ?? '';

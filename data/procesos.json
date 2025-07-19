@@ -1,7 +1,62 @@
-{"results":[{"columns":[{"name":"C_PROCESO","type":"NUMBER"},{"name":"C_TIPO_EJECUCION","type":"CHAR"},{"name":"C_GRUPO","type":"NUMBER"},{"name":"C_TIPO_RETRIBUCION","type":"CHAR"},{"name":"F_SCHEDULE","type":"DATE"},{"name":"C_ID_JOB","type":"NUMBER"},{"name":"F_INICIO","type":"DATE"},{"name":"F_FIN","type":"DATE"},{"name":"C_ESTADO_EJECUCION","type":"CHAR"},{"name":"C_ESTADO_CALCULO","type":"CHAR"},{"name":"C_PERIODO","type":"NUMBER"},{"name":"N_VERSION_PKG_CALCULO","type":"CHAR"},{"name":"N_VERSION_PKG_ERROR_TI","type":"CHAR"},{"name":"N_VERSION_PKG_REGLAS_NEGOCIO","type":"CHAR"},{"name":"N_VERSION_PKG_RPE_CALCULO","type":"CHAR"},{"name":"M_ES_GDI","type":"VARCHAR2"},{"name":"C_PROCESO_ORI","type":"NUMBER"}],"items":
-[
-{"c_proceso":4821,"c_tipo_ejecucion":"M","c_grupo":0,"c_tipo_retribucion":"PXP","f_schedule":"23\/06\/2025 21:23:45","c_id_job":19566009,"f_inicio":"23\/06\/2025 21:23:50","f_fin":"24\/06\/2025 06:22:28","c_estado_ejecucion":"3","c_estado_calculo":"3","c_periodo":202504,"n_version_pkg_calculo":"2.0       ","m_es_gdi":"N","c_proceso_ori":4821}
-,{"c_proceso":4822,"c_tipo_ejecucion":"E","c_tipo_retribucion":"PXP","f_schedule":"24\/06\/2025 18:05:28","c_id_job":19582998,"f_inicio":"24\/06\/2025 18:05:32","f_fin":"24\/06\/2025 19:00:11","c_estado_ejecucion":"3","c_estado_calculo":"3","c_periodo":202504,"n_version_pkg_calculo":"2.0       ","m_es_gdi":"S","c_proceso_ori":4822}
-,{"c_proceso":4832,"c_tipo_ejecucion":"M","c_grupo":0,"c_tipo_retribucion":"PXP","f_schedule":"12\/07\/2025 12:56:12","c_id_job":19690485,"f_inicio":"12\/07\/2025 12:56:17","f_fin":"13\/07\/2025 02:44:25","c_estado_ejecucion":"3","c_estado_calculo":"4","c_periodo":202504,"n_version_pkg_calculo":"2.0       ","m_es_gdi":"N","c_proceso_ori":4832}
-,{"c_proceso":4836,"c_tipo_ejecucion":"M","c_grupo":0,"c_tipo_retribucion":"PXP","f_schedule":"13\/07\/2025 15:36:54","c_id_job":19690660,"f_inicio":"13\/07\/2025 15:36:59","f_fin":"14\/07\/2025 04:24:11","c_estado_ejecucion":"3","c_estado_calculo":"4","c_periodo":202504,"n_version_pkg_calculo":"2.0       ","m_es_gdi":"N","c_proceso_ori":4836}
-]}]}
+{
+    "results": [
+        {
+            "columns": [
+                { "name": "C_PROCESO", "type": "NUMBER" },
+                { "name": "TIPO_EJECUCION", "type": "VARCHAR2" },
+                { "name": "C_GRUPO", "type": "NUMBER" },
+                { "name": "C_TIPO_RETRIBUCION", "type": "CHAR" },
+                { "name": "F_SCHEDULE", "type": "DATE" },
+                { "name": "C_ID_JOB", "type": "NUMBER" },
+                { "name": "F_INICIO", "type": "DATE" },
+                { "name": "F_FIN", "type": "DATE" },
+                { "name": "C_ESTADO_EJECUCION", "type": "CHAR" },
+                { "name": "C_ESTADO_CALCULO", "type": "CHAR" },
+                { "name": "C_PERIODO", "type": "NUMBER" },
+                { "name": "N_VERSION_PKG_CALCULO", "type": "CHAR" },
+                { "name": "N_VERSION_PKG_ERROR_TI", "type": "CHAR" },
+                { "name": "N_VERSION_PKG_REGLAS_NEGOCIO", "type": "CHAR" },
+                { "name": "N_VERSION_PKG_RPE_CALCULO", "type": "CHAR" },
+                { "name": "M_ES_GDI", "type": "VARCHAR2" },
+                { "name": "C_PROCESO_ORI", "type": "NUMBER" }
+            ],
+            "items": [
+                {
+                    "C_PROCESO": 4821,
+                    "TIPO_EJECUCION": "M",
+                    "C_GRUPO": 0,
+                    "F_INICIO": "23-06-2025T21:23:50",
+                    "F_FIN": "24-06-2025T06:22:28",
+                    "C_ESTADO_CALCULO": "3",
+                    "C_PERIODO": 202504
+                },
+                {
+                    "C_PROCESO": 4822,
+                    "TIPO_EJECUCION": "E",
+                    "F_INICIO": "24-06-2025T18:05:32",
+                    "F_FIN": "24-06-2025T19:00:11",
+                    "C_ESTADO_CALCULO": "3",
+                    "C_PERIODO": 202504
+                },
+                {
+                    "C_PROCESO": 4832,
+                    "TIPO_EJECUCION": "M",
+                    "C_GRUPO": 0,
+                    "F_INICIO": "12-07-2025T12:56:17",
+                    "F_FIN": "13-07-2025T02:44:25",
+                    "C_ESTADO_CALCULO": "4",
+                    "C_PERIODO": 202504
+                },
+                {
+                    "C_PROCESO": 4836,
+                    "TIPO_EJECUCION": "M",
+                    "C_GRUPO": 0,
+                    "F_INICIO": "13-07-2025T15:36:59",
+                    "F_FIN": "14-07-2025T04:24:11",
+                    "C_ESTADO_CALCULO": "4",
+                    "C_PERIODO": 202504
+                }
+            ]
+        }
+    ]
+}

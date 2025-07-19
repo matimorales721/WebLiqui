@@ -18,8 +18,15 @@ export class ProcesosManager {
      * @param {Array} procesos - Array de procesos
      */
     inicializar(procesos) {
-        this.allData = procesos;
-        this.filteredData = procesos;
+        // Ordenar los procesos por c_proceso descendente por defecto
+        const procesosOrdenados = procesos.sort((a, b) => {
+            const procesoA = a.c_proceso || a.C_PROCESO || 0;
+            const procesoB = b.c_proceso || b.C_PROCESO || 0;
+            return procesoB - procesoA; // Ordenamiento numérico descendente
+        });
+
+        this.allData = procesosOrdenados;
+        this.filteredData = procesosOrdenados;
         this.configurarFiltros();
         this.configurarEventListeners();
         this.renderTabla();
@@ -36,22 +43,18 @@ export class ProcesosManager {
             // Crear selector de tipo con callback automático
             crearSelectorPersonalizado(
                 this.allData,
-                'c_tipo_ejecucion',
+                'TIPO_EJECUCION',
                 'filtroTipo',
                 'tipoDropdown',
                 'Selecciona o escribe...',
                 () => this.ejecutarFiltradoConDebounce()
             );
+        }
 
-            // Crear selector de período
-            crearSelectorPersonalizado(
-                this.allData,
-                'c_periodo',
-                'filtroPeriodo',
-                'periodoDropdown',
-                'Selecciona o escribe...',
-                () => this.ejecutarFiltradoConDebounce()
-            );
+        // Para el período, usamos un input simple, agregamos el event listener
+        const filtroPeriodoInput = document.getElementById('filtroPeriodo');
+        if (filtroPeriodoInput) {
+            filtroPeriodoInput.addEventListener('input', () => this.ejecutarFiltradoConDebounce());
         }
     }
 
@@ -59,7 +62,7 @@ export class ProcesosManager {
      * Configura event listeners para botones y otros elementos
      */
     configurarEventListeners() {
-        const limpiarBtn = document.getElementById('limpiarFiltros');
+        const limpiarBtn = document.getElementById('limpiarFiltrosBtn');
         if (limpiarBtn) {
             limpiarBtn.addEventListener('click', () => this.limpiarFiltros());
         }
@@ -86,9 +89,17 @@ export class ProcesosManager {
         const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : filtroPeriodoInput?.value || '';
 
         this.filteredData = this.allData.filter((proceso) => {
-            const coincideTipo = !tipo || proceso.c_tipo_ejecucion === tipo;
-            const coincidePeriodo = !periodo || proceso.c_periodo === periodo;
+            const coincideTipo = !tipo || proceso.TIPO_EJECUCION === tipo;
+            // Convertir período a número para comparación correcta
+            const coincidePeriodo = !periodo || proceso.C_PERIODO == periodo || proceso.C_PERIODO === parseInt(periodo);
             return coincideTipo && coincidePeriodo;
+        });
+
+        // Mantener el orden por c_proceso descendente después del filtrado
+        this.filteredData.sort((a, b) => {
+            const procesoA = a.c_proceso || a.C_PROCESO || 0;
+            const procesoB = b.c_proceso || b.C_PROCESO || 0;
+            return procesoB - procesoA; // Ordenamiento numérico descendente
         });
 
         this.currentPage = 1;
@@ -100,18 +111,28 @@ export class ProcesosManager {
      * Limpia todos los filtros
      */
     limpiarFiltros() {
-        const inputs = ['filtroTipo', 'filtroPeriodo'];
+        // Limpiar el selector personalizado de tipo
+        const inputTipo = document.getElementById('filtroTipo');
+        if (inputTipo?.setValue) {
+            inputTipo.setValue('');
+        } else if (inputTipo) {
+            inputTipo.value = '';
+        }
 
-        inputs.forEach((inputId) => {
-            const input = document.getElementById(inputId);
-            if (input?.setValue) {
-                input.setValue('');
-            } else if (input) {
-                input.value = '';
-            }
+        // Limpiar el input simple de período
+        const inputPeriodo = document.getElementById('filtroPeriodo');
+        if (inputPeriodo) {
+            inputPeriodo.value = '';
+        }
+
+        // Restaurar todos los datos manteniendo el orden por c_proceso descendente
+        this.filteredData = [...this.allData];
+        this.filteredData.sort((a, b) => {
+            const procesoA = a.c_proceso || a.C_PROCESO || 0;
+            const procesoB = b.c_proceso || b.C_PROCESO || 0;
+            return procesoB - procesoA; // Ordenamiento numérico descendente
         });
 
-        this.filteredData = this.allData;
         this.currentPage = 1;
         this.renderTabla();
         this.limpiarFiltrosDeURL();
@@ -136,12 +157,15 @@ export class ProcesosManager {
      */
     obtenerConfiguracionColumnas() {
         return [
-            { key: 'c_proceso', header: 'Proceso', format: 'code' },
-            { key: 'c_tipo_ejecucion', header: 'Tipo de Ejecución', format: 'code' },
-            { key: 'c_periodo', header: 'Período', format: 'code' },
-            { key: 'f_inicio', header: 'Inicio', format: 'date' },
-            { key: 'f_fin', header: 'Fin', format: 'date' },
-            { key: 'm_es_gdi', header: 'GDI', format: 'code' },
+            { key: 'C_PROCESO', header: 'Proceso', format: 'code' },
+            { key: 'TIPO_EJECUCION', header: 'Tipo de Ejecución', format: 'code' },
+            { key: 'C_PERIODO', header: 'Período', format: 'code' },
+            { key: 'C_GRUPO', header: 'Grupo', format: 'code' },
+            { key: 'F_INICIO', header: 'Inicio', format: 'date' },
+            { key: 'F_FIN', header: 'Fin', format: 'date' },
+            { key: 'DURACION_HHMM', header: 'DURACION', format: 'hour' },
+            { key: 'C_ESTADO_CALCULO', header: 'C_ESTADO_CALCULO', format: 'code' },
+            { key: 'TUVO_ERRORES', header: 'Tuvo Errores?', format: 'code' },
             {
                 key: 'acciones',
                 header: 'Acciones',
@@ -162,7 +186,7 @@ export class ProcesosManager {
         // Botón Ver
         const btnDetalle = document.createElement('a');
         btnDetalle.className = 'btn';
-        btnDetalle.href = this.construirUrlDetalle(item.c_proceso);
+        btnDetalle.href = this.construirUrlDetalle(item.C_PROCESO);
         btnDetalle.textContent = 'Ver';
 
         // Espacio entre botones
@@ -187,7 +211,7 @@ export class ProcesosManager {
 
         const currentFilters = {
             tipo: filtroTipoInput?.getValue ? filtroTipoInput.getValue() : filtroTipoInput?.value || '',
-            periodo: filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : filtroPeriodoInput?.value || ''
+            periodo: filtroPeriodoInput?.value || ''
         };
 
         let url = `proceso.html?codigo=${codigoProceso}`;
@@ -206,7 +230,7 @@ export class ProcesosManager {
      */
     renderPaginador() {
         const totalPages = Math.max(1, Math.ceil(this.filteredData.length / this.pageSize));
-        const paginador = document.getElementById('paginador');
+        const paginador = document.getElementById('paginacionProcesos');
 
         if (!paginador) return;
 
@@ -290,9 +314,7 @@ export class ProcesosManager {
 
             if (filtroPeriodo) {
                 const input = document.getElementById('filtroPeriodo');
-                if (input?.setValue) {
-                    input.setValue(filtroPeriodo);
-                } else if (input) {
+                if (input) {
                     input.value = filtroPeriodo;
                 }
             }
@@ -312,7 +334,7 @@ export class ProcesosManager {
         const filtroPeriodoInput = document.getElementById('filtroPeriodo');
 
         const tipo = filtroTipoInput?.getValue ? filtroTipoInput.getValue() : filtroTipoInput?.value || '';
-        const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : filtroPeriodoInput?.value || '';
+        const periodo = filtroPeriodoInput?.value || '';
 
         const url = new URL(window.location);
 

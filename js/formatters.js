@@ -11,9 +11,10 @@ export function formatearMoneda(valor) {
 }
 
 export function parsearFecha(fechaStr) {
-    const [fecha, hora] = fechaStr.split(' ');
-    const [dia, mes, anio] = fecha.split('/');
-    return new Date(`${anio}-${mes}-${dia}T${hora}`);
+    const [fecha, hora] = fechaStr.split('T');
+    const [anio, mes, dia] = fecha.split('-');
+    const fechaRes = new Date(`${anio}-${mes}-${dia}T${hora}`);
+    return fechaRes;
 }
 
 export function formatearFecha(date, incluirHora = false) {
@@ -26,10 +27,10 @@ export function formatearFecha(date, incluirHora = false) {
     const fechaStr = `${dia}/${mes}/${anio}`;
 
     if (!incluirHora) return fechaStr;
-
+    //console.warn(date);
     const horas = String(date.getHours()).padStart(2, '0');
     const minutos = String(date.getMinutes()).padStart(2, '0');
     const segundos = String(date.getSeconds()).padStart(2, '0');
 
-    return `${fechaStr} ${horas}:${minutos}:${segundos}`;
+    return `${fechaStr} ${horas}:${minutos}`;
 }

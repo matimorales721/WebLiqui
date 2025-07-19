@@ -350,45 +350,51 @@ document.addEventListener('DOMContentLoaded', () => {
         safeFetch(`../data/aprob-cabecera-${codigoProceso}.json`),
         safeFetch(`../data/validaciones-${codigoProceso}.json`),
         safeFetch(`../data/procesos.json`)
-    ]).then(([practicas, detalle, cabecera, aprobCabecera, validaciones, procesos]) => {
-        const proceso = procesos.find((p) => parseInt(p.c_proceso) === codigoProceso);
+    ])
+        .then(([practicas, detalle, cabecera, aprobCabecera, validaciones, procesos]) => {
+            const proceso = procesos.find((p) => parseInt(p.C_PROCESO) === codigoProceso);
 
-        if (!proceso) {
-            console.warn('Proceso no encontrado');
-            return;
-        }
+            if (!proceso) {
+                mostrarMensajeProcesoNoEncontrado(codigoProceso);
+                return;
+            }
 
-        // Poblar detalles del proceso
-        document.getElementById('codigo').textContent = proceso.c_proceso;
-        document.getElementById('tipo').textContent =
-            proceso.c_tipo_ejecucion === 'E'
+            // Poblar detalles del proceso
+            document.getElementById('codigo').textContent = proceso.C_PROCESO;
+            document.getElementById('tipo').textContent = proceso.TIPO_EJECUCION;
+            proceso.TIPO_EJECUCION === 'E'
                 ? 'Excepción'
-                : proceso.c_tipo_ejecucion === 'M'
+                : proceso.TIPO_EJECUCION === 'M'
                 ? 'Mensual'
-                : proceso.c_tipo_ejecucion;
+                : proceso.TIPO_EJECUCION;
 
-        document.getElementById('periodo').textContent = proceso.c_periodo;
-        document.getElementById('inicio').textContent = proceso.f_inicio;
-        document.getElementById('fin').textContent = proceso.f_fin;
-        document.getElementById('duracion').textContent = calcularDuracion(proceso.f_inicio, proceso.f_fin);
+            document.getElementById('periodo').textContent = proceso.C_PERIODO;
+            document.getElementById('inicio').textContent = proceso.F_INICIO;
+            document.getElementById('fin').textContent = proceso.F_FIN;
+            document.getElementById('duracion').textContent = calcularDuracion(proceso.F_INICIO, proceso.F_FIN);
 
-        document.getElementById('btnLogs').addEventListener('click', () => {
-            window.location.href = `logs.html?codigo=${proceso.codigo}`;
+            document.getElementById('btnLogs').addEventListener('click', () => {
+                window.location.href = `logs.html?codigo=${proceso.codigo}`;
+            });
+
+            // Guardar datos globales
+            practicasGlobal = practicas;
+            detalleGlobal = detalle;
+            cabeceraGlobal = cabecera;
+            aprobCabeceraGlobal = aprobCabecera;
+            validacionesGlobal = validaciones;
+
+            // Inicializar pestañas usando el TabManager
+            tabManager.inicializarTab('aprob_cabecera', aprobCabeceraGlobal, configuracionCampos.aprob_cabecera);
+            tabManager.inicializarTab('cabecera', cabeceraGlobal, configuracionCampos.cabecera);
+            tabManager.inicializarTab('detalle', detalleGlobal, configuracionCampos.detalle);
+            tabManager.inicializarTab('practicas', practicasGlobal, configuracionCampos.practicas);
+        })
+        .catch((error) => {
+            console.error('Error cargando datos del proceso:', error);
+            // Si hay error al cargar datos, mostrar mensaje de proceso no encontrado
+            mostrarMensajeProcesoNoEncontrado(codigoProceso);
         });
-
-        // Guardar datos globales
-        practicasGlobal = practicas;
-        detalleGlobal = detalle;
-        cabeceraGlobal = cabecera;
-        aprobCabeceraGlobal = aprobCabecera;
-        validacionesGlobal = validaciones;
-
-        // Inicializar pestañas usando el TabManager
-        tabManager.inicializarTab('aprob_cabecera', aprobCabeceraGlobal, configuracionCampos.aprob_cabecera);
-        tabManager.inicializarTab('cabecera', cabeceraGlobal, configuracionCampos.cabecera);
-        tabManager.inicializarTab('detalle', detalleGlobal, configuracionCampos.detalle);
-        tabManager.inicializarTab('practicas', practicasGlobal, configuracionCampos.practicas);
-    });
 });
 
 // Navega a la página de validaciones con los parámetros correctos
@@ -456,4 +462,135 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function calcularDuracion(inicio, fin) {
     return DateUtils.calcularDuracionLegible(inicio, fin);
+}
+
+/**
+ * Muestra un mensaje elegante cuando no se encuentra un proceso
+ * @param {number} codigoProceso - Código del proceso no encontrado
+ */
+function mostrarMensajeProcesoNoEncontrado(codigoProceso) {
+    // Ocultar el contenido principal
+    const mainContent = document.querySelector('.content');
+    if (mainContent) {
+        mainContent.innerHTML = `
+            <div style="display: flex; justify-content: center; align-items: center; min-height: 60vh; padding: 2rem;">
+                <div style="
+                    background: linear-gradient(135deg, #e3f0ff 0%, #f7fafc 100%);
+                    border: 1px solid #d0e2ff;
+                    border-radius: 18px;
+                    padding: 3rem 2rem;
+                    text-align: center;
+                    box-shadow: 0 8px 32px rgba(37, 99, 235, 0.1);
+                    max-width: 500px;
+                    width: 100%;
+                    color: #1b3a6b;
+                    position: relative;
+                    overflow: hidden;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: -50%;
+                        left: -50%;
+                        width: 200%;
+                        height: 200%;
+                        background: linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
+                        animation: shine 3s infinite;
+                    "></div>
+                    
+                    <div style="position: relative; z-index: 2;">
+                        <div style="
+                            background: linear-gradient(135deg, #2563eb 0%, #1b3a6b 100%);
+                            border-radius: 50%;
+                            width: 80px;
+                            height: 80px;
+                            margin: 0 auto 1.5rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 2.5rem;
+                            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.2);
+                        ">
+                            🔍
+                        </div>
+                        
+                        <h2 style="
+                            margin: 0 0 1rem 0;
+                            font-size: 1.8rem;
+                            font-weight: 700;
+                            color: #1b3a6b;
+                            letter-spacing: 0.5px;
+                        ">
+                            Proceso No Encontrado
+                        </h2>
+                        
+                        <p style="
+                            margin: 0 0 1.5rem 0;
+                            font-size: 1rem;
+                            color: #2563eb;
+                            line-height: 1.5;
+                            font-weight: 500;
+                        ">
+                            El proceso <strong style="color: #1b3a6b;">#${codigoProceso}</strong> no se encuentra cargado en el sistema WebLiqui.
+                        </p>
+                        
+                        <div style="
+                            background: linear-gradient(135deg, #b4cefa 0%, #d0e2ff 100%);
+                            border: 1px solid #2563eb;
+                            border-radius: 12px;
+                            padding: 1rem;
+                            margin: 1.5rem 0;
+                            font-size: 0.9rem;
+                            color: #1b3a6b;
+                            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.08);
+                        ">
+                            💡 <strong>Sugerencias:</strong><br>
+                            • Verifica que el código sea correcto<br>
+                            • Asegúrate de que el proceso esté procesado<br>
+                            • Contacta al administrador si persiste el problema
+                        </div>
+                        
+                        <button onclick="window.history.back()" style="
+                            background: linear-gradient(135deg, #f7fafc 0%, #e3f0ff 100%);
+                            border: 2px solid #2563eb;
+                            color: #2563eb;
+                            padding: 0.75rem 2rem;
+                            border-radius: 25px;
+                            font-size: 1rem;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            margin-right: 1rem;
+                            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+                        " onmouseover="this.style.background='linear-gradient(135deg, #e3f0ff 0%, #d0e2ff 100%)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(37, 99, 235, 0.2)'" 
+                           onmouseout="this.style.background='linear-gradient(135deg, #f7fafc 0%, #e3f0ff 100%)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(37, 99, 235, 0.1)'">
+                            ← Volver
+                        </button>
+                        
+                        <button onclick="window.location.href='procesos.html'" style="
+                            background: linear-gradient(135deg, #2563eb 0%, #1b3a6b 100%);
+                            border: none;
+                            color: white;
+                            padding: 0.75rem 2rem;
+                            border-radius: 25px;
+                            font-size: 1rem;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.2);
+                        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 24px rgba(37, 99, 235, 0.3)'" 
+                           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 18px rgba(37, 99, 235, 0.2)'">
+                            Ver Procesos
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <style>
+                @keyframes shine {
+                    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+                    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+                }
+            </style>
+        `;
+    }
 }
