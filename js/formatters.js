@@ -14,10 +14,10 @@ export function parsearFecha(fechaStr) {
     if (!fechaStr || typeof fechaStr !== 'string') {
         return new Date('Invalid Date');
     }
-    
+
     // Detectar formato - base de datos vs JSON
     let fecha, hora;
-    
+
     if (fechaStr.includes('T')) {
         // Formato JSON: "23-06-2025T21:23:50"
         [fecha, hora] = fechaStr.split('T');
@@ -28,15 +28,15 @@ export function parsearFecha(fechaStr) {
         console.warn(`Formato de fecha no reconocido: ${fechaStr}`);
         return new Date('Invalid Date');
     }
-    
+
     if (!fecha || !hora) {
         return new Date('Invalid Date');
     }
-    
+
     // Detectar formato de fecha: DD-MM-YYYY vs YYYY-MM-DD (con - o /)
     let partesFecha;
     let separador;
-    
+
     if (fecha.includes('-')) {
         partesFecha = fecha.split('-');
         separador = '-';
@@ -47,11 +47,11 @@ export function parsearFecha(fechaStr) {
         console.warn(`Separador de fecha no reconocido en: ${fecha}`);
         return new Date('Invalid Date');
     }
-    
+
     if (partesFecha.length !== 3) {
         return new Date('Invalid Date');
     }
-    
+
     let fechaISO;
     if (partesFecha[0].length === 4) {
         // Formato base de datos: YYYY-MM-DD o YYYY/MM/DD
@@ -61,15 +61,15 @@ export function parsearFecha(fechaStr) {
         const [dia, mes, anio] = partesFecha;
         fechaISO = `${anio}-${mes}-${dia}T${hora}`;
     }
-    
+
     // Crear fecha en formato ISO válido
     const fechaRes = new Date(fechaISO);
-    
+
     // Verificar que la fecha sea válida
     if (isNaN(fechaRes.getTime())) {
         return new Date('Invalid Date');
     }
-    
+
     return fechaRes;
 }
 
