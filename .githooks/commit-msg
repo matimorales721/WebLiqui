@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Pre-commit hook para validar mensajes de commit en español
+# Este script verifica que los mensajes de commit sigan las reglas establecidas
+
+# Colores para output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${YELLOW}🔍 Validando reglas de commit...${NC}"
+
+# Obtener el mensaje de commit
+COMMIT_MSG_FILE=$1
+COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
+
+# Ignorar mensajes que empiecen con # (comentarios)
+if [[ $COMMIT_MSG =~ ^#.* ]]; then
+    exit 0
+fi
+
+# Lista de palabras en inglés que no deberían aparecer en commits
+ENGLISH_WORDS=(
+    "add" "added" "adding"
+    "fix" "fixed" "fixing" 
+    "update" "updated" "updating"
+    "create" "created" "creating"
+    "delete" "deleted" "deleting"
+    "remove" "removed" "removing"
+    "change" "changed" "changing"
+    "improve" "improved" "improving"
+    "refactor" "refactored" "refactoring"
+    "implement" "implemented" "implementing"
+    "merge" "merged" "merging"
+    "initial" "commit"
+    "wip" "work in progress"
+    "quick" "temporary" "temp"
+)
+
+# Verificar longitud del título (primera línea)
+TITLE=$(echo "$COMMIT_MSG" | head -n 1)
+TITLE_LENGTH=${#TITLE}
+
+if [ $TITLE_LENGTH -gt 50 ]; then
+    echo -e "${RED}❌ Error: El título del commit es muy largo (${TITLE_LENGTH} caracteres, máximo 50)${NC}"
+    echo -e "${YELLOW}Título actual: ${TITLE}${NC}"
+    exit 1
+fi
+
+# Verificar que use un tipo válido
+VALID_TYPES="feat|fix|docs|style|refactor|test|chore"
+if ! [[ $TITLE =~ ^($VALID_TYPES): ]]; then
+    echo -e "${RED}❌ Error: El commit debe empezar con un tipo válido seguido de ':'${NC}"
+    echo -e "${YELLOW}Tipos válidos: feat, fix, docs, style, refactor, test, chore${NC}"
+    echo -e "${YELLOW}Ejemplo: feat: agrega nueva funcionalidad${NC}"
+    exit 1
+fi
+
+# Verificar palabras en inglés (solo en el título para ser menos restrictivo)
+for word in "${ENGLISH_WORDS[@]}"; do
+    if echo "$TITLE" | grep -qi "\b$word\b"; then
+        echo -e "${RED}❌ Error: Se detectó una palabra en inglés: '$word'${NC}"
+        echo -e "${YELLOW}Los mensajes de commit deben estar en ESPAÑOL${NC}"
+        echo -e "${YELLOW}Título actual: ${TITLE}${NC}"
+        exit 1
+    fi
+done
+
+# Verificar que no esté vacío después del tipo
+MESSAGE_CONTENT=$(echo "$TITLE" | sed 's/^[^:]*: *//')
+if [ ${#MESSAGE_CONTENT} -lt 3 ]; then
+    echo -e "${RED}❌ Error: La descripción del commit es muy corta${NC}"
+    echo -e "${YELLOW}Debe tener al menos 3 caracteres después del tipo${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ Mensaje de commit válido${NC}"
+exit 0

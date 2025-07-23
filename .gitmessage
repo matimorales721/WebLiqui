@@ -1,0 +1,25 @@
+# Plantilla de mensaje de commit
+# 
+# Título: Descripción breve y clara en español (máximo 50 caracteres)
+# |<----  Usar máximo 50 caracteres  ---->|
+
+# Cuerpo del mensaje: Explicación detallada del cambio (opcional)
+# Usa el presente imperativo: "agrega" en lugar de "agregado" o "agregando"
+# |<----   Intenta usar máximo 72 caracteres por línea   ---->|
+
+# Ejemplos de buenos títulos de commit:
+# - feat: agrega filtro por proceso en pantalla principal
+# - fix: corrige formato de fechas en detalle de proceso
+# - style: mejora espaciado en filtros de cabecera
+# - refactor: reorganiza lógica de filtrado en procesosUtils
+# - docs: actualiza documentación de instalación
+# - test: agrega pruebas para función parsearFecha
+
+# Tipos de commit permitidos:
+# feat:     Nueva funcionalidad
+# fix:      Corrección de errores
+# docs:     Cambios en documentación
+# style:    Cambios de formato, espacios, etc.
+# refactor: Refactorización de código
+# test:     Agregar o modificar pruebas
+# chore:    Cambios en build, dependencias, etc.

@@ -56,6 +56,12 @@ export class ProcesosManager {
         if (filtroPeriodoInput) {
             filtroPeriodoInput.addEventListener('input', () => this.ejecutarFiltradoConDebounce());
         }
+
+        // Para el proceso, usamos un input simple, agregamos el event listener
+        const filtroProcesoInput = document.getElementById('filtroProceso');
+        if (filtroProcesoInput) {
+            filtroProcesoInput.addEventListener('input', () => this.ejecutarFiltradoConDebounce());
+        }
     }
 
     /**
@@ -84,15 +90,21 @@ export class ProcesosManager {
     ejecutarFiltrado() {
         const filtroTipoInput = document.getElementById('filtroTipo');
         const filtroPeriodoInput = document.getElementById('filtroPeriodo');
+        const filtroProcesoInput = document.getElementById('filtroProceso');
 
         const tipo = filtroTipoInput?.getValue ? filtroTipoInput.getValue() : filtroTipoInput?.value || '';
         const periodo = filtroPeriodoInput?.getValue ? filtroPeriodoInput.getValue() : filtroPeriodoInput?.value || '';
+        const proceso = filtroProcesoInput?.value || '';
 
-        this.filteredData = this.allData.filter((proceso) => {
-            const coincideTipo = !tipo || proceso.TIPO_EJECUCION === tipo;
+        this.filteredData = this.allData.filter((item) => {
+            const coincideTipo = !tipo || item.TIPO_EJECUCION === tipo;
             // Convertir período a número para comparación correcta
-            const coincidePeriodo = !periodo || proceso.C_PERIODO == periodo || proceso.C_PERIODO === parseInt(periodo);
-            return coincideTipo && coincidePeriodo;
+            const coincidePeriodo = !periodo || item.C_PERIODO == periodo || item.C_PERIODO === parseInt(periodo);
+            // Comparación parcial para proceso - buscar procesos que comiencen con el texto ingresado
+            const procesoItem = (item.c_proceso || item.C_PROCESO || 0).toString();
+            const coincideProceso = !proceso || procesoItem.startsWith(proceso.toString());
+
+            return coincideTipo && coincidePeriodo && coincideProceso;
         });
 
         // Mantener el orden por c_proceso descendente después del filtrado
@@ -123,6 +135,12 @@ export class ProcesosManager {
         const inputPeriodo = document.getElementById('filtroPeriodo');
         if (inputPeriodo) {
             inputPeriodo.value = '';
+        }
+
+        // Limpiar el input simple de proceso
+        const inputProceso = document.getElementById('filtroProceso');
+        if (inputProceso) {
+            inputProceso.value = '';
         }
 
         // Restaurar todos los datos manteniendo el orden por c_proceso descendente
@@ -301,8 +319,9 @@ export class ProcesosManager {
         const urlParams = new URLSearchParams(window.location.search);
         const filtroTipo = urlParams.get('filtroTipo');
         const filtroPeriodo = urlParams.get('filtroPeriodo');
+        const filtroProceso = urlParams.get('filtroProceso');
 
-        if (filtroTipo || filtroPeriodo) {
+        if (filtroTipo || filtroPeriodo || filtroProceso) {
             if (filtroTipo) {
                 const input = document.getElementById('filtroTipo');
                 if (input?.setValue) {
@@ -319,6 +338,13 @@ export class ProcesosManager {
                 }
             }
 
+            if (filtroProceso) {
+                const input = document.getElementById('filtroProceso');
+                if (input) {
+                    input.value = filtroProceso;
+                }
+            }
+
             // Ejecutar filtrado después de un breve delay para asegurar que los selectores estén configurados
             setTimeout(() => {
                 this.ejecutarFiltrado();
@@ -332,9 +358,11 @@ export class ProcesosManager {
     guardarFiltrosEnURL() {
         const filtroTipoInput = document.getElementById('filtroTipo');
         const filtroPeriodoInput = document.getElementById('filtroPeriodo');
+        const filtroProcesoInput = document.getElementById('filtroProceso');
 
         const tipo = filtroTipoInput?.getValue ? filtroTipoInput.getValue() : filtroTipoInput?.value || '';
         const periodo = filtroPeriodoInput?.value || '';
+        const proceso = filtroProcesoInput?.value || '';
 
         const url = new URL(window.location);
 
@@ -350,6 +378,12 @@ export class ProcesosManager {
             url.searchParams.delete('filtroPeriodo');
         }
 
+        if (proceso) {
+            url.searchParams.set('filtroProceso', proceso);
+        } else {
+            url.searchParams.delete('filtroProceso');
+        }
+
         window.history.replaceState({}, '', url);
     }
 
@@ -360,6 +394,7 @@ export class ProcesosManager {
         const url = new URL(window.location);
         url.searchParams.delete('filtroTipo');
         url.searchParams.delete('filtroPeriodo');
+        url.searchParams.delete('filtroProceso');
         window.history.replaceState({}, '', url);
     }
 }

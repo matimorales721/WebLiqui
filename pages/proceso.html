@@ -155,6 +155,18 @@
                                         <div class="custom-select-dropdown" id="prestadorDropdown_cabecera"></div>
                                     </div>
                                 </label>
+                                <label
+                                    >Módulo:
+                                    <div class="custom-select-wrapper">
+                                        <input
+                                            type="text"
+                                            id="filtroModulo_cabecera"
+                                            placeholder="Selecciona o escribe..."
+                                            readonly
+                                        />
+                                        <div class="custom-select-dropdown" id="moduloDropdown_cabecera"></div>
+                                    </div>
+                                </label>
                                 <button id="limpiarFiltrosBtn_cabecera">Limpiar</button>
                             </div>
                             <table id="tablaCabecera" class="styled-table"></table>
@@ -300,80 +312,7 @@
         </div>
 
         <script type="module" src="../js/proceso.js"></script>
-        <script type="module">
-            import { DateUtils, TipoEjecucionUtils, ProcesoDataManager, UrlUtils } from '../js/procesoUtils.js';
-
-            // Clase optimizada usando utilidades existentes
-            class ProcesoDetailManager {
-                async init() {
-                    try {
-                        const codigoProceso = UrlUtils.getParametroProceso();
-                        const dataManager = new ProcesoDataManager(codigoProceso);
-                        const proceso = await dataManager.obtenerDatosProceso();
-
-                        if (!proceso) {
-                            console.warn('Proceso no encontrado');
-                            return;
-                        }
-
-                        this.poblarDatosProceso(proceso);
-                    } catch (error) {
-                        console.error('Error inicializando proceso:', error);
-                    }
-                }
-
-                poblarDatosProceso(proceso) {
-                    const elementos = this.obtenerElementosDOM();
-
-                    // Poblar datos básicos usando utilidades
-                    if (elementos.codigo) elementos.codigo.textContent = proceso.c_proceso;
-                    if (elementos.tipo)
-                        elementos.tipo.textContent = TipoEjecucionUtils.formatear(proceso.c_tipo_ejecucion);
-                    if (elementos.periodo) elementos.periodo.textContent = proceso.c_periodo;
-
-                    // Formatear fechas con datos puros + "hs" solo para UI
-                    if (elementos.inicio && proceso.f_inicio) {
-                        const fechaFormateada = DateUtils.formatearFechaHora(proceso.f_inicio);
-                        elementos.inicio.textContent = fechaFormateada + ' hs';
-                    }
-
-                    if (elementos.fin && proceso.f_fin) {
-                        const fechaFormateada = DateUtils.formatearFechaHora(proceso.f_fin);
-                        elementos.fin.textContent = fechaFormateada + ' hs';
-                    }
-
-                    if (elementos.duracion) {
-                        const duracion = DateUtils.calcularDuracion(proceso.f_inicio, proceso.f_fin);
-                        elementos.duracion.textContent = duracion + ' hs';
-                    }
-
-                    // Configurar botón de logs
-                    if (elementos.btnLogs) {
-                        elementos.btnLogs.onclick = () => {
-                            window.location.href = `logs.html?codigo=${proceso.c_proceso}`;
-                        };
-                    }
-                }
-
-                obtenerElementosDOM() {
-                    return {
-                        codigo: document.getElementById('codigo'),
-                        tipo: document.getElementById('tipo'),
-                        periodo: document.getElementById('periodo'),
-                        inicio: document.getElementById('inicio'),
-                        fin: document.getElementById('fin'),
-                        duracion: document.getElementById('duracion'),
-                        btnLogs: document.getElementById('btnLogs')
-                    };
-                }
-            }
-
-            // Inicializar cuando el DOM esté listo
-            document.addEventListener('DOMContentLoaded', () => {
-                new ProcesoDetailManager().init();
-            });
-        </script>
-
+        
         <!-- Mis js utiles -->
         <script type="module" src="../js/formatters.js"></script>
         <script type="module" src="../js/tableLogic.js"></script>

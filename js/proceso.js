@@ -1,5 +1,5 @@
 import { generarTabla } from './tableUI.js';
-import { parsearFecha } from './formatters.js';
+import { parsearFecha, formatearFecha } from './formatters.js';
 import { poblarSelectUnico, crearSelectorPersonalizado } from './tableLogic.js';
 import { safeFetch, initCopyIconListener } from './newUtils.js';
 import { DateUtils, TipoEjecucionUtils, ProcesoDataManager, CamposConfigManager, UrlUtils } from './procesoUtils.js';
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentPage: 1,
                     pageSize: 10,
                     campos: [],
-                    filtros: ['concepto', 'periodo_ex', 'prestador']
+                    filtros: ['concepto', 'periodo_ex', 'prestador', 'modulo']
                 },
                 aprob_cabecera: {
                     data: [],
@@ -369,8 +369,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 : proceso.TIPO_EJECUCION;
 
             document.getElementById('periodo').textContent = proceso.C_PERIODO;
-            document.getElementById('inicio').textContent = proceso.F_INICIO;
-            document.getElementById('fin').textContent = proceso.F_FIN;
+
+            // Formatear fechas usando parsearFecha y formatearFecha
+            if (proceso.F_INICIO) {
+                const fechaInicio = parsearFecha(proceso.F_INICIO);
+                if (fechaInicio && !isNaN(fechaInicio.getTime())) {
+                    document.getElementById('inicio').textContent = formatearFecha(fechaInicio, true) + ' hs';
+                }
+            }
+
+            if (proceso.F_FIN) {
+                const fechaFin = parsearFecha(proceso.F_FIN);
+                if (fechaFin && !isNaN(fechaFin.getTime())) {
+                    document.getElementById('fin').textContent = formatearFecha(fechaFin, true) + ' hs';
+                }
+            }
+
             document.getElementById('duracion').textContent = calcularDuracion(proceso.F_INICIO, proceso.F_FIN);
 
             document.getElementById('btnLogs').addEventListener('click', () => {
@@ -461,7 +475,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function calcularDuracion(inicio, fin) {
-    return DateUtils.calcularDuracionLegible(inicio, fin);
+    if (!inicio || !fin) return '';
+
+    try {
+        // Usar la función parsearFecha de formatters.js que maneja múltiples formatos
+        const inicioDate = parsearFecha(inicio);
+        const finDate = parsearFecha(fin);
+
+        if (!inicioDate || !finDate || isNaN(inicioDate.getTime()) || isNaN(finDate.getTime())) {
+            return '';
+        }
+
+        const diffMs = finDate - inicioDate;
+        const diffMin = diffMs / 60000;
+
+        if (diffMin < 60) {
+            return `${Math.round(diffMin)} minutos`;
+        } else {
+            const horas = Math.floor(diffMin / 60);
+            const minutos = Math.round(diffMin % 60);
+            const minutosFormateados = minutos.toString().padStart(2, '0');
+            return `${horas}:${minutosFormateados} horas`;
+        }
+    } catch (error) {
+        console.error('Error calculando duración:', error);
+        return '';
+    }
 }
 
 /**
