@@ -25,16 +25,16 @@
                     "C_PROCESO": 4821,
                     "TIPO_EJECUCION": "M",
                     "C_GRUPO": 0,
-                    "F_INICIO": "23-06-2025T21:23:50",
-                    "F_FIN": "24-06-2025T06:22:28",
+                    "F_INICIO": "2025-06-23 21:23:50",
+                    "F_FIN": "2025-06-24 06:22:28",
                     "C_ESTADO_CALCULO": "3",
                     "C_PERIODO": 202504
                 },
                 {
                     "C_PROCESO": 4822,
                     "TIPO_EJECUCION": "E",
-                    "F_INICIO": "24-06-2025T18:05:32",
-                    "F_FIN": "24-06-2025T19:00:11",
+                    "F_INICIO": "2025-06-24 18:05:32",
+                    "F_FIN": "2025-06-24 19:00:11",
                     "C_ESTADO_CALCULO": "3",
                     "C_PERIODO": 202504
                 },
@@ -42,8 +42,8 @@
                     "C_PROCESO": 4832,
                     "TIPO_EJECUCION": "M",
                     "C_GRUPO": 0,
-                    "F_INICIO": "12-07-2025T12:56:17",
-                    "F_FIN": "13-07-2025T02:44:25",
+                    "F_INICIO": "2025-07-12 12:56:17",
+                    "F_FIN": "2025-07-13 02:44:25",
                     "C_ESTADO_CALCULO": "4",
                     "C_PERIODO": 202504
                 },
@@ -51,8 +51,8 @@
                     "C_PROCESO": 4836,
                     "TIPO_EJECUCION": "M",
                     "C_GRUPO": 0,
-                    "F_INICIO": "13-07-2025T15:36:59",
-                    "F_FIN": "14-07-2025T04:24:11",
+                    "F_INICIO": "2025-07-13 15:36:59",
+                    "F_FIN": "2025-07-14 04:24:11",
                     "C_ESTADO_CALCULO": "4",
                     "C_PERIODO": 202504
                 }
