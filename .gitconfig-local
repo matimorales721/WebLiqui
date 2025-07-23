@@ -1,31 +1,40 @@
 # Configuración Git para el proyecto WebLiqui_IA
 
 # Para aplicar esta configuración al proyecto actual, ejecuta:
+
 # git config commit.template .gitmessage
-# git config core.editor "code --wait"  # Si usas VS Code
+
+# git config core.editor "code --wait" # Si usas VS Code
 
 # Reglas para mensajes de commit:
+
 # 1. OBLIGATORIO: Todos los mensajes deben estar en ESPAÑOL
+
 # 2. Usa el presente imperativo (agrega, corrige, mejora)
+
 # 3. Título máximo 50 caracteres
+
 # 4. Cuerpo opcional, máximo 72 caracteres por línea
+
 # 5. Usa prefijos de tipo: feat, fix, docs, style, refactor, test, chore
 
 # Configuración automática para este proyecto
+
 [commit]
-    template = .gitmessage
+template = .gitmessage
 
 [core]
-    editor = code --wait
+editor = code --wait
 
 # Alias útiles para commits en español
+
 [alias]
-    c = commit
-    cm = commit -m
-    feat = "!f() { git commit -m \"feat: $1\"; }; f"
-    fix = "!f() { git commit -m \"fix: $1\"; }; f"
-    docs = "!f() { git commit -m \"docs: $1\"; }; f"
-    style = "!f() { git commit -m \"style: $1\"; }; f"
-    refactor = "!f() { git commit -m \"refactor: $1\"; }; f"
-    test = "!f() { git commit -m \"test: $1\"; }; f"
-    chore = "!f() { git commit -m \"chore: $1\"; }; f"
+c = commit
+cm = commit -m
+feat = "!f() { git commit -m \"feat: $1\"; }; f"
+fix = "!f() { git commit -m \"fix: $1\"; }; f"
+docs = "!f() { git commit -m \"docs: $1\"; }; f"
+style = "!f() { git commit -m \"style: $1\"; }; f"
+refactor = "!f() { git commit -m \"refactor: $1\"; }; f"
+test = "!f() { git commit -m \"test: $1\"; }; f"
+chore = "!f() { git commit -m \"chore: $1\"; }; f"

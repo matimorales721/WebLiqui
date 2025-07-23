@@ -24,18 +24,21 @@ git config alias.chore "!f() { git commit -m \"chore: \$1\"; }; f"
 ## Reglas de Desarrollo
 
 ### 1. Idioma
-- **Código**: Variables y funciones en español cuando sea posible
-- **Comentarios**: Siempre en español
-- **Commits**: OBLIGATORIO en español
-- **Documentación**: En español
+
+-   **Código**: Variables y funciones en español cuando sea posible
+-   **Comentarios**: Siempre en español
+-   **Commits**: OBLIGATORIO en español
+-   **Documentación**: En español
 
 ### 2. Estilo de Código
-- Usar camelCase para variables y funciones
-- Usar PascalCase para clases
-- Indentación de 4 espacios
-- Máximo 120 caracteres por línea
+
+-   Usar camelCase para variables y funciones
+-   Usar PascalCase para clases
+-   Indentación de 4 espacios
+-   Máximo 120 caracteres por línea
 
 ### 3. Estructura de Commits
+
 ```
 tipo: descripción breve en español
 
@@ -46,6 +49,7 @@ Explicación detallada del cambio (opcional)
 ```
 
 ### 4. Ejemplos de Buenos Commits
+
 ```
 feat: agrega filtro por código de módulo en pestaña cabecera
 fix: corrige formato de fechas en tarjeta de detalle del proceso
@@ -57,6 +61,7 @@ chore: actualiza dependencias del proyecto
 ```
 
 ### 5. Commits NO Permitidos
+
 ```
 ❌ Add new filter functionality
 ❌ Fixed bug in date formatting
