@@ -1,7 +1,7 @@
 # Plantilla de mensaje de commit
 #
-# Título: Descripción breve y clara en español (máximo 50 caracteres)
-# |<----  Usar máximo 50 caracteres  ---->|
+# Título: Descripción breve y clara en español (máximo 250 caracteres)
+# |<----  Usar máximo 250 caracteres  ---->|
 
 # Cuerpo del mensaje: Explicación detallada del cambio (opcional)
 # Usa el presente imperativo: "agrega" en lugar de "agregado" o "agregando"

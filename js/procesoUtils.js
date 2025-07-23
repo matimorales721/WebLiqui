@@ -294,6 +294,7 @@ export class CamposConfigManager {
             { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
             { key: 'd_prestador', header: 'Prestador' },
             { key: 'd_modulo_pami', header: 'Modulo (7X)' },
+            { key: 'i_monto_resu', header: 'I_MONTO_RESU', format: 'moneda' },
             { key: 'i_monto', header: 'I_MONTO', format: 'moneda' }
         ]
     };

@@ -35,7 +35,7 @@ git config core.editor "code --wait"
 
 #### Formato de Mensajes
 
--   **Título**: Máximo 50 caracteres, en presente imperativo
+-   **Título**: Máximo 250 caracteres, en presente imperativo
 -   **Cuerpo**: Opcional, máximo 72 caracteres por línea
 -   **Tipo**: Usar prefijos según el tipo de cambio
 
