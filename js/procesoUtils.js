@@ -294,8 +294,24 @@ export class CamposConfigManager {
             { key: 'c_prestador', header: 'Cod. Prestador', format: 'code' },
             { key: 'd_prestador', header: 'Prestador' },
             { key: 'd_modulo_pami', header: 'Modulo (7X)' },
+            { key: 'i_monto_cab', header: 'I_MONTO_CAB', format: 'moneda' },
             { key: 'i_monto_resu', header: 'I_MONTO_RESU', format: 'moneda' },
-            { key: 'i_monto', header: 'I_MONTO', format: 'moneda' }
+            { key: 'i_monto', header: 'I_MONTO', format: 'moneda' },
+            {
+                key: 'acciones',
+                header: 'Ver Cabecera',
+                format: 'btn',
+                render: (item) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-cabecera';
+                    btn.textContent = 'Ver Cabecera';
+                    btn.style.backgroundColor = '#28a745';
+                    btn.style.fontSize = '0.8rem';
+                    btn.style.padding = '0.3rem 0.6rem';
+                    btn.onclick = () => navegarACabeceraConFiltros(item);
+                    return btn;
+                }
+            }
         ]
     };
 

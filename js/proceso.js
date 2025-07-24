@@ -4,6 +4,14 @@ import { poblarSelectUnico, crearSelectorPersonalizado } from './tableLogic.js';
 import { safeFetch, initCopyIconListener } from './newUtils.js';
 import { DateUtils, TipoEjecucionUtils, ProcesoDataManager, CamposConfigManager, UrlUtils } from './procesoUtils.js';
 
+// Variables globales
+let tabManager;
+let practicasGlobal = [];
+let detalleGlobal = [];
+let cabeceraGlobal = [];
+let aprobCabeceraGlobal = [];
+let validacionesGlobal = [];
+
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializa el listener de copiado de íconos
     initCopyIconListener();
@@ -78,12 +86,59 @@ document.addEventListener('DOMContentLoaded', () => {
                     const span = document.createElement('span');
                     span.textContent = '...';
                     span.className = 'paginador-ellipsis';
+                    span.style.padding = '8px 12px';
+                    span.style.margin = '0 4px';
+                    span.style.color = '#6c757d';
                     paginador.appendChild(span);
                 } else {
                     const btn = document.createElement('button');
                     btn.textContent = i;
-                    btn.className = 'paginador-btn' + (i === tab.currentPage ? ' active' : '');
-                    btn.style.margin = '4px 4px';
+                    const isActive = i === tab.currentPage;
+                    btn.className = 'paginador-btn' + (isActive ? ' active' : '');
+
+                    // Estilos base para todos los botones
+                    btn.style.margin = '0 2px';
+                    btn.style.padding = '8px 12px';
+                    btn.style.border = '1px solid #dee2e6';
+                    btn.style.borderRadius = '4px';
+                    btn.style.cursor = 'pointer';
+                    btn.style.fontSize = '14px';
+                    btn.style.fontWeight = '500';
+                    btn.style.transition = 'all 0.2s ease';
+                    btn.style.minWidth = '36px';
+                    btn.style.height = '36px';
+                    btn.style.display = 'inline-flex';
+                    btn.style.alignItems = 'center';
+                    btn.style.justifyContent = 'center';
+
+                    // Estilos específicos según si está activo o no
+                    if (isActive) {
+                        btn.style.backgroundColor = '#28a745';
+                        btn.style.color = 'white';
+                        btn.style.borderColor = '#28a745';
+                        btn.style.boxShadow = '0 2px 4px rgba(40, 167, 69, 0.25)';
+                        btn.style.fontWeight = '600';
+                    } else {
+                        btn.style.backgroundColor = '#007bff';
+                        btn.style.color = 'white';
+                        btn.style.borderColor = '#007bff';
+                    }
+
+                    // Eventos hover
+                    btn.addEventListener('mouseenter', () => {
+                        if (!isActive) {
+                            btn.style.backgroundColor = '#0056b3';
+                            btn.style.borderColor = '#0056b3';
+                        }
+                    });
+
+                    btn.addEventListener('mouseleave', () => {
+                        if (!isActive) {
+                            btn.style.backgroundColor = '#007bff';
+                            btn.style.borderColor = '#007bff';
+                        }
+                    });
+
                     btn.onclick = () => {
                         tab.currentPage = i;
                         this.renderTabla(tabName);
@@ -250,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Instanciar el manager de pestañas
-    const tabManager = new TabManager();
+    tabManager = new TabManager();
 
     // Configuración de datos compartidos
     let camposImportantesPractica = [];
@@ -267,12 +322,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const codigoProceso = getParametroProceso(); // obtiene el código directamente de la URL
-
-    let practicasGlobal = [];
-    let detalleGlobal = [];
-    let cabeceraGlobal = [];
-    let aprobCabeceraGlobal = [];
-    let validacionesGlobal = [];
 
     // Definir campos importantes (configuración de las tablas)
     const configuracionCampos = {
@@ -321,7 +370,22 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'd_practica', header: 'Práctica' },
             { key: 'q_pract_correctas', header: 'Q_CORR', format: 'numeric' },
             { key: 'i_valor_practica', header: 'Valor Práctica', format: 'moneda' },
-            { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' }
+            { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' },
+            {
+                key: 'acciones',
+                header: 'Ver Prácticas',
+                format: 'btn',
+                render: (item) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-practicas';
+                    btn.textContent = 'Ver Prácticas';
+                    btn.style.backgroundColor = '#6f42c1';
+                    btn.style.fontSize = '0.8rem';
+                    btn.style.padding = '0.3rem 0.6rem';
+                    btn.onclick = () => navegarAPracticasConFiltros(item);
+                    return btn;
+                }
+            }
         ],
         cabecera: [
             { key: 'c_concepto', header: 'Concepto', format: 'code' },
@@ -330,7 +394,22 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'd_prestador', header: 'Prestador' },
             { key: 'c_modulo_pami_4x', header: 'Cod. Modulo', format: 'code' },
             { key: 'd_modulo_pami', header: 'Modulo' },
-            { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' }
+            { key: 'i_valorizado', header: 'I_VALORIZADO', format: 'moneda' },
+            {
+                key: 'acciones',
+                header: 'Ver Detalle',
+                format: 'btn',
+                render: (item) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-detalle';
+                    btn.textContent = 'Ver Detalle';
+                    btn.style.backgroundColor = '#007bff';
+                    btn.style.fontSize = '0.8rem';
+                    btn.style.padding = '0.3rem 0.6rem';
+                    btn.onclick = () => navegarADetalleConFiltros(item);
+                    return btn;
+                }
+            }
         ],
         aprob_cabecera: [
             { key: 'c_concepto', header: 'Concepto', format: 'code' },
@@ -339,8 +418,24 @@ document.addEventListener('DOMContentLoaded', () => {
             { key: 'd_prestador', header: 'Prestador' },
             { key: 'c_modulo_pami_7x', header: 'Cod. Modulo', format: 'code' },
             { key: 'd_modulo_pami', header: 'Modulo (7X)' },
+            { key: 'i_monto_cab', header: 'I_MONTO_CAB', format: 'moneda' },
             { key: 'i_monto_resu', header: 'I_MONTO_RESU', format: 'moneda' },
-            { key: 'i_monto', header: 'I_MONTO', format: 'moneda' }
+            { key: 'i_monto', header: 'I_MONTO', format: 'moneda' },
+            {
+                key: 'acciones',
+                header: 'Ver Cabecera',
+                format: 'btn',
+                render: (item) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-cabecera';
+                    btn.textContent = 'Ver Cabecera';
+                    btn.style.backgroundColor = '#28a745';
+                    btn.style.fontSize = '0.8rem';
+                    btn.style.padding = '0.3rem 0.6rem';
+                    btn.onclick = () => navegarACabeceraConFiltros(item);
+                    return btn;
+                }
+            }
         ]
     };
 
@@ -412,8 +507,242 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 });
 
+// Función para navegar a la pestaña Cabecera con filtros aplicados
+function navegarACabeceraConFiltros(item) {
+    // Mostrar indicador visual de carga en el botón
+    const btn = event.target;
+    const originalText = btn.textContent;
+    const originalBg = btn.style.backgroundColor;
+
+    // Animación del botón
+    btn.textContent = '⏳ Cargando...';
+    btn.style.backgroundColor = '#17a2b8';
+    btn.style.transform = 'scale(0.95)';
+    btn.style.transition = 'all 0.3s ease';
+    btn.disabled = true;
+
+    // Cambiar a la pestaña cabecera con animación suave
+    window.showTab('cabecera');
+
+    // Aplicar filtros basados en la fila seleccionada
+    setTimeout(() => {
+        // Filtro por concepto
+        const filtroConcepto = document.getElementById('filtroConcepto_cabecera');
+        if (filtroConcepto && filtroConcepto.setValue) {
+            filtroConcepto.setValue(item.c_concepto || '');
+        }
+
+        // Filtro por periodo
+        const filtroPeriodo = document.getElementById('filtroPeriodo_cabecera');
+        if (filtroPeriodo && filtroPeriodo.setValue) {
+            filtroPeriodo.setValue(item.c_periodo_ex || '');
+        }
+
+        // Filtro por prestador
+        const filtroPrestador = document.getElementById('filtroPrestador_cabecera');
+        if (filtroPrestador && filtroPrestador.setValue) {
+            filtroPrestador.setValue(item.c_prestador || '');
+        }
+
+        // Filtro por módulo - Buscar el módulo correspondiente en cabecera
+        const filtroModulo = document.getElementById('filtroModulo_cabecera');
+        if (filtroModulo && filtroModulo.setValue && cabeceraGlobal && cabeceraGlobal.length > 0) {
+            // Buscar el módulo correspondiente en los datos de cabecera por prestador y descripción
+            const moduloEnCabecera = cabeceraGlobal.find(
+                (c) =>
+                    c.c_concepto === item.c_concepto &&
+                    c.c_periodo_ex === item.c_periodo_ex &&
+                    c.c_prestador === item.c_prestador &&
+                    (c.d_modulo_pami === item.d_modulo_pami || c.d_modulo_pami?.includes(item.d_modulo_pami))
+            );
+
+            if (moduloEnCabecera && moduloEnCabecera.c_modulo_pami_4x) {
+                filtroModulo.setValue(moduloEnCabecera.c_modulo_pami_4x);
+            } else {
+                // Si no encuentra correspondencia exacta, limpiar el filtro de módulo
+                filtroModulo.setValue('');
+            }
+        }
+
+        // Aplicar el filtrado usando el tabManager
+        if (tabManager && typeof tabManager.filtrar === 'function') {
+            tabManager.filtrar('cabecera');
+        }
+
+        // Mostrar mensaje informativo
+        console.log(
+            `Navegando a Cabecera con filtros: Concepto=${item.c_concepto}, Período=${item.c_periodo_ex}, Prestador=${item.c_prestador}`
+        );
+    }, 200);
+
+    // Restaurar botón después del filtrado
+    setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.backgroundColor = originalBg;
+        btn.style.transform = 'scale(1)';
+        btn.disabled = false;
+    }, 600);
+}
+
+// Función para navegar a la pestaña Detalle con filtros aplicados
+function navegarADetalleConFiltros(item) {
+    // Mostrar indicador visual de carga en el botón
+    const btn = event.target;
+    const originalText = btn.textContent;
+    const originalBg = btn.style.backgroundColor;
+
+    // Animación del botón
+    btn.textContent = '⏳ Cargando...';
+    btn.style.backgroundColor = '#17a2b8';
+    btn.style.transform = 'scale(0.95)';
+    btn.style.transition = 'all 0.3s ease';
+    btn.disabled = true;
+
+    // Cambiar a la pestaña detalle con animación suave
+    window.showTab('detalle');
+
+    // Aplicar filtros basados en la fila seleccionada
+    setTimeout(() => {
+        // Filtro por concepto
+        const filtroConcepto = document.getElementById('filtroConcepto_detalle');
+        if (filtroConcepto && filtroConcepto.setValue) {
+            filtroConcepto.setValue(item.c_concepto || '');
+        }
+
+        // Filtro por periodo
+        const filtroPeriodo = document.getElementById('filtroPeriodo_detalle');
+        if (filtroPeriodo && filtroPeriodo.setValue) {
+            filtroPeriodo.setValue(item.c_periodo_ex || '');
+        }
+
+        // Filtro por prestador
+        const filtroPrestador = document.getElementById('filtroPrestador_detalle');
+        if (filtroPrestador && filtroPrestador.setValue) {
+            filtroPrestador.setValue(item.c_prestador || '');
+        }
+
+        // Filtro por módulo - usar directamente el módulo de cabecera (4x)
+        const filtroModulo = document.getElementById('filtroModulo_detalle');
+        if (filtroModulo && filtroModulo.setValue) {
+            filtroModulo.setValue(item.c_modulo_pami_4x || '');
+        }
+
+        // Aplicar el filtrado usando el tabManager
+        if (tabManager && typeof tabManager.filtrar === 'function') {
+            tabManager.filtrar('detalle');
+        }
+
+        // Mostrar mensaje informativo
+        console.log(
+            `Navegando a Detalle con filtros: Concepto=${item.c_concepto}, Período=${item.c_periodo_ex}, Prestador=${item.c_prestador}, Módulo=${item.c_modulo_pami_4x}`
+        );
+    }, 200);
+
+    // Restaurar botón después del filtrado
+    setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.backgroundColor = originalBg;
+        btn.style.transform = 'scale(1)';
+        btn.disabled = false;
+    }, 600);
+}
+
+// Función para navegar a la pestaña Prácticas con filtros aplicados
+function navegarAPracticasConFiltros(item) {
+    // Mostrar indicador visual de carga en el botón
+    const btn = event.target;
+    const originalText = btn.textContent;
+    const originalBg = btn.style.backgroundColor;
+
+    // Animación del botón
+    btn.textContent = '⏳ Cargando...';
+    btn.style.backgroundColor = '#17a2b8';
+    btn.style.transform = 'scale(0.95)';
+    btn.style.transition = 'all 0.3s ease';
+    btn.disabled = true;
+
+    // Cambiar a la pestaña practicas con animación suave
+    window.showTab('practicas');
+
+    // Aplicar filtros basados en la fila seleccionada
+    setTimeout(() => {
+        // Filtro por concepto
+        const filtroConcepto = document.getElementById('filtroConcepto_practicas');
+        if (filtroConcepto && filtroConcepto.setValue) {
+            filtroConcepto.setValue(item.c_concepto || '');
+        }
+
+        // Filtro por periodo - mapear de periodo_ex a periodo
+        const filtroPeriodo = document.getElementById('filtroPeriodo_practicas');
+        if (filtroPeriodo && filtroPeriodo.setValue) {
+            // En prácticas se usa c_periodo, pero en detalle viene c_periodo_ex
+            filtroPeriodo.setValue(item.c_periodo_ex || '');
+        }
+
+        // Filtro por prestador
+        const filtroPrestador = document.getElementById('filtroPrestador_practicas');
+        if (filtroPrestador && filtroPrestador.setValue) {
+            filtroPrestador.setValue(item.c_prestador || '');
+        }
+
+        // Filtro por módulo - usar directamente el módulo de detalle (4x)
+        const filtroModulo = document.getElementById('filtroModulo_practicas');
+        if (filtroModulo && filtroModulo.setValue) {
+            filtroModulo.setValue(item.c_modulo_pami_4x || '');
+        }
+
+        // Filtro por práctica - usar el código de práctica específico
+        const filtroPractica = document.getElementById('filtroPractica_practicas');
+        if (filtroPractica && filtroPractica.setValue) {
+            filtroPractica.setValue(item.c_practica || '');
+        }
+
+        // Aplicar el filtrado usando el tabManager
+        if (tabManager && typeof tabManager.filtrar === 'function') {
+            tabManager.filtrar('practicas');
+        }
+
+        // Mostrar mensaje informativo
+        console.log(
+            `Navegando a Prácticas con filtros: Concepto=${item.c_concepto}, Período=${item.c_periodo_ex}, Prestador=${item.c_prestador}, Módulo=${item.c_modulo_pami_4x}, Práctica=${item.c_practica}`
+        );
+    }, 200);
+
+    // Restaurar botón después del filtrado
+    setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.backgroundColor = originalBg;
+        btn.style.transform = 'scale(1)';
+        btn.disabled = false;
+    }, 600);
+}
+
 // Navega a la página de validaciones con los parámetros correctos
 function navegarAValidaciones(codigo, c_id_practica) {
+    // Guardar el estado actual de la página de prácticas
+    const estadoPracticas = {
+        scrollY: window.scrollY,
+        filtros: {},
+        paginaActual: tabManager?.tabs?.practicas?.currentPage || 1,
+        tamañoPagina: tabManager?.tabs?.practicas?.pageSize || 10
+    };
+
+    // Guardar filtros aplicados
+    if (tabManager?.tabs?.practicas?.filtros) {
+        tabManager.tabs.practicas.filtros.forEach((filtro) => {
+            const inputId = `filtro${tabManager.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_practicas`;
+            const input = document.getElementById(inputId);
+            if (input) {
+                estadoPracticas.filtros[filtro] = input?.getValue ? input.getValue() : input?.value || '';
+            }
+        });
+    }
+
+    // Guardar en sessionStorage para persistir entre páginas
+    sessionStorage.setItem('estadoPracticas', JSON.stringify(estadoPracticas));
+    console.log('Estado guardado antes de navegar a validaciones:', estadoPracticas);
+
+    // Navegar a validaciones
     UrlUtils.navegarAValidaciones(codigo, c_id_practica);
 }
 
@@ -454,6 +783,160 @@ window.showTab = (tabId) => {
         }
     });
 };
+
+// Verificar si hay un hash en la URL al cargar la página para activar una pestaña específica
+document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash;
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (hash && hash.startsWith('#')) {
+        const tabId = hash.substring(1);
+        // Esperar un poco para que las pestañas se inicialicen
+        setTimeout(() => {
+            if (document.getElementById(tabId)) {
+                window.showTab(tabId);
+
+                // Si venimos de validaciones y tenemos el parámetro restore, restaurar estado
+                if (tabId === 'practicas' && urlParams.get('restore') === 'true') {
+                    console.log('Detectado parámetro restore=true para la pestaña prácticas');
+                    // Restaurar estado con un delay adicional para asegurar que la tabla esté renderizada
+                    setTimeout(() => {
+                        restaurarEstadoPracticas();
+                    }, 1500); // Aumentar el delay para dar más tiempo a la inicialización
+                }
+            }
+        }, 800); // Aumentar también este delay inicial
+    }
+});
+
+// Función para restaurar el estado de la pestaña prácticas
+function restaurarEstadoPracticas() {
+    try {
+        const estadoSession = sessionStorage.getItem('estadoPracticas');
+        if (!estadoSession) {
+            console.log('No hay estado guardado para restaurar');
+            return;
+        }
+
+        const estado = JSON.parse(estadoSession);
+        console.log('Restaurando estado:', estado);
+
+        // Función para intentar restaurar con reintentos
+        const intentarRestaurar = (intentos = 0) => {
+            const maxIntentos = 10;
+
+            // Verificar que tabManager esté listo
+            if (!tabManager || !tabManager.tabs || !tabManager.tabs.practicas || intentos >= maxIntentos) {
+                if (intentos >= maxIntentos) {
+                    console.warn('Se agotaron los intentos para restaurar el estado');
+                }
+                sessionStorage.removeItem('estadoPracticas');
+                return;
+            }
+
+            // Restaurar filtros
+            if (estado.filtros && tabManager.tabs.practicas.filtros) {
+                let filtrosAplicados = 0;
+                tabManager.tabs.practicas.filtros.forEach((filtro) => {
+                    const inputId = `filtro${tabManager.capitalize(
+                        filtro === 'periodo_ex' ? 'Periodo' : filtro
+                    )}_practicas`;
+                    const input = document.getElementById(inputId);
+                    const valorFiltro = estado.filtros[filtro];
+
+                    if (input && valorFiltro) {
+                        if (input.setValue) {
+                            input.setValue(valorFiltro);
+                            filtrosAplicados++;
+                        } else if (input.value !== undefined) {
+                            input.value = valorFiltro;
+                            filtrosAplicados++;
+                        }
+                    }
+                });
+
+                console.log(`Filtros aplicados: ${filtrosAplicados}`);
+            }
+
+            // Restaurar página actual y tamaño de página antes de aplicar filtros
+            if (estado.paginaActual) {
+                tabManager.tabs.practicas.currentPage = estado.paginaActual;
+            }
+            if (estado.tamañoPagina) {
+                tabManager.tabs.practicas.pageSize = estado.tamañoPagina;
+
+                // Actualizar el selector de tamaño de página si existe
+                const pageSizeSelect = document.getElementById('pageSizePracticas');
+                if (pageSizeSelect) {
+                    pageSizeSelect.value = estado.tamañoPagina;
+                }
+            }
+
+            // Aplicar filtros y re-renderizar manteniendo la página actual
+            setTimeout(() => {
+                if (tabManager && typeof tabManager.filtrar === 'function') {
+                    // Guardar temporalmente la página actual antes de filtrar
+                    const paginaGuardada = estado.paginaActual;
+
+                    // Aplicar filtros (esto resetea currentPage a 1)
+                    tabManager.filtrar('practicas');
+
+                    // Restaurar la página después del filtrado
+                    if (paginaGuardada) {
+                        tabManager.tabs.practicas.currentPage = paginaGuardada;
+                        // Re-renderizar la tabla con la página correcta
+                        tabManager.renderTabla('practicas');
+                    }
+
+                    console.log(`Filtros aplicados y tabla re-renderizada en página: ${paginaGuardada || 1}`);
+
+                    // Restaurar posición del scroll después de que se renderice todo
+                    setTimeout(() => {
+                        if (estado.scrollY) {
+                            window.scrollTo({
+                                top: estado.scrollY,
+                                behavior: 'smooth'
+                            });
+                            console.log(`Scroll restaurado a posición: ${estado.scrollY}`);
+                        }
+                    }, 500);
+                }
+            }, 300);
+
+            // Limpiar el estado guardado después de usarlo
+            sessionStorage.removeItem('estadoPracticas');
+            console.log('Estado de prácticas restaurado exitosamente');
+
+            // Limpiar la URL del parámetro restore después de la restauración
+            setTimeout(() => {
+                const url = new URL(window.location);
+                url.searchParams.delete('restore');
+                window.history.replaceState({}, '', url.toString());
+                console.log('URL limpiada después de la restauración');
+            }, 1000);
+        };
+
+        // Intentar restaurar inmediatamente o después de un delay
+        if (tabManager && tabManager.tabs && tabManager.tabs.practicas) {
+            intentarRestaurar();
+        } else {
+            // Reintentar cada 200ms hasta que tabManager esté listo
+            const intervalo = setInterval(() => {
+                if (tabManager && tabManager.tabs && tabManager.tabs.practicas) {
+                    clearInterval(intervalo);
+                    intentarRestaurar();
+                }
+            }, 200);
+
+            // Limpiar el intervalo después de 5 segundos máximo
+            setTimeout(() => clearInterval(intervalo), 5000);
+        }
+    } catch (error) {
+        console.error('Error restaurando estado de prácticas:', error);
+        // Limpiar sessionStorage en caso de error
+        sessionStorage.removeItem('estadoPracticas');
+    }
+}
 
 // Inicializar botones de vuelta a procesos cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {

@@ -9,6 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const codigo = urlParams.get('codigo');
     const c_id_practica = urlParams.get('c_id_practica');
 
+    // Configurar botón "Volver a Prácticas" si venimos desde prácticas
+    if (codigo && c_id_practica) {
+        const btnVolverPracticas = document.getElementById('btnVolverPracticas');
+        if (btnVolverPracticas) {
+            btnVolverPracticas.style.display = 'inline-block';
+            btnVolverPracticas.addEventListener('click', () => {
+                // Construir URL de vuelta a proceso con la pestaña de prácticas activa y restauración de estado
+                const practicasUrl = `./proceso.html?codigo=${codigo}&restore=true#practicas`;
+                window.location.href = practicasUrl;
+            });
+        }
+    }
+
     let validacionesGlobal = [];
 
     // Esto bien podria ser resuelto con mi propia entidad Validacion, que se cargue en otra capa con los datos del json
