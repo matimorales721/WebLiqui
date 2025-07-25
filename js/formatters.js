@@ -88,5 +88,5 @@ export function formatearFecha(date, incluirHora = false) {
     const minutos = String(date.getMinutes()).padStart(2, '0');
     const segundos = String(date.getSeconds()).padStart(2, '0');
 
-    return `${fechaStr} ${horas}:${minutos}`;
+    return `${fechaStr} ${horas}:${minutos} hs.`;
 }

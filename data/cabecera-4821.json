@@ -1,148 +1,819 @@
-{"results":[{"columns":[{"name":"C_PROCESO","type":"NUMBER"},{"name":"C_PRESTADOR","type":"NUMBER"},{"name":"C_RED","type":"NUMBER"},{"name":"C_PERIODO_EX","type":"NUMBER"},{"name":"C_MODULO_PAMI_4X","type":"NUMBER"},{"name":"C_TIPO_EJECUCION","type":"CHAR"},{"name":"C_UGL","type":"VARCHAR2"},{"name":"Q_PRACTICAS","type":"NUMBER"},{"name":"Q_PRACT_CORRECTAS","type":"VARCHAR2"},{"name":"Q_PRACT_INVALIDAS","type":"VARCHAR2"},{"name":"Q_BENEFICIARIOS","type":"NUMBER"},{"name":"I_VALORIZADO","type":"VARCHAR2"},{"name":"I_GASTO_MEDICAMENTOS","type":"NUMBER"},{"name":"C_ESTADO_APROBACION","type":"NUMBER"},{"name":"C_CONCEPTO","type":"VARCHAR2"},{"name":"D_MODULO_PAMI","type":"VARCHAR2"},{"name":"D_PRESTADOR","type":"VARCHAR2"}],"items":
-[
-{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":7,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"5342.63","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"RADIOLOGIA DE NIVEL 2","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":7,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":604,"q_pract_correctas":"432","q_pract_invalidas":"172","q_beneficiarios":14,"i_valorizado":"2188639.94","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"RADIOLOGIA DE NIVEL 2","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":9,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":148,"q_pract_correctas":"141","q_pract_invalidas":"7","q_beneficiarios":137,"i_valorizado":"917386.26","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"LABORATORIO DE NIVEL 2","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":9,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":2677,"q_pract_correctas":"2014","q_pract_invalidas":"663","q_beneficiarios":14,"i_valorizado":"18758375.95","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"LABORATORIO DE NIVEL 2","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":12,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1758,"q_pract_correctas":"1500","q_pract_invalidas":"258","q_beneficiarios":227,"i_valorizado":"96454644.34","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"MODULO INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":12,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1306,"q_pract_correctas":"863","q_pract_invalidas":"443","q_beneficiarios":14,"i_valorizado":"64525131.15","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULO INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":202,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"4910338.36","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE NEUROCIRUGIA- ESCALA A","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":241,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"1450489.8","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA A","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":242,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":3,"i_valorizado":"2940807.03","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA B","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":243,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"680149.95","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA C","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":244,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1,"q_pract_correctas":"0.8","q_pract_invalidas":"0.2","q_beneficiarios":1,"i_valorizado":"5121552.28","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA CARDIOVASCULAR CENTRAL Y PERIFERICA- ESCALA A","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":245,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":2,"i_valorizado":"3037931.91","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA CARDIOVASCULAR CENTRAL Y PERIFERICA- ESCALA B","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":246,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":2,"i_valorizado":"1677377.74","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA CARDIOVASCULAR CENTRAL Y PERIFERICA- ESCALA C","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":247,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":3,"q_pract_correctas":"2","q_pract_invalidas":"1","q_beneficiarios":2,"i_valorizado":"8802635.86","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE ELECTROFISIOLOGIA - ESCALA A","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":301,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":27,"q_pract_correctas":"24.25","q_pract_invalidas":"2.75","q_beneficiarios":24,"i_valorizado":"8356951.5","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA GENERAL Y DEL APARATO DIGESTIVO","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":303,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":10,"q_pract_correctas":"8.05","q_pract_invalidas":"1.95","q_beneficiarios":7,"i_valorizado":"3559436.38","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA PERCUTANEA ¿ INTERVENCIONISMO","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":305,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"471787.5","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA DE GASTROENTEROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":306,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":2,"i_valorizado":"343221.16","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA DE GINECOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":310,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":2,"i_valorizado":"1045238.69","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA DE UROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":322,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":35,"q_pract_correctas":"0","q_pract_invalidas":"35","q_beneficiarios":0,"i_valorizado":"0","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"ECODOPPLER EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":322,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1268,"q_pract_correctas":"1251.6","q_pract_invalidas":"16.4","q_beneficiarios":672,"i_valorizado":"40579657.69","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"PRE","d_modulo_pami":"ECODOPPLER EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":323,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":10,"q_pract_correctas":"0","q_pract_invalidas":"10","q_beneficiarios":0,"i_valorizado":"0","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"RESONANCIA MAGNETICA NUCLEAR (INCLUYE GADOLINIO) EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":323,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":12,"q_pract_correctas":"11","q_pract_invalidas":"1","q_beneficiarios":11,"i_valorizado":"811164.48","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"PRE","d_modulo_pami":"RESONANCIA MAGNETICA NUCLEAR (INCLUYE GADOLINIO) EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":324,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":51,"q_pract_correctas":"0","q_pract_invalidas":"51","q_beneficiarios":0,"i_valorizado":"0","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":324,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":852,"q_pract_correctas":"808","q_pract_invalidas":"44","q_beneficiarios":573,"i_valorizado":"55052801.03","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"PRE","d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":650,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":33,"q_pract_correctas":"33","q_pract_invalidas":"0","q_beneficiarios":4,"i_valorizado":"3117859.31","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"ONCO","d_modulo_pami":"ONCOPLAN- MODULOS DE INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":655,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":4,"q_pract_correctas":"3","q_pract_invalidas":"1","q_beneficiarios":3,"i_valorizado":"1292963.19","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"ONCO","d_modulo_pami":"ONCOPLAN- MODULOS DE CIRUGIA DE GINECOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":657,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":2,"i_valorizado":"687008.69","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"ONCO","d_modulo_pami":"ONCOPLAN- MODULOS DE CIRUGIA DE UROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_4x":662,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1,"q_pract_correctas":"0","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"0","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"ONCO","d_modulo_pami":"ONCOPLAN- MODULOS DE CIRUGIA PERCUTANEA ¿ INTERVENCIONISMO","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":22,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":139,"q_pract_correctas":"139","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"4498726.66","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ECODOPPLER EN AMBULATORIO","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":27,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":23,"q_pract_correctas":"23","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"541083.35","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"DENSITOMETRIA OSEA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":144,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":249,"q_pract_correctas":"247","q_pract_invalidas":"2","q_beneficiarios":0,"i_valorizado":"2281444.4","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME_ONCO","d_modulo_pami":"ONCOLOGIA - CONSULTAS","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":145,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":80,"q_pract_correctas":"80","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"4119006.17","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME_ONCO","d_modulo_pami":"ONCOLOGIA - TRATAMIENTOS","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":322,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"64729.88","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ECODOPPLER EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":330,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"271888.83","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"EVALUACION PREQUIRURGICA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":418,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":201,"q_pract_correctas":"200","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"1805394.82","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"HEMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":431,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":35,"q_pract_correctas":"34.4","q_pract_invalidas":"0.6","q_beneficiarios":0,"i_valorizado":"330261.25","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"INFECTOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":434,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":195,"q_pract_correctas":"121.2","q_pract_invalidas":"73.8","q_beneficiarios":0,"i_valorizado":"1176448.79","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ENDOCRINOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":435,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":86,"q_pract_correctas":"85","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"829931.15","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"FLEBOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":437,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":316,"q_pract_correctas":"301.6","q_pract_invalidas":"14.4","q_beneficiarios":0,"i_valorizado":"2103735.63","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"OTORRINOLARINGOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":537,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":128,"q_pract_correctas":"127","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"3380186.86","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"DERMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":540,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":7,"q_pract_correctas":"6","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"57648.84","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ALERGIA E INMUNOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":541,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":59,"q_pract_correctas":"59","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"571112.41","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NEUROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":542,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":45,"q_pract_correctas":"45","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"560128.11","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ANATOMIA PATOLOGICA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":543,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":937,"q_pract_correctas":"931","q_pract_invalidas":"6","q_beneficiarios":0,"i_valorizado":"11098615.3","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"CARDIOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":544,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":278,"q_pract_correctas":"277.8","q_pract_invalidas":"0.2","q_beneficiarios":0,"i_valorizado":"2567390.74","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":545,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":250,"q_pract_correctas":"246","q_pract_invalidas":"4","q_beneficiarios":0,"i_valorizado":"2305989.52","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"UROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":546,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":545,"q_pract_correctas":"542","q_pract_invalidas":"3","q_beneficiarios":0,"i_valorizado":"5104658.37","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":548,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":33,"q_pract_correctas":"33","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"325127.67","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NEUMONOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":549,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":35,"q_pract_correctas":"35","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"340100.65","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NEFROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":550,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":8,"q_pract_correctas":"8","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"70586.92","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"HEPATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":551,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":235,"q_pract_correctas":"230.2","q_pract_invalidas":"4.8","q_beneficiarios":0,"i_valorizado":"2068176.28","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":551,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"10694.99","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME_VET","d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":552,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":151,"q_pract_correctas":"149","q_pract_invalidas":"2","q_beneficiarios":0,"i_valorizado":"1448101.51","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":553,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":329,"q_pract_correctas":"323.2","q_pract_invalidas":"5.8","q_beneficiarios":0,"i_valorizado":"1769743.98","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"FONOAUDIOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":555,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":200,"q_pract_correctas":"199","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"1886596.01","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"DIABETOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":557,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":53,"q_pract_correctas":"53","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"502664.47","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NUTRICION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_4x":558,"c_tipo_ejecucion":"M","c_ugl":"06","q_practicas":45,"q_pract_correctas":"45","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"429938.55","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"LIC. EN NUTRICION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202410,"c_modulo_pami_4x":2,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"9721.64","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202410,"c_modulo_pami_4x":541,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"7638.62","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NEUROLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202410,"c_modulo_pami_4x":543,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":5,"q_pract_correctas":"5","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"50198.49","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"CARDIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202411,"c_modulo_pami_4x":543,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":3,"q_pract_correctas":"2","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"13215.91","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"CARDIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202501,"c_modulo_pami_4x":2,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":7,"q_pract_correctas":"7","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"35763.19","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202501,"c_modulo_pami_4x":24,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"109674.1","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN AMBULATORIO","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202501,"c_modulo_pami_4x":543,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"25586.04","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"CARDIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":4,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":20,"q_pract_correctas":"20","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"113912.8","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"KINESIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":7,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":135,"q_pract_correctas":"135","q_pract_invalidas":"0","q_beneficiarios":7,"i_valorizado":"701862.55","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"RADIOLOGIA DE NIVEL 2","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":7,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":985,"q_pract_correctas":"982","q_pract_invalidas":"3","q_beneficiarios":101,"i_valorizado":"5212772.23","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"RADIOLOGIA DE NIVEL 2","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":8,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":72,"q_pract_correctas":"70","q_pract_invalidas":"2","q_beneficiarios":38,"i_valorizado":"3932897.17","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"ECODIAGNOSTICO DE NIVEL 2","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":9,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":7975,"q_pract_correctas":"7935","q_pract_invalidas":"40","q_beneficiarios":101,"i_valorizado":"38271733.56","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"LABORATORIO DE NIVEL 2","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":10,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"5695.64","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"FISIOKINESIOTERAPIA  DE NIVEL 2","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":10,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":958,"q_pract_correctas":"957","q_pract_invalidas":"1","q_beneficiarios":101,"i_valorizado":"5427874.03","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"FISIOKINESIOTERAPIA  DE NIVEL 2","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":12,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":545,"q_pract_correctas":"533","q_pract_invalidas":"12","q_beneficiarios":44,"i_valorizado":"36258995.78","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"MODULO INTERNACION","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":12,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":5038,"q_pract_correctas":"4768","q_pract_invalidas":"270","q_beneficiarios":101,"i_valorizado":"191884317.04","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULO INTERNACION","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":204,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":3,"i_valorizado":"270659.37","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE NEUROCIRUGIA- ESCALA C","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":242,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"2152737.56","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA B","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":301,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"834548.48","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA GENERAL Y DEL APARATO DIGESTIVO","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":322,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":137,"q_pract_correctas":"136","q_pract_invalidas":"1","q_beneficiarios":89,"i_valorizado":"4499935.28","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"PRE","d_modulo_pami":"ECODOPPLER EN INTERNACION","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_4x":324,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":165,"q_pract_correctas":"164","q_pract_invalidas":"1","q_beneficiarios":100,"i_valorizado":"14754792.82","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"PRE","d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":2,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":29,"q_pract_correctas":"27.8","q_pract_invalidas":"1.2","q_beneficiarios":0,"i_valorizado":"155866.25","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":3,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":13,"q_pract_correctas":"13","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"214131.58","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ECODIAGNOSTICO DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":24,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"258490.2","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN AMBULATORIO","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":324,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"47976.09","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":330,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"271888.83","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"EVALUACION PREQUIRURGICA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":434,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"8555.99","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ENDOCRINOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":435,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":6,"q_pract_correctas":"6","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"53474.94","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"FLEBOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":541,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":7,"q_pract_correctas":"7","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"66308.93","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NEUROLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":543,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":111,"q_pract_correctas":"107.6","q_pract_invalidas":"3.4","q_beneficiarios":0,"i_valorizado":"996303.81","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"CARDIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":544,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":12,"q_pract_correctas":"11.8","q_pract_invalidas":"0.2","q_beneficiarios":0,"i_valorizado":"103099.68","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":546,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":29,"q_pract_correctas":"24.8","q_pract_invalidas":"4.2","q_beneficiarios":0,"i_valorizado":"219888.95","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":551,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":10,"q_pract_correctas":"10","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"91976.9","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_4x":552,"c_tipo_ejecucion":"M","c_ugl":"09","q_practicas":15,"q_pract_correctas":"11","q_pract_invalidas":"4","q_beneficiarios":0,"i_valorizado":"1393118.93","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"GUEMES S.A."}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202503,"c_modulo_pami_4x":433,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"10204.3","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"REUMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":7,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"0","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"0","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"RADIOLOGIA DE NIVEL 2","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":7,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":327,"q_pract_correctas":"327","q_pract_invalidas":"0","q_beneficiarios":40,"i_valorizado":"1738088.81","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"RADIOLOGIA DE NIVEL 2","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":7,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"16027.89","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"VET","d_modulo_pami":"RADIOLOGIA DE NIVEL 2","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":9,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":2,"q_pract_correctas":"0","q_pract_invalidas":"2","q_beneficiarios":0,"i_valorizado":"0","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"LABORATORIO DE NIVEL 2","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":9,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":2912,"q_pract_correctas":"2912","q_pract_invalidas":"0","q_beneficiarios":41,"i_valorizado":"8435499.26","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"LABORATORIO DE NIVEL 2","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":9,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":27,"q_pract_correctas":"27","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"78630.96","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"VET","d_modulo_pami":"LABORATORIO DE NIVEL 2","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":10,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":326,"q_pract_correctas":"326","q_pract_invalidas":"0","q_beneficiarios":40,"i_valorizado":"1846533.99","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"FISIOKINESIOTERAPIA  DE NIVEL 2","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":10,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"17086.92","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"VET","d_modulo_pami":"FISIOKINESIOTERAPIA  DE NIVEL 2","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":12,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":118,"q_pract_correctas":"0","q_pract_invalidas":"118","q_beneficiarios":0,"i_valorizado":"0","i_gasto_medicamentos":0,"c_estado_aprobacion":3,"c_concepto":"DC","d_modulo_pami":"MODULO INTERNACION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":12,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1426,"q_pract_correctas":"1396","q_pract_invalidas":"30","q_beneficiarios":43,"i_valorizado":"64777899.29","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULO INTERNACION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":12,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":14,"q_pract_correctas":"14","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"329321.1","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"VET","d_modulo_pami":"MODULO INTERNACION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":202,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"4910338.36","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE NEUROCIRUGIA- ESCALA A","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":208,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":2,"q_pract_correctas":"1","q_pract_invalidas":"1","q_beneficiarios":1,"i_valorizado":"2796400.44","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE HEMODINAMIA- ESCALA A","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":210,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":4,"q_pract_correctas":"4","q_pract_invalidas":"0","q_beneficiarios":4,"i_valorizado":"3630623.07","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE HEMODINAMIA- ESCALA C","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":241,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"1450489.8","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA A","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":300,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"564106.06","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA DE CABEZA Y CUELLO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":301,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":10,"q_pract_correctas":"10","q_pract_invalidas":"0","q_beneficiarios":10,"i_valorizado":"4082122.96","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA GENERAL Y DEL APARATO DIGESTIVO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":304,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":1,"i_valorizado":"941875.89","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA TORACICA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":305,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"0","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"0","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA DE GASTROENTEROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":306,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":2,"i_valorizado":"623858.26","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA DE GINECOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":310,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":8,"q_pract_correctas":"8","q_pract_invalidas":"0","q_beneficiarios":8,"i_valorizado":"5279715.04","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OP","d_modulo_pami":"MODULOS DE CIRUGIA DE UROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":322,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":12,"q_pract_correctas":"12","q_pract_invalidas":"0","q_beneficiarios":10,"i_valorizado":"442866.4","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"PRE","d_modulo_pami":"ECODOPPLER EN INTERNACION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":324,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":15,"q_pract_correctas":"15","q_pract_invalidas":"0","q_beneficiarios":15,"i_valorizado":"1085604.42","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"PRE","d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_4x":653,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"0","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"0","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"ONCO","d_modulo_pami":"ONCOPLAN- MODULOS DE CIRUGIA DE CABEZA Y CUELLO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":2,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":80,"q_pract_correctas":"50","q_pract_invalidas":"30","q_beneficiarios":0,"i_valorizado":"355087.79","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":3,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":36,"q_pract_correctas":"24","q_pract_invalidas":"12","q_beneficiarios":0,"i_valorizado":"390501.82","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ECODIAGNOSTICO DE NIVEL 1","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":3,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"44164.33","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME_VET","d_modulo_pami":"ECODIAGNOSTICO DE NIVEL 1","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":22,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":23,"q_pract_correctas":"22.4","q_pract_invalidas":"0.6","q_beneficiarios":0,"i_valorizado":"747755.9","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ECODOPPLER EN AMBULATORIO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":23,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":15,"q_pract_correctas":"14.1","q_pract_invalidas":"0.9","q_beneficiarios":0,"i_valorizado":"1202100.66","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"RESONANCIA MAGNETICA NUCLEAR(INCLUYE GADOLINIO) EN AMBULATORIO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":24,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":18,"q_pract_correctas":"16.4","q_pract_invalidas":"1.6","q_beneficiarios":0,"i_valorizado":"1763621.19","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN AMBULATORIO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":324,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":2,"q_pract_correctas":"2","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"117131.94","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":418,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"32084.97","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"HEMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":431,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":5,"q_pract_correctas":"5","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"53474.95","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"INFECTOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":433,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":10,"q_pract_correctas":"10","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"91976.9","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"REUMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":435,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"10694.99","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"FLEBOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":437,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":5,"q_pract_correctas":"5","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"44918.95","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"OTORRINOLARINGOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":437,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"8555.99","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME_VET","d_modulo_pami":"OTORRINOLARINGOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":537,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":9,"q_pract_correctas":"9","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"91976.91","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"DERMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":541,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":16,"q_pract_correctas":"16","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"162563.84","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NEUROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":542,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":4,"q_pract_correctas":"4","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"23147.96","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"ANATOMIA PATOLOGICA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":543,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":133,"q_pract_correctas":"133","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"1213270.62","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"CARDIOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":544,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":78,"q_pract_correctas":"77","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"906145.59","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":545,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":72,"q_pract_correctas":"72","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"733861.93","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"UROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":546,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":128,"q_pract_correctas":"127","q_pract_invalidas":"1","q_beneficiarios":0,"i_valorizado":"1236340.73","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":548,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":9,"q_pract_correctas":"9","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"94149.17","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NEUMONOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":549,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"32084.97","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NEFROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":550,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":1,"q_pract_correctas":"1","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"8555.99","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"HEPATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":551,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":42,"q_pract_correctas":"42","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"387025.9","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":552,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":27,"q_pract_correctas":"27","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"269513.73","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":555,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":10,"q_pract_correctas":"10","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"96254.9","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"DIABETOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":557,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":3,"q_pract_correctas":"3","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"32084.97","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"NUTRICION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_4x":558,"c_tipo_ejecucion":"M","c_ugl":"07","q_practicas":6,"q_pract_correctas":"6","q_pract_invalidas":"0","q_beneficiarios":0,"i_valorizado":"59891.94","i_gasto_medicamentos":0,"c_estado_aprobacion":1,"c_concepto":"OME","d_modulo_pami":"LIC. EN NUTRICION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-]}]}
+{
+  "results": [
+    {
+      "columns": [
+        {
+          "name": "C_PROCESO",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_PRESTADOR",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_RED",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_PERIODO_EX",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_MODULO_PAMI_4X",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_TIPO_EJECUCION",
+          "type": "CHAR"
+        },
+        {
+          "name": "C_UGL",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "Q_PRACTICAS",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "Q_PRACT_CORRECTAS",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "Q_PRACT_INVALIDAS",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "Q_BENEFICIARIOS",
+          "type": "NUMBER"
+        },
+        {
+          "name": "I_VALORIZADO",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "I_GASTO_MEDICAMENTOS",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_ESTADO_APROBACION",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_CONCEPTO",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "D_MODULO_PAMI",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "D_PRESTADOR",
+          "type": "CHAR"
+        }
+      ],
+      "items": [
+        {
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "08",
+          "q_practicas": "228001",
+          "q_pract_correctas": "226072",
+          "q_pract_invalidas": "1929",
+          "q_beneficiarios": 32428,
+          "i_valorizado": "648172102.17",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "08",
+          "q_practicas": "87",
+          "q_pract_correctas": "74",
+          "q_pract_invalidas": "13",
+          "q_beneficiarios": 10,
+          "i_valorizado": "278300.02",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "OP",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "08",
+          "q_practicas": "46498",
+          "q_pract_correctas": "46498",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 14987,
+          "i_valorizado": "263757578.48",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "08",
+          "q_practicas": "620",
+          "q_pract_correctas": "607",
+          "q_pract_invalidas": "13",
+          "q_beneficiarios": 75,
+          "i_valorizado": "2008503.83",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "08",
+          "q_practicas": "10820",
+          "q_pract_correctas": "10617",
+          "q_pract_invalidas": "203",
+          "q_beneficiarios": 6939,
+          "i_valorizado": "214208377.38",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "08",
+          "q_practicas": "5",
+          "q_pract_correctas": "5",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 2,
+          "i_valorizado": "91712.53",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "OP",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "08",
+          "q_practicas": "3964",
+          "q_pract_correctas": "3964",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 3921,
+          "i_valorizado": "89866586.33",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "08",
+          "q_practicas": "36",
+          "q_pract_correctas": "31",
+          "q_pract_invalidas": "5",
+          "q_beneficiarios": 21,
+          "i_valorizado": "484178.91",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "01",
+          "q_practicas": "123940",
+          "q_pract_correctas": "120648",
+          "q_pract_invalidas": "3292",
+          "q_beneficiarios": 17875,
+          "i_valorizado": "315306318.84",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "01",
+          "q_practicas": "32746",
+          "q_pract_correctas": "32746",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 9887,
+          "i_valorizado": "147165999.7",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "01",
+          "q_practicas": "13",
+          "q_pract_correctas": "13",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 1,
+          "i_valorizado": "62933.75",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "01",
+          "q_practicas": "4930",
+          "q_pract_correctas": "4830",
+          "q_pract_invalidas": "100",
+          "q_beneficiarios": 2902,
+          "i_valorizado": "85432907.51",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "01",
+          "q_practicas": "64",
+          "q_pract_correctas": "61",
+          "q_pract_invalidas": "3",
+          "q_beneficiarios": 40,
+          "i_valorizado": "1903825.76",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "PRE",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "01",
+          "q_practicas": "143",
+          "q_pract_correctas": "143",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 143,
+          "i_valorizado": "1182775.03",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "01",
+          "q_practicas": "3",
+          "q_pract_correctas": "3",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 1,
+          "i_valorizado": "28462.5",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "10",
+          "q_practicas": "218418",
+          "q_pract_correctas": "216634",
+          "q_pract_invalidas": "1784",
+          "q_beneficiarios": 31471,
+          "i_valorizado": "608030171.42",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "10",
+          "q_practicas": "299",
+          "q_pract_correctas": "246",
+          "q_pract_invalidas": "53",
+          "q_beneficiarios": 29,
+          "i_valorizado": "937997.57",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "OP",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "10",
+          "q_practicas": "53015",
+          "q_pract_correctas": "53015",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 14413,
+          "i_valorizado": "265294237.7",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "10",
+          "q_practicas": "617",
+          "q_pract_correctas": "465",
+          "q_pract_invalidas": "152",
+          "q_beneficiarios": 52,
+          "i_valorizado": "1619516.32",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "10",
+          "q_practicas": "9248",
+          "q_pract_correctas": "9133",
+          "q_pract_invalidas": "115",
+          "q_beneficiarios": 5806,
+          "i_valorizado": "181415294.5",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "10",
+          "q_practicas": "12",
+          "q_pract_correctas": "9",
+          "q_pract_invalidas": "3",
+          "q_beneficiarios": 5,
+          "i_valorizado": "238452.59",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "OP",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "10",
+          "q_practicas": "1361",
+          "q_pract_correctas": "1361",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 1341,
+          "i_valorizado": "31425459.5",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "10",
+          "q_practicas": "39",
+          "q_pract_correctas": "24",
+          "q_pract_invalidas": "15",
+          "q_beneficiarios": 15,
+          "i_valorizado": "404167.64",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "11",
+          "q_practicas": "193",
+          "q_pract_correctas": "193",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 21,
+          "i_valorizado": "607516.28",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "11",
+          "q_practicas": "142579",
+          "q_pract_correctas": "140534",
+          "q_pract_invalidas": "2045",
+          "q_beneficiarios": 20354,
+          "i_valorizado": "393194267.38",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "11",
+          "q_practicas": "185",
+          "q_pract_correctas": "154",
+          "q_pract_invalidas": "31",
+          "q_beneficiarios": 20,
+          "i_valorizado": "494298.77",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "OP",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "11",
+          "q_practicas": "24295",
+          "q_pract_correctas": "24295",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 8212,
+          "i_valorizado": "121606036.49",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "11",
+          "q_practicas": "7200",
+          "q_pract_correctas": "7049",
+          "q_pract_invalidas": "151",
+          "q_beneficiarios": 4403,
+          "i_valorizado": "150610794.86",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "11",
+          "q_practicas": "31",
+          "q_pract_correctas": "27",
+          "q_pract_invalidas": "4",
+          "q_beneficiarios": 11,
+          "i_valorizado": "842174.06",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "OP",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "11",
+          "q_practicas": "2593",
+          "q_pract_correctas": "2593",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 2581,
+          "i_valorizado": "60345585.67",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "11",
+          "q_practicas": "21",
+          "q_pract_correctas": "21",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 12,
+          "i_valorizado": "223272.55",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "29",
+          "q_practicas": "37135",
+          "q_pract_correctas": "37135",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 10128,
+          "i_valorizado": "174356861.39",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "29",
+          "q_practicas": "334",
+          "q_pract_correctas": "327",
+          "q_pract_invalidas": "7",
+          "q_beneficiarios": 41,
+          "i_valorizado": "1183407.55",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "29",
+          "q_practicas": "139433",
+          "q_pract_correctas": "135179",
+          "q_pract_invalidas": "4254",
+          "q_beneficiarios": 19829,
+          "i_valorizado": "383352250.79",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 5,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "29",
+          "q_practicas": "181",
+          "q_pract_correctas": "168",
+          "q_pract_invalidas": "13",
+          "q_beneficiarios": 22,
+          "i_valorizado": "562608.75",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "OP",
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "29",
+          "q_practicas": "6625",
+          "q_pract_correctas": "6462",
+          "q_pract_invalidas": "163",
+          "q_beneficiarios": 4177,
+          "i_valorizado": "126006631.1",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 3,
+          "c_concepto": "DC",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "29",
+          "q_practicas": "18",
+          "q_pract_correctas": "18",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 8,
+          "i_valorizado": "530983.94",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "OP",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "29",
+          "q_practicas": "2101",
+          "q_pract_correctas": "2101",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 2082,
+          "i_valorizado": "48406194.23",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "TI",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_4x": 34,
+          "c_tipo_ejecucion": "M",
+          "c_ugl": "29",
+          "q_practicas": "28",
+          "q_pract_correctas": "28",
+          "q_pract_invalidas": "0",
+          "q_beneficiarios": 12,
+          "i_valorizado": "404325.77",
+          "i_gasto_medicamentos": 0,
+          "c_estado_aprobacion": 1,
+          "c_concepto": "VET",
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        }
+      ]
+    }
+  ]
+}

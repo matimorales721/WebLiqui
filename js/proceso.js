@@ -3,6 +3,7 @@ import { parsearFecha, formatearFecha } from './formatters.js';
 import { poblarSelectUnico, crearSelectorPersonalizado } from './tableLogic.js';
 import { safeFetch, initCopyIconListener } from './newUtils.js';
 import { DateUtils, TipoEjecucionUtils, ProcesoDataManager, CamposConfigManager, UrlUtils } from './procesoUtils.js';
+import { cargarPracticas } from './practicasLoader.js';
 
 // Variables globales
 let tabManager;
@@ -440,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     Promise.all([
-        safeFetch(`../data/practicas-${codigoProceso}.json`),
+        cargarPracticas(codigoProceso),
         safeFetch(`../data/detalle-${codigoProceso}.json`),
         safeFetch(`../data/cabecera-${codigoProceso}.json`),
         safeFetch(`../data/aprob-cabecera-${codigoProceso}.json`),
@@ -470,14 +471,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (proceso.F_INICIO) {
                 const fechaInicio = parsearFecha(proceso.F_INICIO);
                 if (fechaInicio && !isNaN(fechaInicio.getTime())) {
-                    document.getElementById('inicio').textContent = formatearFecha(fechaInicio, true) + ' hs';
+                    document.getElementById('inicio').textContent = formatearFecha(fechaInicio, true);
                 }
             }
 
             if (proceso.F_FIN) {
                 const fechaFin = parsearFecha(proceso.F_FIN);
                 if (fechaFin && !isNaN(fechaFin.getTime())) {
-                    document.getElementById('fin').textContent = formatearFecha(fechaFin, true) + ' hs';
+                    document.getElementById('fin').textContent = formatearFecha(fechaFin, true);
                 }
             }
 

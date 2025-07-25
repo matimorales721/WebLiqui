@@ -187,7 +187,7 @@ export function generarTabla(data, tableId, columns, headers, page = 1, pageSize
             } else if (format === 'date') {
                 if (valor != null && valor !== '') {
                     // Aplica formatos fecha
-                    td.textContent = formatearFecha(parsearFecha(valor));
+                    td.textContent = formatearFecha(parsearFecha(valor), true);
                 }
 
                 // Numeric

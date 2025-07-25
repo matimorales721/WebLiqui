@@ -1,189 +1,497 @@
-{"results":[{"columns":[{"name":"C_CONCEPTO","type":"VARCHAR2"},{"name":"C_PROCESO","type":"NUMBER"},{"name":"C_PRESTADOR","type":"NUMBER"},{"name":"C_RED","type":"NUMBER"},{"name":"C_PERIODO_EX","type":"NUMBER"},{"name":"C_MODULO_PAMI_7X","type":"NUMBER"},{"name":"C_ESTADO_APROBACION","type":"NUMBER"},{"name":"I_MONTO_CAB","type":"VARCHAR2"},{"name":"I_MONTO_RESU","type":"VARCHAR2"},{"name":"I_MONTO","type":"VARCHAR2"},{"name":"N_REG_AUDITORIA","type":"NUMBER"},{"name":"D_MODULO_PAMI","type":"VARCHAR2"},{"name":"D_PRESTADOR","type":"VARCHAR2"}],"items":
-[
-{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202501,"c_modulo_pami_7x":543,"c_estado_aprobacion":2,"i_monto_cab":"25586.04","i_monto_resu":"0","i_monto":"25586.04","n_reg_auditoria":228235614,"d_modulo_pami":"CARDIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":544,"c_estado_aprobacion":2,"i_monto_cab":"103099.68","i_monto_resu":"0","i_monto":"103099.68","n_reg_auditoria":228235619,"d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":552,"c_estado_aprobacion":2,"i_monto_cab":"1393118.93","i_monto_resu":"0","i_monto":"1393118.93","n_reg_auditoria":228235640,"d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":542,"c_estado_aprobacion":2,"i_monto_cab":"23147.96","i_monto_resu":"0","i_monto":"23147.96","n_reg_auditoria":228235674,"d_modulo_pami":"ANATOMIA PATOLOGICA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":548,"c_estado_aprobacion":2,"i_monto_cab":"94149.17","i_monto_resu":"0","i_monto":"94149.17","n_reg_auditoria":228235689,"d_modulo_pami":"NEUMONOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":549,"c_estado_aprobacion":2,"i_monto_cab":"32084.97","i_monto_resu":"0","i_monto":"32084.97","n_reg_auditoria":228235694,"d_modulo_pami":"NEFROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":434,"c_estado_aprobacion":2,"i_monto_cab":"8555.99","i_monto_resu":"0","i_monto":"8555.99","n_reg_auditoria":228235891,"d_modulo_pami":"ENDOCRINOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":546,"c_estado_aprobacion":2,"i_monto_cab":"5104658.37","i_monto_resu":"0","i_monto":"5104658.37","n_reg_auditoria":228236112,"d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":550,"c_estado_aprobacion":2,"i_monto_cab":"70586.92","i_monto_resu":"0","i_monto":"70586.92","n_reg_auditoria":228236122,"d_modulo_pami":"HEPATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":553,"c_estado_aprobacion":2,"i_monto_cab":"1769743.98","i_monto_resu":"0","i_monto":"1769743.98","n_reg_auditoria":228236131,"d_modulo_pami":"FONOAUDIOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":437,"c_estado_aprobacion":2,"i_monto_cab":"44918.95","i_monto_resu":"0","i_monto":"44918.95","n_reg_auditoria":228236161,"d_modulo_pami":"OTORRINOLARINGOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":2,"c_estado_aprobacion":2,"i_monto_cab":"355087.79","i_monto_resu":"0","i_monto":"355087.79","n_reg_auditoria":228236515,"d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":437,"c_estado_aprobacion":2,"i_monto_cab":"2103735.63","i_monto_resu":"0","i_monto":"2103735.63","n_reg_auditoria":228237569,"d_modulo_pami":"OTORRINOLARINGOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202501,"c_modulo_pami_7x":24,"c_estado_aprobacion":2,"i_monto_cab":"109674.1","i_monto_resu":"0","i_monto":"109674.1","n_reg_auditoria":228238121,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN AMBULATORIO","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202501,"c_modulo_pami_7x":2,"c_estado_aprobacion":2,"i_monto_cab":"35763.19","i_monto_resu":"0","i_monto":"35763.19","n_reg_auditoria":228238248,"d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":543,"c_estado_aprobacion":2,"i_monto_cab":"996303.81","i_monto_resu":"0","i_monto":"996303.81","n_reg_auditoria":228238499,"d_modulo_pami":"CARDIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":435,"c_estado_aprobacion":2,"i_monto_cab":"53474.94","i_monto_resu":"0","i_monto":"53474.94","n_reg_auditoria":228238781,"d_modulo_pami":"FLEBOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":537,"c_estado_aprobacion":2,"i_monto_cab":"91976.91","i_monto_resu":"0","i_monto":"91976.91","n_reg_auditoria":228238813,"d_modulo_pami":"DERMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":550,"c_estado_aprobacion":2,"i_monto_cab":"8555.99","i_monto_resu":"0","i_monto":"8555.99","n_reg_auditoria":228238839,"d_modulo_pami":"HEPATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":431,"c_estado_aprobacion":2,"i_monto_cab":"330261.25","i_monto_resu":"0","i_monto":"330261.25","n_reg_auditoria":228239461,"d_modulo_pami":"INFECTOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":540,"c_estado_aprobacion":2,"i_monto_cab":"57648.84","i_monto_resu":"0","i_monto":"57648.84","n_reg_auditoria":228239475,"d_modulo_pami":"ALERGIA E INMUNOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":541,"c_estado_aprobacion":2,"i_monto_cab":"162563.84","i_monto_resu":"0","i_monto":"162563.84","n_reg_auditoria":228239729,"d_modulo_pami":"NEUROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":541,"c_estado_aprobacion":2,"i_monto_cab":"66308.93","i_monto_resu":"0","i_monto":"66308.93","n_reg_auditoria":228240045,"d_modulo_pami":"NEUROLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202410,"c_modulo_pami_7x":2,"c_estado_aprobacion":2,"i_monto_cab":"9721.64","i_monto_resu":"0","i_monto":"9721.64","n_reg_auditoria":228240317,"d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":2,"c_estado_aprobacion":2,"i_monto_cab":"155866.25","i_monto_resu":"0","i_monto":"155866.25","n_reg_auditoria":228240320,"d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":24,"c_estado_aprobacion":2,"i_monto_cab":"258490.2","i_monto_resu":"0","i_monto":"258490.2","n_reg_auditoria":228240538,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN AMBULATORIO","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":544,"c_estado_aprobacion":2,"i_monto_cab":"906145.59","i_monto_resu":"0","i_monto":"906145.59","n_reg_auditoria":228241495,"d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":545,"c_estado_aprobacion":2,"i_monto_cab":"733861.93","i_monto_resu":"0","i_monto":"733861.93","n_reg_auditoria":228241499,"d_modulo_pami":"UROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":557,"c_estado_aprobacion":2,"i_monto_cab":"32084.97","i_monto_resu":"0","i_monto":"32084.97","n_reg_auditoria":228241527,"d_modulo_pami":"NUTRICION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":546,"c_estado_aprobacion":2,"i_monto_cab":"219888.95","i_monto_resu":"0","i_monto":"219888.95","n_reg_auditoria":228242048,"d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":542,"c_estado_aprobacion":2,"i_monto_cab":"560128.11","i_monto_resu":"0","i_monto":"560128.11","n_reg_auditoria":228242461,"d_modulo_pami":"ANATOMIA PATOLOGICA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":548,"c_estado_aprobacion":2,"i_monto_cab":"325127.67","i_monto_resu":"0","i_monto":"325127.67","n_reg_auditoria":228242484,"d_modulo_pami":"NEUMONOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":549,"c_estado_aprobacion":2,"i_monto_cab":"340100.65","i_monto_resu":"0","i_monto":"340100.65","n_reg_auditoria":228242486,"d_modulo_pami":"NEFROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":558,"c_estado_aprobacion":2,"i_monto_cab":"429938.55","i_monto_resu":"0","i_monto":"429938.55","n_reg_auditoria":228242503,"d_modulo_pami":"LIC. EN NUTRICION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":27,"c_estado_aprobacion":2,"i_monto_cab":"541083.35","i_monto_resu":"0","i_monto":"541083.35","n_reg_auditoria":228242662,"d_modulo_pami":"DENSITOMETRIA OSEA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":543,"c_estado_aprobacion":2,"i_monto_cab":"1213270.62","i_monto_resu":"0","i_monto":"1213270.62","n_reg_auditoria":228242833,"d_modulo_pami":"CARDIOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":546,"c_estado_aprobacion":2,"i_monto_cab":"1236340.73","i_monto_resu":"0","i_monto":"1236340.73","n_reg_auditoria":228242842,"d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":551,"c_estado_aprobacion":2,"i_monto_cab":"387025.9","i_monto_resu":"0","i_monto":"387025.9","n_reg_auditoria":228242855,"d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":558,"c_estado_aprobacion":2,"i_monto_cab":"59891.94","i_monto_resu":"0","i_monto":"59891.94","n_reg_auditoria":228242867,"d_modulo_pami":"LIC. EN NUTRICION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":433,"c_estado_aprobacion":2,"i_monto_cab":"91976.9","i_monto_resu":"0","i_monto":"91976.9","n_reg_auditoria":228243583,"d_modulo_pami":"REUMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":435,"c_estado_aprobacion":2,"i_monto_cab":"10694.99","i_monto_resu":"0","i_monto":"10694.99","n_reg_auditoria":228243587,"d_modulo_pami":"FLEBOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":551,"c_estado_aprobacion":2,"i_monto_cab":"2068176.28","i_monto_resu":"0","i_monto":"2068176.28","n_reg_auditoria":228243807,"d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":330,"c_estado_aprobacion":2,"i_monto_cab":"271888.83","i_monto_resu":"0","i_monto":"271888.83","n_reg_auditoria":228244561,"d_modulo_pami":"EVALUACION PREQUIRURGICA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":22,"c_estado_aprobacion":2,"i_monto_cab":"747755.9","i_monto_resu":"0","i_monto":"747755.9","n_reg_auditoria":228244694,"d_modulo_pami":"ECODOPPLER EN AMBULATORIO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":3,"c_estado_aprobacion":2,"i_monto_cab":"390501.82","i_monto_resu":"0","i_monto":"390501.82","n_reg_auditoria":228245060,"d_modulo_pami":"ECODIAGNOSTICO DE NIVEL 1","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202411,"c_modulo_pami_7x":543,"c_estado_aprobacion":2,"i_monto_cab":"13215.91","i_monto_resu":"0","i_monto":"13215.91","n_reg_auditoria":228245440,"d_modulo_pami":"CARDIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202410,"c_modulo_pami_7x":543,"c_estado_aprobacion":2,"i_monto_cab":"50198.49","i_monto_resu":"0","i_monto":"50198.49","n_reg_auditoria":228246565,"d_modulo_pami":"CARDIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":551,"c_estado_aprobacion":2,"i_monto_cab":"91976.9","i_monto_resu":"0","i_monto":"91976.9","n_reg_auditoria":228246594,"d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":555,"c_estado_aprobacion":2,"i_monto_cab":"96254.9","i_monto_resu":"0","i_monto":"96254.9","n_reg_auditoria":228246646,"d_modulo_pami":"DIABETOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":545,"c_estado_aprobacion":2,"i_monto_cab":"2305989.52","i_monto_resu":"0","i_monto":"2305989.52","n_reg_auditoria":228246798,"d_modulo_pami":"UROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202503,"c_modulo_pami_7x":433,"c_estado_aprobacion":2,"i_monto_cab":"10204.3","i_monto_resu":"0","i_monto":"10204.3","n_reg_auditoria":228247217,"d_modulo_pami":"REUMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":552,"c_estado_aprobacion":2,"i_monto_cab":"1448101.51","i_monto_resu":"0","i_monto":"1448101.51","n_reg_auditoria":228247380,"d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":322,"c_estado_aprobacion":2,"i_monto_cab":"64729.88","i_monto_resu":"0","i_monto":"64729.88","n_reg_auditoria":228248282,"d_modulo_pami":"ECODOPPLER EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":23,"c_estado_aprobacion":2,"i_monto_cab":"1202100.66","i_monto_resu":"0","i_monto":"1202100.66","n_reg_auditoria":228248428,"d_modulo_pami":"RESONANCIA MAGNETICA NUCLEAR(INCLUYE GADOLINIO) EN AMBULATORIO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":22,"c_estado_aprobacion":2,"i_monto_cab":"4498726.66","i_monto_resu":"0","i_monto":"4498726.66","n_reg_auditoria":228248837,"d_modulo_pami":"ECODOPPLER EN AMBULATORIO","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":434,"c_estado_aprobacion":2,"i_monto_cab":"1176448.79","i_monto_resu":"0","i_monto":"1176448.79","n_reg_auditoria":228248965,"d_modulo_pami":"ENDOCRINOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":435,"c_estado_aprobacion":2,"i_monto_cab":"829931.15","i_monto_resu":"0","i_monto":"829931.15","n_reg_auditoria":228248969,"d_modulo_pami":"FLEBOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":24,"c_estado_aprobacion":2,"i_monto_cab":"1763621.19","i_monto_resu":"0","i_monto":"1763621.19","n_reg_auditoria":228249346,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN AMBULATORIO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":557,"c_estado_aprobacion":2,"i_monto_cab":"502664.47","i_monto_resu":"0","i_monto":"502664.47","n_reg_auditoria":228249584,"d_modulo_pami":"NUTRICION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202410,"c_modulo_pami_7x":541,"c_estado_aprobacion":2,"i_monto_cab":"7638.62","i_monto_resu":"0","i_monto":"7638.62","n_reg_auditoria":228249963,"d_modulo_pami":"NEUROLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":418,"c_estado_aprobacion":2,"i_monto_cab":"32084.97","i_monto_resu":"0","i_monto":"32084.97","n_reg_auditoria":228250316,"d_modulo_pami":"HEMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":431,"c_estado_aprobacion":2,"i_monto_cab":"53474.95","i_monto_resu":"0","i_monto":"53474.95","n_reg_auditoria":228250317,"d_modulo_pami":"INFECTOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":324,"c_estado_aprobacion":2,"i_monto_cab":"117131.94","i_monto_resu":"0","i_monto":"117131.94","n_reg_auditoria":228250687,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":543,"c_estado_aprobacion":2,"i_monto_cab":"11098615.3","i_monto_resu":"0","i_monto":"11098615.3","n_reg_auditoria":228251256,"d_modulo_pami":"CARDIOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":544,"c_estado_aprobacion":2,"i_monto_cab":"2567390.74","i_monto_resu":"0","i_monto":"2567390.74","n_reg_auditoria":228251260,"d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":555,"c_estado_aprobacion":2,"i_monto_cab":"1886596.01","i_monto_resu":"0","i_monto":"1886596.01","n_reg_auditoria":228251280,"d_modulo_pami":"DIABETOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":552,"c_estado_aprobacion":2,"i_monto_cab":"269513.73","i_monto_resu":"0","i_monto":"269513.73","n_reg_auditoria":228251689,"d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":418,"c_estado_aprobacion":2,"i_monto_cab":"1805394.82","i_monto_resu":"0","i_monto":"1805394.82","n_reg_auditoria":228252801,"d_modulo_pami":"HEMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":537,"c_estado_aprobacion":2,"i_monto_cab":"3380186.86","i_monto_resu":"0","i_monto":"3380186.86","n_reg_auditoria":228252824,"d_modulo_pami":"DERMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":330,"c_estado_aprobacion":2,"i_monto_cab":"271888.83","i_monto_resu":"0","i_monto":"271888.83","n_reg_auditoria":228253443,"d_modulo_pami":"EVALUACION PREQUIRURGICA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":324,"c_estado_aprobacion":2,"i_monto_cab":"47976.09","i_monto_resu":"0","i_monto":"47976.09","n_reg_auditoria":228253503,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":541,"c_estado_aprobacion":2,"i_monto_cab":"571112.41","i_monto_resu":"0","i_monto":"571112.41","n_reg_auditoria":228253747,"d_modulo_pami":"NEUROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202505,"c_modulo_pami_7x":3,"c_estado_aprobacion":2,"i_monto_cab":"214131.58","i_monto_resu":"0","i_monto":"214131.58","n_reg_auditoria":228253899,"d_modulo_pami":"ECODIAGNOSTICO DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OME_ONCO","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":144,"c_estado_aprobacion":2,"i_monto_cab":"2281444.4","i_monto_resu":"0","i_monto":"2281444.4","n_reg_auditoria":228263373,"d_modulo_pami":"ONCOLOGIA - CONSULTAS","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME_ONCO","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":145,"c_estado_aprobacion":2,"i_monto_cab":"4119006.17","i_monto_resu":"0","i_monto":"4119006.17","n_reg_auditoria":228263512,"d_modulo_pami":"ONCOLOGIA - TRATAMIENTOS","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME_VET","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":3,"c_estado_aprobacion":2,"i_monto_cab":"44164.33","i_monto_resu":"0","i_monto":"44164.33","n_reg_auditoria":228263789,"d_modulo_pami":"ECODIAGNOSTICO DE NIVEL 1","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OME_VET","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202505,"c_modulo_pami_7x":551,"c_estado_aprobacion":2,"i_monto_cab":"10694.99","i_monto_resu":"0","i_monto":"10694.99","n_reg_auditoria":228265531,"d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OME_VET","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202505,"c_modulo_pami_7x":437,"c_estado_aprobacion":2,"i_monto_cab":"8555.99","i_monto_resu":"0","i_monto":"8555.99","n_reg_auditoria":228265789,"d_modulo_pami":"OTORRINOLARINGOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"ONCO","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":144,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228268720,"d_modulo_pami":"ONCOLOGIA - CONSULTAS","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"ONCO","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":145,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228268737,"d_modulo_pami":"ONCOLOGIA - TRATAMIENTOS","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"ONCO","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":655,"c_estado_aprobacion":2,"i_monto_cab":"1292963.19","i_monto_resu":"0","i_monto":"1292963.19","n_reg_auditoria":228269011,"d_modulo_pami":"ONCOPLAN- MODULOS DE CIRUGIA DE GINECOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"ONCO","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":657,"c_estado_aprobacion":2,"i_monto_cab":"687008.69","i_monto_resu":"0","i_monto":"687008.69","n_reg_auditoria":228269291,"d_modulo_pami":"ONCOPLAN- MODULOS DE CIRUGIA DE UROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"ONCO","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":650,"c_estado_aprobacion":2,"i_monto_cab":"3117859.31","i_monto_resu":"0","i_monto":"3117859.31","n_reg_auditoria":228269428,"d_modulo_pami":"ONCOPLAN- MODULOS DE INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":305,"c_estado_aprobacion":2,"i_monto_cab":"471787.5","i_monto_resu":"0","i_monto":"471787.5","n_reg_auditoria":228270045,"d_modulo_pami":"MODULOS DE CIRUGIA DE GASTROENTEROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":310,"c_estado_aprobacion":2,"i_monto_cab":"1045238.69","i_monto_resu":"0","i_monto":"1045238.69","n_reg_auditoria":228270164,"d_modulo_pami":"MODULOS DE CIRUGIA DE UROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":202,"c_estado_aprobacion":2,"i_monto_cab":"4910338.36","i_monto_resu":"0","i_monto":"4910338.36","n_reg_auditoria":228270226,"d_modulo_pami":"MODULOS DE NEUROCIRUGIA- ESCALA A","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":241,"c_estado_aprobacion":2,"i_monto_cab":"1450489.8","i_monto_resu":"0","i_monto":"1450489.8","n_reg_auditoria":228270311,"d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA A","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":242,"c_estado_aprobacion":2,"i_monto_cab":"2940807.03","i_monto_resu":"0","i_monto":"2940807.03","n_reg_auditoria":228270324,"d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA B","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":301,"c_estado_aprobacion":2,"i_monto_cab":"834548.48","i_monto_resu":"0","i_monto":"834548.48","n_reg_auditoria":228270890,"d_modulo_pami":"MODULOS DE CIRUGIA GENERAL Y DEL APARATO DIGESTIVO","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":301,"c_estado_aprobacion":2,"i_monto_cab":"8356951.5","i_monto_resu":"0","i_monto":"8356951.5","n_reg_auditoria":228271769,"d_modulo_pami":"MODULOS DE CIRUGIA GENERAL Y DEL APARATO DIGESTIVO","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":306,"c_estado_aprobacion":2,"i_monto_cab":"623858.26","i_monto_resu":"0","i_monto":"623858.26","n_reg_auditoria":228271901,"d_modulo_pami":"MODULOS DE CIRUGIA DE GINECOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":242,"c_estado_aprobacion":2,"i_monto_cab":"2152737.56","i_monto_resu":"0","i_monto":"2152737.56","n_reg_auditoria":228272416,"d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA B","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":246,"c_estado_aprobacion":2,"i_monto_cab":"1677377.74","i_monto_resu":"0","i_monto":"1677377.74","n_reg_auditoria":228272486,"d_modulo_pami":"MODULOS DE CIRUGIA CARDIOVASCULAR CENTRAL Y PERIFERICA- ESCALA C","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":204,"c_estado_aprobacion":2,"i_monto_cab":"270659.37","i_monto_resu":"0","i_monto":"270659.37","n_reg_auditoria":228272620,"d_modulo_pami":"MODULOS DE NEUROCIRUGIA- ESCALA C","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":243,"c_estado_aprobacion":2,"i_monto_cab":"680149.95","i_monto_resu":"0","i_monto":"680149.95","n_reg_auditoria":228272961,"d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA C","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":304,"c_estado_aprobacion":2,"i_monto_cab":"941875.89","i_monto_resu":"0","i_monto":"941875.89","n_reg_auditoria":228273042,"d_modulo_pami":"MODULOS DE CIRUGIA TORACICA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":244,"c_estado_aprobacion":2,"i_monto_cab":"5121552.28","i_monto_resu":"0","i_monto":"5121552.28","n_reg_auditoria":228274218,"d_modulo_pami":"MODULOS DE CIRUGIA CARDIOVASCULAR CENTRAL Y PERIFERICA- ESCALA A","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":247,"c_estado_aprobacion":2,"i_monto_cab":"8802635.86","i_monto_resu":"0","i_monto":"8802635.86","n_reg_auditoria":228274243,"d_modulo_pami":"MODULOS DE ELECTROFISIOLOGIA - ESCALA A","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":301,"c_estado_aprobacion":2,"i_monto_cab":"4082122.96","i_monto_resu":"0","i_monto":"4082122.96","n_reg_auditoria":228274284,"d_modulo_pami":"MODULOS DE CIRUGIA GENERAL Y DEL APARATO DIGESTIVO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":208,"c_estado_aprobacion":2,"i_monto_cab":"2796400.44","i_monto_resu":"0","i_monto":"2796400.44","n_reg_auditoria":228274346,"d_modulo_pami":"MODULOS DE HEMODINAMIA- ESCALA A","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":210,"c_estado_aprobacion":2,"i_monto_cab":"3630623.07","i_monto_resu":"0","i_monto":"3630623.07","n_reg_auditoria":228274378,"d_modulo_pami":"MODULOS DE HEMODINAMIA- ESCALA C","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":241,"c_estado_aprobacion":2,"i_monto_cab":"1450489.8","i_monto_resu":"0","i_monto":"1450489.8","n_reg_auditoria":228274396,"d_modulo_pami":"MODULOS DE COLOCACION DE MARCAPASOS- ESCALA A","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":303,"c_estado_aprobacion":2,"i_monto_cab":"3559436.38","i_monto_resu":"0","i_monto":"3559436.38","n_reg_auditoria":228274561,"d_modulo_pami":"MODULOS DE CIRUGIA PERCUTANEA ¿ INTERVENCIONISMO","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":300,"c_estado_aprobacion":2,"i_monto_cab":"564106.06","i_monto_resu":"0","i_monto":"564106.06","n_reg_auditoria":228274664,"d_modulo_pami":"MODULOS DE CIRUGIA DE CABEZA Y CUELLO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":69,"c_estado_aprobacion":2,"i_monto_cab":"76798021.35","i_monto_resu":"0","i_monto":"76798021.35","n_reg_auditoria":228274765,"d_modulo_pami":"MODULO INTERNACION (LABORATORIO + FISIO + IMAGENES)","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":306,"c_estado_aprobacion":2,"i_monto_cab":"343221.16","i_monto_resu":"0","i_monto":"343221.16","n_reg_auditoria":228274958,"d_modulo_pami":"MODULOS DE CIRUGIA DE GINECOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":310,"c_estado_aprobacion":2,"i_monto_cab":"5279715.04","i_monto_resu":"0","i_monto":"5279715.04","n_reg_auditoria":228275125,"d_modulo_pami":"MODULOS DE CIRUGIA DE UROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":202,"c_estado_aprobacion":2,"i_monto_cab":"4910338.36","i_monto_resu":"0","i_monto":"4910338.36","n_reg_auditoria":228275169,"d_modulo_pami":"MODULOS DE NEUROCIRUGIA- ESCALA A","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":245,"c_estado_aprobacion":2,"i_monto_cab":"3037931.91","i_monto_resu":"0","i_monto":"3037931.91","n_reg_auditoria":228275499,"d_modulo_pami":"MODULOS DE CIRUGIA CARDIOVASCULAR CENTRAL Y PERIFERICA- ESCALA B","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":69,"c_estado_aprobacion":2,"i_monto_cab":"244729594.03","i_monto_resu":"0","i_monto":"244729594.03","n_reg_auditoria":228275605,"d_modulo_pami":"MODULO INTERNACION (LABORATORIO + FISIO + IMAGENES)","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"OP","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":69,"c_estado_aprobacion":2,"i_monto_cab":"85472147.04","i_monto_resu":"0","i_monto":"85472147.04","n_reg_auditoria":228275638,"d_modulo_pami":"MODULO INTERNACION (LABORATORIO + FISIO + IMAGENES)","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":545,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228277488,"d_modulo_pami":"UROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":2,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228277602,"d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":543,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228277680,"d_modulo_pami":"CARDIOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":546,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228277917,"d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":437,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228278024,"d_modulo_pami":"OTORRINOLARINGOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":551,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228278296,"d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":552,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228278409,"d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":2,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228278493,"d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":544,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228278537,"d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":541,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228278999,"d_modulo_pami":"NEUROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":546,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228279084,"d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":418,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228279161,"d_modulo_pami":"HEMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":546,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228279196,"d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":324,"c_estado_aprobacion":2,"i_monto_cab":"55052801.03","i_monto_resu":"0","i_monto":"55052801.03","n_reg_auditoria":228279406,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":550,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228279521,"d_modulo_pami":"HEPATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":541,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228279947,"d_modulo_pami":"NEUROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":418,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228279991,"d_modulo_pami":"HEMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":537,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228280275,"d_modulo_pami":"DERMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":27,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228281001,"d_modulo_pami":"DENSITOMETRIA OSEA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":431,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228281161,"d_modulo_pami":"INFECTOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":22,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228281517,"d_modulo_pami":"ECODOPPLER EN AMBULATORIO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":24,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228281890,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN AMBULATORIO","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":433,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228282001,"d_modulo_pami":"REUMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":542,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228282342,"d_modulo_pami":"ANATOMIA PATOLOGICA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":557,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228282758,"d_modulo_pami":"NUTRICION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":543,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228282783,"d_modulo_pami":"CARDIOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":551,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228283139,"d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":435,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228283148,"d_modulo_pami":"FLEBOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":552,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228283280,"d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":434,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228283411,"d_modulo_pami":"ENDOCRINOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":555,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228283528,"d_modulo_pami":"DIABETOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":24,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228283854,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN AMBULATORIO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":537,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228283862,"d_modulo_pami":"DERMATOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":544,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228283863,"d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":437,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228283873,"d_modulo_pami":"OTORRINOLARINGOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":418,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228284069,"d_modulo_pami":"HEMATOLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":549,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228284274,"d_modulo_pami":"NEFROLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":555,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228284455,"d_modulo_pami":"DIABETOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":541,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228284561,"d_modulo_pami":"NEUROLOGIA","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":551,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228284933,"d_modulo_pami":"GINECOLOGIA Y OBSTETRICIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":550,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228285000,"d_modulo_pami":"HEPATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":548,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228285275,"d_modulo_pami":"NEUMONOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":549,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228285386,"d_modulo_pami":"NEFROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":545,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228285570,"d_modulo_pami":"UROLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":543,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228285736,"d_modulo_pami":"CARDIOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":330,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228285752,"d_modulo_pami":"EVALUACION PREQUIRURGICA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":558,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228285840,"d_modulo_pami":"LIC. EN NUTRICION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":330,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228285904,"d_modulo_pami":"EVALUACION PREQUIRURGICA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":552,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228286032,"d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":542,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228286033,"d_modulo_pami":"ANATOMIA PATOLOGICA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":3,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228286067,"d_modulo_pami":"ECODIAGNOSTICO DE NIVEL 1","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":553,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228286087,"d_modulo_pami":"FONOAUDIOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":548,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228286099,"d_modulo_pami":"NEUMONOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":431,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228286464,"d_modulo_pami":"INFECTOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":22,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228286611,"d_modulo_pami":"ECODOPPLER EN AMBULATORIO","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":544,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228286732,"d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":435,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228286923,"d_modulo_pami":"FLEBOLOGIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":557,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228287160,"d_modulo_pami":"NUTRICION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":23,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228287678,"d_modulo_pami":"RESONANCIA MAGNETICA NUCLEAR(INCLUYE GADOLINIO) EN AMBULATORIO","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":558,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228287774,"d_modulo_pami":"LIC. EN NUTRICION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":3,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228287870,"d_modulo_pami":"ECODIAGNOSTICO DE NIVEL 1","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":540,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228288531,"d_modulo_pami":"ALERGIA E INMUNOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":324,"c_estado_aprobacion":2,"i_monto_cab":"1085604.42","i_monto_resu":"0","i_monto":"1085604.42","n_reg_auditoria":228289036,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":323,"c_estado_aprobacion":2,"i_monto_cab":"811164.48","i_monto_resu":"0","i_monto":"811164.48","n_reg_auditoria":228289097,"d_modulo_pami":"RESONANCIA MAGNETICA NUCLEAR (INCLUYE GADOLINIO) EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":322,"c_estado_aprobacion":2,"i_monto_cab":"4499935.28","i_monto_resu":"0","i_monto":"4499935.28","n_reg_auditoria":228289149,"d_modulo_pami":"ECODOPPLER EN INTERNACION","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":322,"c_estado_aprobacion":2,"i_monto_cab":"40579657.69","i_monto_resu":"0","i_monto":"40579657.69","n_reg_auditoria":228289329,"d_modulo_pami":"ECODOPPLER EN INTERNACION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":322,"c_estado_aprobacion":2,"i_monto_cab":"442866.4","i_monto_resu":"0","i_monto":"442866.4","n_reg_auditoria":228289397,"d_modulo_pami":"ECODOPPLER EN INTERNACION","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"PRE","c_proceso":4821,"c_prestador":936062,"c_red":109,"c_periodo_ex":202504,"c_modulo_pami_7x":324,"c_estado_aprobacion":2,"i_monto_cab":"14754792.82","i_monto_resu":"0","i_monto":"14754792.82","n_reg_auditoria":228289430,"d_modulo_pami":"TOMOGRAFIA AXIAL COMPUTADA EN INTERNACION","d_prestador":"GUEMES S.A."}
-,{"c_concepto":"VET","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":144,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228289816,"d_modulo_pami":"ONCOLOGIA - CONSULTAS","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"VET","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":552,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228290277,"d_modulo_pami":"GASTROENTEROLOGIA ","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"VET","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":546,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228291089,"d_modulo_pami":"TRAUMATOLOGIA","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"VET","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":2,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228291146,"d_modulo_pami":"RADIOLOGIA AMBULATORIA DE NIVEL 1","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"VET","c_proceso":4821,"c_prestador":61115,"c_red":106,"c_periodo_ex":202504,"c_modulo_pami_7x":557,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228291472,"d_modulo_pami":"NUTRICION","d_prestador":"HOSPITAL SIRIO LIBANES"}
-,{"c_concepto":"VET","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":544,"c_estado_aprobacion":2,"i_monto_cab":"0","i_monto_resu":"0","i_monto":"0","n_reg_auditoria":228291580,"d_modulo_pami":"CIRUGIA GENERAL AMBULATORIA","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-,{"c_concepto":"VET","c_proceso":4821,"c_prestador":5074297,"c_red":107,"c_periodo_ex":202504,"c_modulo_pami_7x":69,"c_estado_aprobacion":2,"i_monto_cab":"441066.87","i_monto_resu":"0","i_monto":"441066.87","n_reg_auditoria":228291642,"d_modulo_pami":"MODULO INTERNACION (LABORATORIO + FISIO + IMAGENES)","d_prestador":"HOSPITAL REGIONAL CUENCA ALTA DR. NESTOR KIRCHNER"}
-]}]}
+{
+  "results": [
+    {
+      "columns": [
+        {
+          "name": "C_CONCEPTO",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "C_PROCESO",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_PRESTADOR",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_RED",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_PERIODO_EX",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_MODULO_PAMI_7X",
+          "type": "NUMBER"
+        },
+        {
+          "name": "C_ESTADO_APROBACION",
+          "type": "NUMBER"
+        },
+        {
+          "name": "I_MONTO_CAB",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "I_MONTO_RESU",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "I_MONTO",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "N_REG_AUDITORIA",
+          "type": "NUMBER"
+        },
+        {
+          "name": "D_MODULO_PAMI",
+          "type": "VARCHAR2"
+        },
+        {
+          "name": "D_PRESTADOR",
+          "type": "CHAR"
+        }
+      ],
+      "items": [
+        {
+          "c_concepto": "OP",
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "91712.53",
+          "i_monto_resu": "0",
+          "i_monto": "91712.53",
+          "n_reg_auditoria": 228270221,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "OP",
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "278300.02",
+          "i_monto_resu": "0",
+          "i_monto": "278300.02",
+          "n_reg_auditoria": 228270421,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "OP",
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "562608.75",
+          "i_monto_resu": "0",
+          "i_monto": "562608.75",
+          "n_reg_auditoria": 228271304,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "OP",
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "238452.59",
+          "i_monto_resu": "0",
+          "i_monto": "238452.59",
+          "n_reg_auditoria": 228272238,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "OP",
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "842174.06",
+          "i_monto_resu": "0",
+          "i_monto": "842174.06",
+          "n_reg_auditoria": 228272239,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "OP",
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "530983.94",
+          "i_monto_resu": "0",
+          "i_monto": "530983.94",
+          "n_reg_auditoria": 228272244,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "OP",
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "937997.57",
+          "i_monto_resu": "0",
+          "i_monto": "937997.57",
+          "n_reg_auditoria": 228274763,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "OP",
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "494298.77",
+          "i_monto_resu": "0",
+          "i_monto": "494298.77",
+          "n_reg_auditoria": 228275385,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "PRE",
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "1903825.76",
+          "i_monto_resu": "0",
+          "i_monto": "1903825.76",
+          "n_reg_auditoria": 228289025,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "263757578.48",
+          "i_monto_resu": "0",
+          "i_monto": "263757578.48",
+          "n_reg_auditoria": 228289448,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "60345585.67",
+          "i_monto_resu": "0",
+          "i_monto": "60345585.67",
+          "n_reg_auditoria": 228289478,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "265294237.7",
+          "i_monto_resu": "0",
+          "i_monto": "265294237.7",
+          "n_reg_auditoria": 228289482,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "89866586.33",
+          "i_monto_resu": "0",
+          "i_monto": "89866586.33",
+          "n_reg_auditoria": 228289511,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "121606036.49",
+          "i_monto_resu": "0",
+          "i_monto": "121606036.49",
+          "n_reg_auditoria": 228289552,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "174356861.39",
+          "i_monto_resu": "0",
+          "i_monto": "174356861.39",
+          "n_reg_auditoria": 228289553,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "31425459.5",
+          "i_monto_resu": "0",
+          "i_monto": "31425459.5",
+          "n_reg_auditoria": 228289560,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "147165999.7",
+          "i_monto_resu": "0",
+          "i_monto": "147165999.7",
+          "n_reg_auditoria": 228289610,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "1182775.03",
+          "i_monto_resu": "0",
+          "i_monto": "1182775.03",
+          "n_reg_auditoria": 228289667,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "TI",
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "48406194.23",
+          "i_monto_resu": "0",
+          "i_monto": "48406194.23",
+          "n_reg_auditoria": 228289670,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "2008503.83",
+          "i_monto_resu": "0",
+          "i_monto": "2008503.83",
+          "n_reg_auditoria": 228290430,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "1183407.55",
+          "i_monto_resu": "0",
+          "i_monto": "1183407.55",
+          "n_reg_auditoria": 228291641,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "140AD",
+          "c_red": 108,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "484178.91",
+          "i_monto_resu": "0",
+          "i_monto": "484178.91",
+          "n_reg_auditoria": 228291710,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "404167.64",
+          "i_monto_resu": "0",
+          "i_monto": "404167.64",
+          "n_reg_auditoria": 228291711,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "28462.5",
+          "i_monto_resu": "0",
+          "i_monto": "28462.5",
+          "n_reg_auditoria": 228291783,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "2121C",
+          "c_red": 101,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "62933.75",
+          "i_monto_resu": "0",
+          "i_monto": "62933.75",
+          "n_reg_auditoria": 228291855,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "607516.28",
+          "i_monto_resu": "0",
+          "i_monto": "607516.28",
+          "n_reg_auditoria": 228291859,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "11D994",
+          "c_red": 111,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "223272.55",
+          "i_monto_resu": "0",
+          "i_monto": "223272.55",
+          "n_reg_auditoria": 228291936,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "3816CE",
+          "c_red": 129,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 34,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "404325.77",
+          "i_monto_resu": "0",
+          "i_monto": "404325.77",
+          "n_reg_auditoria": 228292134,
+          "d_modulo_pami": "LABORATORIO DE NIVEL 3",
+          "d_prestador": "nombre de prestador standard"
+        },
+        {
+          "c_concepto": "VET",
+          "c_proceso": 4821,
+          "c_prestador": "1069D0",
+          "c_red": 110,
+          "c_periodo_ex": 202504,
+          "c_modulo_pami_7x": 5,
+          "c_estado_aprobacion": 2,
+          "i_monto_cab": "1619516.32",
+          "i_monto_resu": "0",
+          "i_monto": "1619516.32",
+          "n_reg_auditoria": 228292148,
+          "d_modulo_pami": "LABORATORIO AMBULATORIO DE NIVEL 1",
+          "d_prestador": "nombre de prestador standard"
+        }
+      ]
+    }
+  ]
+}

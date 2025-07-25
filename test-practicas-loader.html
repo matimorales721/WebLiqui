@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Prueba Loader de Prácticas</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            .resultado {
+                background: #f0f0f0;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+            }
+            .error {
+                background: #ffe6e6;
+                border: 1px solid #ff6666;
+            }
+            .exito {
+                background: #e6ffe6;
+                border: 1px solid #66ff66;
+            }
+            .info {
+                background: #e6f3ff;
+                border: 1px solid #6699ff;
+            }
+            button {
+                padding: 10px 20px;
+                margin: 5px;
+                background: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            button:hover {
+                background: #0056b3;
+            }
+            pre {
+                background: #f8f9fa;
+                padding: 10px;
+                border-radius: 5px;
+                overflow-x: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>🧪 Prueba del Loader de Prácticas</h1>
+
+        <p>Esta página prueba el nuevo sistema de carga de prácticas desde archivos divididos por prestador.</p>
+
+        <button onclick="probarLoader()">🚀 Probar Carga de Prácticas (Proceso 4821)</button>
+        <button onclick="probarLoader4822()">🚀 Probar Carga de Prácticas (Proceso 4822)</button>
+        <button onclick="limpiarResultados()">🧹 Limpiar Resultados</button>
+
+        <div id="resultados"></div>
+
+        <script type="module">
+            import { cargarPracticas, PracticasLoader } from './js/practicasLoader.js';
+
+            window.cargarPracticas = cargarPracticas;
+            window.PracticasLoader = PracticasLoader;
+
+            window.probarLoader = async function () {
+                const resultadosDiv = document.getElementById('resultados');
+
+                // Agregar mensaje de inicio
+                resultadosDiv.innerHTML += `
+                <div class="resultado info">
+                    <h3>🔄 Iniciando prueba para proceso 4821...</h3>
+                    <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
+                </div>
+            `;
+
+                try {
+                    console.log('🚀 Iniciando carga de prácticas para proceso 4821...');
+
+                    const practicas = await cargarPracticas(4821);
+
+                    resultadosDiv.innerHTML += `
+                    <div class="resultado exito">
+                        <h3>✅ Carga exitosa para proceso 4821</h3>
+                        <p><strong>Total de registros cargados:</strong> ${practicas.length}</p>
+                        <p><strong>Primer registro:</strong></p>
+                        <pre>${JSON.stringify(practicas[0] || {}, null, 2)}</pre>
+                        ${
+                            practicas.length > 1
+                                ? `
+                        <p><strong>Último registro:</strong></p>
+                        <pre>${JSON.stringify(practicas[practicas.length - 1], null, 2)}</pre>
+                        `
+                                : ''
+                        }
+                        <p><strong>Muestra de C_PRESTADOR únicos:</strong> ${[
+                            ...new Set(practicas.slice(0, 100).map((p) => p.c_prestador || p.C_PRESTADOR))
+                        ]
+                            .slice(0, 10)
+                            .join(', ')}</p>
+                    </div>
+                `;
+                } catch (error) {
+                    console.error('❌ Error en la prueba:', error);
+                    resultadosDiv.innerHTML += `
+                    <div class="resultado error">
+                        <h3>❌ Error en la carga</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+                }
+            };
+
+            window.probarLoader4822 = async function () {
+                const resultadosDiv = document.getElementById('resultados');
+
+                resultadosDiv.innerHTML += `
+                <div class="resultado info">
+                    <h3>🔄 Iniciando prueba para proceso 4822...</h3>
+                    <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
+                </div>
+            `;
+
+                try {
+                    console.log('🚀 Iniciando carga de prácticas para proceso 4822...');
+
+                    const practicas = await cargarPracticas(4822);
+
+                    resultadosDiv.innerHTML += `
+                    <div class="resultado exito">
+                        <h3>✅ Carga exitosa para proceso 4822</h3>
+                        <p><strong>Total de registros cargados:</strong> ${practicas.length}</p>
+                        <p><strong>Primer registro:</strong></p>
+                        <pre>${JSON.stringify(practicas[0] || {}, null, 2)}</pre>
+                    </div>
+                `;
+                } catch (error) {
+                    console.error('❌ Error en la prueba:', error);
+                    resultadosDiv.innerHTML += `
+                    <div class="resultado error">
+                        <h3>❌ Error en la carga</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+                }
+            };
+
+            window.limpiarResultados = function () {
+                document.getElementById('resultados').innerHTML = '';
+            };
+
+            // Auto-ejecutar la prueba al cargar la página
+            setTimeout(() => {
+                console.log('🏁 Página cargada, ejecutando prueba automática...');
+                probarLoader();
+            }, 1000);
+        </script>
+    </body>
+</html>
