@@ -1,19 +1,64 @@
 [
     {
         "id": 1,
-        "usuario": "admin",
-        "password": "123",
-        "nombre": "Administrador",
-        "email": "admin@test.com",
+        "usuario": "mmorales",
+        "password": "123456780",
+        "nombre": "Matias Morales",
+        "email": "matmorales@proyectos.pami.org.ar",
         "rol": "admin",
         "activo": true
     },
     {
         "id": 2,
-        "usuario": "usuario1",
-        "password": "123",
-        "nombre": "Usuario Uno",
-        "email": "usuario1@test.com",
+        "usuario": "vgrisolia",
+        "password": "123456780",
+        "nombre": "Victoria Grisolía",
+        "email": "vgrisolia@pami.org.ar",
+        "rol": "user",
+        "activo": true
+    },
+    {
+        "id": 3,
+        "usuario": "vsanto",
+        "password": "123456780",
+        "nombre": "Verónica Santo",
+        "email": "vsanto@pami.org.ar",
+        "rol": "user",
+        "activo": true
+    },
+    {
+        "id": 4,
+        "usuario": "amoppenlander",
+        "password": "123456780",
+        "nombre": "Aylen Oppenlander",
+        "email": "amoppenlander@pami.org.ar",
+        "rol": "user",
+        "activo": true
+    },
+    {
+        "id": 5,
+        "usuario": "kcarrasquel",
+        "password": "123456780",
+        "nombre": "Karen Carrasquel",
+        "email": "kcarrasquel@pami.org.ar",
+        "rol": "user",
+        "activo": true
+    },
+    {
+        "id": 6,
+        "usuario": "otorresescales",
+        "password": "123456780",
+        "nombre": "Alejandro Torres Escales",
+        "email": "otorresescales@pami.org.ar",
+        "rol": "user",
+        "activo": true
+    },
+    {
+        "id": 7,
+        "usuario": "ocovello",
+        "password": "123456780",
+        "nombre": "Ornella Covello",
+        "email": "ocovello@pami.org.ar",
         "rol": "user",
         "activo": true
     }
