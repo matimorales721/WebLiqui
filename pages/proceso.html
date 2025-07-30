@@ -13,8 +13,13 @@
                 <div class="logo">WebLiqui</div>
             </div>
             <div class="topbar-user">
-                <span>Martín Rodríguez</span>
-                <div class="avatar">M</div>
+                <span data-usuario-nombre></span>
+                <div class="avatar" data-usuario-inicial></div>
+                <button class="btn-logout" id="btnLogout" title="Cerrar sesión">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                    </svg>
+                </button>
             </div>
         </div>
 
@@ -74,249 +79,15 @@
                 </div>
                 <div class="tabla-container">
                     <div id="grillasPorProceso">
-                        <div id="aprob-cabecera" class="tab-content active">
-                            <div class="filters">
-                                <label
-                                    >Concepto:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroConcepto_aprob_cabecera"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="conceptoDropdown_aprob_cabecera"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Período:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroPeriodo_aprob_cabecera"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="periodoDropdown_aprob_cabecera"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Prestador:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroPrestador_aprob_cabecera"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="prestadorDropdown_aprob_cabecera"></div>
-                                    </div>
-                                </label>
-                                <button id="limpiarFiltrosBtn_aprob_cabecera">Limpiar</button>
-                            </div>
-                            <table id="tablaAprobCabecera" class="styled-table"></table>
-                            <div id="paginadorAprobCabecera"></div>
-                        </div>
-                        <div id="cabecera" class="tab-content">
-                            <div class="filters">
-                                <label
-                                    >Concepto:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroConcepto_cabecera"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="conceptoDropdown_cabecera"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Período:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroPeriodo_cabecera"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="periodoDropdown_cabecera"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Prestador:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroPrestador_cabecera"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="prestadorDropdown_cabecera"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Módulo:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroModulo_cabecera"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="moduloDropdown_cabecera"></div>
-                                    </div>
-                                </label>
-                                <button id="limpiarFiltrosBtn_cabecera">Limpiar</button>
-                            </div>
-                            <table id="tablaCabecera" class="styled-table"></table>
-                            <div id="paginadorCabecera"></div>
-                        </div>
-                        <div id="detalle" class="tab-content">
-                            <div class="filters">
-                                <label
-                                    >Concepto:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroConcepto_detalle"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="conceptoDropdown_detalle"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Período:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroPeriodo_detalle"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="periodoDropdown_detalle"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Prestador:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroPrestador_detalle"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="prestadorDropdown_detalle"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Modulo:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroModulo_detalle"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="moduloDropdown_detalle"></div>
-                                    </div>
-                                </label>
-                                <button id="limpiarFiltrosBtn_detalle">Limpiar</button>
-                            </div>
-                            <table id="tablaDetalle" class="styled-table"></table>
-                            <div id="paginadorDetalle"></div>
-                        </div>
-                        <div id="practicas" class="tab-content">
-                            <div class="filters">
-                                <label
-                                    >Concepto:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroConcepto_practicas"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="conceptoDropdown_practicas"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Período:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroPeriodo_practicas"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="periodoDropdown_practicas"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Prestador:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroPrestador_practicas"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="prestadorDropdown_practicas"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Módulo:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroModulo_practicas"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="moduloDropdown_practicas"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Práctica:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroPractica_practicas"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="practicaDropdown_practicas"></div>
-                                    </div>
-                                </label>
-                                <label
-                                    >Beneficiario:
-                                    <div class="custom-select-wrapper">
-                                        <input
-                                            type="text"
-                                            id="filtroBeneficiario_practicas"
-                                            placeholder="Selecciona o escribe..."
-                                            readonly
-                                        />
-                                        <div class="custom-select-dropdown" id="beneficiarioDropdown_practicas"></div>
-                                    </div>
-                                </label>
-                                <button id="limpiarFiltrosBtn_practicas">Limpiar</button>
-                            </div>
-                            <table id="tablaPracticas" class="styled-table"></table>
-                            <div id="paginadorPracticas"></div>
-                        </div>
+                        <!-- Contenido de tabs se carga dinámicamente -->
                     </div>
                 </div>
             </div>
         </div>
 
         <script type="module" src="../js/proceso.js"></script>
-        
-        <!-- Mis js utiles -->
         <script type="module" src="../js/formatters.js"></script>
         <script type="module" src="../js/tableLogic.js"></script>
         <script type="module" src="../js/tableUI.js"></script>
-        <script type="module" src="../js/proceso.js"></script>
     </body>
 </html>

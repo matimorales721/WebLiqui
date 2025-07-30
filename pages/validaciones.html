@@ -3,75 +3,63 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>WebLiqui - Validaciones del Proceso</title>
+        <title>WebLiqui - Validaciones</title>
         <link rel="stylesheet" href="../css/styles_meEncantaPeroEstáDesorganizado.css" />
         <link rel="icon" type="image/x-icon" href="../images/favicon-ok.png" />
     </head>
     <body>
         <div class="topbar">
-            <div class="topbar-left">
-                <div class="hamburger" id="hamburger" onclick="toggleSidebar()">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-                <div class="logo">WebLiqui</div>
-            </div>
+            <div class="logo">WebLiqui</div>
             <div class="topbar-user">
-                <span>Martín Rodríguez</span>
-                <div class="avatar">M</div>
+                <span data-usuario-nombre>Martín Rodríguez</span>
+                <div class="avatar" data-usuario-inicial>M</div>
             </div>
         </div>
 
         <div class="main-container">
-            <div class="sidebar hidden" id="sidebar">
+            <div class="sidebar">
                 <h3>Menú</h3>
                 <nav>
                     <a href="./procesos.html">Procesos</a>
+                    <a href="./validaciones.html">Validaciones</a>
                     <a href="#">Liquidación</a>
                 </nav>
             </div>
-
             <div class="content">
-                <div class="botones-navegacion">
-                    <a href="./procesos.html" class="btn-volver-mobile">←</a>
-                    <button id="btnVolverPracticas" class="btn-volver-practicas" style="display: none">
-                        ← Volver a Prácticas
-                    </button>
-                </div>
-                <h2>Validaciones del Proceso</h2>
-                <div class="tabla-container">
-                    <div id="validaciones" class="tab-content active">
-                        <div class="filters">
-                            <select id="filtroGrupo"></select>
-                            <select id="filtroCodigoValidacion"></select>
-                            <select id="filtroCIdPractica"></select>
+                <h2>Validaciones</h2>
 
-                            <button id="filtroBtn">Filtrar</button>
-                        </div>
-                        <table id="tablaValidaciones" class="styled-table"></table>
-                        <div id="paginacionValidaciones" class="table-pagination">
-                            <button id="prevPageValidaciones">Anterior</button>
-                            <span id="pageInfoValidaciones"></span>
-                            <button id="nextPageValidaciones">Siguiente</button>
-                            <label style="margin-left: 16px">
-                                Filas por página:
-                                <select id="pageSizeValidaciones">
-                                    <option value="5">5</option>
-                                    <option value="10" selected>10</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
+                <div class="filters">
+                    <label
+                        >Proceso:
+                        <input type="text" id="filtroProceso" placeholder="ej: 4821" />
+                    </label>
+
+                    <label
+                        >Estado:
+                        <select id="filtroEstado">
+                            <option value="">Todos</option>
+                            <option value="exitosa">Exitosa</option>
+                            <option value="error">Error</option>
+                            <option value="pendiente">Pendiente</option>
+                        </select>
+                    </label>
+
+                    <label
+                        >Fecha:
+                        <input type="date" id="filtroFecha" />
+                    </label>
+
+                    <button id="limpiarFiltrosBtn">Limpiar</button>
+                </div>
+
+                <table id="tablaValidaciones" class="styled-table"></table>
+                <div id="paginacionValidaciones" class="table-pagination">
+                    <!-- Los botones de paginación se generan dinámicamente -->
                 </div>
             </div>
         </div>
 
         <script type="module" src="../js/validaciones.js"></script>
-
-        <!-- Mis js utiles -->
         <script type="module" src="../js/formatters.js"></script>
         <script type="module" src="../js/tableLogic.js"></script>
         <script type="module" src="../js/tableUI.js"></script>

@@ -1,8 +1,17 @@
+import { Auth } from './auth.js';
 import { generarTabla } from './tableUI.js';
 import { poblarSelectUnico } from './tableLogic.js';
 import { safeFetch, initCopyIconListener } from './newUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Validar sesión al cargar la página
+    if (!Auth.validarSesion()) {
+        return;
+    }
+    
+    // Actualizar datos del usuario en el DOM
+    Auth.actualizarDatosUsuario();
+    
     // Inicializa el listener de copiado de íconos
     initCopyIconListener();
     const urlParams = new URLSearchParams(window.location.search);

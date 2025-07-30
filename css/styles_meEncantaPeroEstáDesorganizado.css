@@ -1060,7 +1060,7 @@ button:focus,
     user-select: none !important;
 }
 
-/* Responsivo para pantallas pequeñas */
+/* Responsive para pantallas pequeñas */
 @media (max-width: 768px) {
     .paginador {
         gap: 2px;
@@ -1077,5 +1077,61 @@ button:focus,
     .paginador-ellipsis {
         padding: 6px 10px !important;
         font-size: 13px !important;
+    }
+}
+
+/* Botón de logout en la topbar */
+.btn-logout {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12px;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    min-width: 36px;
+    height: 36px;
+}
+
+.btn-logout:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+.btn-logout:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-logout svg {
+    transition: transform 0.2s ease;
+}
+
+.btn-logout:hover svg {
+    transform: translateX(2px);
+}
+
+/* Responsive para móvil */
+@media (max-width: 768px) {
+    .topbar-user {
+        gap: 8px;
+    }
+    
+    .btn-logout {
+        margin-left: 8px;
+        padding: 6px 8px;
+        min-width: 32px;
+        height: 32px;
+    }
+    
+    .btn-logout svg {
+        width: 14px;
+        height: 14px;
     }
 }

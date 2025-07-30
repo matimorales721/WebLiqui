@@ -1,7 +1,11 @@
+import { Auth } from './auth.js';
+import { ProcesoData } from './procesoData.js';
+import { ProcesoUI } from './procesoUI.js';
+import { ProcesoLogic } from './procesoLogic.js';
 import { generarTabla } from './tableUI.js';
-import { parsearFecha, formatearFecha } from './formatters.js';
 import { poblarSelectUnico, crearSelectorPersonalizado } from './tableLogic.js';
 import { safeFetch, initCopyIconListener } from './newUtils.js';
+import { parsearFecha, formatearFecha } from './formatters.js';
 import { DateUtils, TipoEjecucionUtils, ProcesoDataManager, CamposConfigManager, UrlUtils } from './procesoUtils.js';
 import { cargarPracticas } from './practicasLoader.js';
 
@@ -14,7 +18,169 @@ let aprobCabeceraGlobal = [];
 let validacionesGlobal = [];
 let codigoProceso;
 
-// Definir campos importantes (configuración de las tablas)
+// ===== FUNCIONES UTILITARIAS PRIMERO =====
+
+// Extrae el código de proceso de la URL
+export function getParametroProceso() {
+    return UrlUtils.getParametroProceso();
+}
+
+// Función para construir URL de vuelta a procesos
+function construirUrlVueltaProcesos() {
+    try {
+        // Verificar que UrlUtils esté disponible
+        if (typeof UrlUtils !== 'undefined' && UrlUtils.construirUrlVueltaProcesos) {
+            return UrlUtils.construirUrlVueltaProcesos();
+        }
+        
+        // Fallback mejorado: construir URL básica
+        console.warn('⚠️ UrlUtils no disponible, usando fallback mejorado');
+        
+        // Obtener parámetros actuales de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const params = {};
+        
+        // Preservar ciertos parámetros si existen
+        ['periodo', 'tipo', 'estado', 'codigo', 'page'].forEach(param => {
+            if (urlParams.has(param)) {
+                params[param] = urlParams.get(param);
+            }
+        });
+        
+        // Construir URL de vuelta con ruta relativa correcta
+        const baseUrl = './procesos.html'; // Misma carpeta que proceso.html
+        const queryString = Object.keys(params).length > 0 
+            ? '?' + Object.entries(params).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')
+            : '';
+            
+        const urlFinal = baseUrl + queryString;
+        console.log('🔗 URL construida (fallback mejorado):', urlFinal);
+        return urlFinal;
+        
+    } catch (error) {
+        console.error('❌ Error construyendo URL de vuelta:', error);
+        return './procesos.html'; // URL de fallback básica
+    }
+}
+
+// NUEVA FUNCIÓN: Configurar botones de volver a procesos
+function configurarBotonesVolver() {
+    console.log('🔧 Configurando botones de volver a procesos...');
+    
+    // Configurar botón de volver a procesos (escritorio)
+    const btnVolver = document.getElementById('btnVolverProcesos');
+    if (btnVolver) {
+        // Limpiar eventos existentes usando cloneNode
+        const nuevoBtnVolver = btnVolver.cloneNode(true);
+        btnVolver.parentNode.replaceChild(nuevoBtnVolver, btnVolver);
+        
+        nuevoBtnVolver.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🔄 Navegando de vuelta a procesos...');
+            
+            try {
+                const urlVuelta = construirUrlVueltaProcesos();
+                console.log('🔗 URL de vuelta:', urlVuelta);
+                
+                // Mostrar feedback visual
+                nuevoBtnVolver.textContent = 'Cargando...';
+                nuevoBtnVolver.disabled = true;
+                nuevoBtnVolver.style.opacity = '0.6';
+                
+                // Navegar después de un pequeño delay para mostrar el feedback
+                setTimeout(() => {
+                    window.location.href = urlVuelta;
+                }, 100);
+                
+            } catch (error) {
+                console.error('❌ Error navegando de vuelta:', error);
+                nuevoBtnVolver.textContent = '← Volver a Procesos';
+                nuevoBtnVolver.disabled = false;
+                nuevoBtnVolver.style.opacity = '1';
+                alert('Error al volver a procesos. Por favor, recargue la página.');
+            }
+        });
+        
+        console.log('✅ Botón volver (escritorio) configurado');
+    } else {
+        console.warn('⚠️ No se encontró btnVolverProcesos en el DOM');
+    }
+
+    // Configurar botón de volver a procesos (móvil)
+    const btnVolverMobile = document.getElementById('btnVolverProcesosMobile');
+    if (btnVolverMobile) {
+        // Limpiar eventos existentes usando cloneNode
+        const nuevoBtnVolverMobile = btnVolverMobile.cloneNode(true);
+        btnVolverMobile.parentNode.replaceChild(nuevoBtnVolverMobile, btnVolverMobile);
+        
+        nuevoBtnVolverMobile.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🔄 Navegando de vuelta a procesos (móvil)...');
+            
+            try {
+                const urlVuelta = construirUrlVueltaProcesos();
+                console.log('🔗 URL de vuelta (móvil):', urlVuelta);
+                
+                // Mostrar feedback visual
+                nuevoBtnVolverMobile.textContent = '...';
+                nuevoBtnVolverMobile.style.pointerEvents = 'none';
+                nuevoBtnVolverMobile.style.opacity = '0.6';
+                
+                // Navegar después de un pequeño delay
+                setTimeout(() => {
+                    window.location.href = urlVuelta;
+                }, 100);
+                
+            } catch (error) {
+                console.error('❌ Error navegando de vuelta (móvil):', error);
+                nuevoBtnVolverMobile.textContent = '←';
+                nuevoBtnVolverMobile.style.pointerEvents = 'auto';
+                nuevoBtnVolverMobile.style.opacity = '1';
+                alert('Error al volver a procesos. Por favor, recargue la página.');
+            }
+        });
+        
+        console.log('✅ Botón volver (móvil) configurado');
+    } else {
+        console.warn('⚠️ No se encontró btnVolverProcesosMobile en el DOM');
+    }
+}
+
+function ocultarLoaderEnPestana(tabId) {
+    const loader = document.getElementById(`loader-${tabId}`);
+    if (loader) {
+        loader.remove();
+    }
+}
+
+function mostrarErrorCargaEnPestaña(tabId) {
+    const tab = document.getElementById(tabId);
+    if (!tab) return;
+
+    const errorDiv = document.createElement('div');
+    errorDiv.style.cssText = `
+        text-align: center;
+        padding: 2rem;
+        color: #dc3545;
+    `;
+
+    errorDiv.innerHTML = `
+        <h3>❌ Error al cargar ${tabId}</h3>
+        <p>No se pudieron cargar los datos. Por favor, intente nuevamente.</p>
+        <button onclick="location.reload()" style="padding: 0.5rem 1rem; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Recargar página
+        </button>
+    `;
+
+    tab.innerHTML = '';
+    tab.appendChild(errorDiv);
+}
+
+// ===== CONSTANTES Y CONFIGURACIÓN =====
+
+// Definir campos importantes (configuración de las tablas) - RESTAURADOS CON BOTONES
 const configuracionCampos = {
     practicas: [
         { key: 'c_concepto', header: 'Concepto', format: 'code' },
@@ -155,243 +321,289 @@ const CONFIGURACION = {
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Inicializa el listener de copiado de íconos
+// ===== EVENTO PRINCIPAL =====
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // PRIMERO: Guardar el contenido original INMEDIATAMENTE
+    ProcesoUI.guardarContenidoOriginal();
+    
+    // Validar sesión al cargar la página
+    if (!Auth.validarSesion()) {
+        return;
+    }
+    
+    // Actualizar datos del usuario en el DOM
+    Auth.actualizarDatosUsuario();
+    
+    // Inicializar listener de copiado
     initCopyIconListener();
 
-    // Clase para manejar pestañas de manera unificada
-    class TabManager {
-        constructor() {
-            this.tabs = {
-                practicas: {
-                    data: [],
-                    filtered: [],
-                    currentPage: 1,
-                    pageSize: 10,
-                    campos: [],
-                    filtros: ['concepto', 'periodo', 'prestador', 'modulo', 'practica', 'beneficiario']
-                },
-                detalle: {
-                    data: [],
-                    filtered: [],
-                    currentPage: 1,
-                    pageSize: 10,
-                    campos: [],
-                    filtros: ['concepto', 'periodo_ex', 'prestador', 'modulo']
-                },
-                cabecera: {
-                    data: [],
-                    filtered: [],
-                    currentPage: 1,
-                    pageSize: 10,
-                    campos: [],
-                    filtros: ['concepto', 'periodo_ex', 'prestador', 'modulo']
-                },
-                aprob_cabecera: {
-                    data: [],
-                    filtered: [],
-                    currentPage: 1,
-                    pageSize: 10,
-                    campos: [],
-                    filtros: ['concepto', 'periodo_ex', 'prestador']
-                }
-            };
+    // Instanciar el manager de pestañas
+    tabManager = new TabManager();
+
+    // Obtener código de proceso de la URL
+    codigoProceso = getParametroProceso();
+
+    // CONFIGURAR BOTONES DE VOLVER INMEDIATAMENTE
+    setTimeout(() => {
+        configurarBotonesVolver();
+    }, 100);
+
+    await cargarProceso();
+    
+    // RECONFIGURAR BOTONES DESPUÉS DE CARGAR PROCESO
+    setTimeout(() => {
+        configurarBotonesVolver();
+    }, 500);
+    
+    // RECONFIGURAR BOTONES UNA VEZ MÁS DESPUÉS DE UN DELAY MAYOR
+    setTimeout(() => {
+        configurarBotonesVolver();
+    }, 1500);
+});
+
+// ===== FUNCIONES PRINCIPALES =====
+
+async function cargarProceso() {
+    try {
+        ProcesoUI.mostrarCargando();
+
+        const procesoIdParam = ProcesoLogic.obtenerParametroUrl();
+        const procesoId = ProcesoLogic.validarProcesoId(procesoIdParam);
+        codigoProceso = procesoId;
+
+        const proceso = await ProcesoData.obtenerProceso(procesoId);
+
+        if (!proceso) {
+            throw new Error('Proceso no encontrado');
         }
 
-        // Función genérica para renderizar tabla con paginación
-        renderTabla(tabName) {
-            const tab = this.tabs[tabName];
-            const tableId = `tabla${this.capitalize(tabName)}`;
-            const paginadorId = `paginador${this.capitalize(tabName)}`;
+        // Cargar datos de las pestañas (sin prácticas - lazy loading)
+        await cargarPestanas(procesoId);
 
-            generarTabla(tab.filtered, tableId, tab.campos, undefined, tab.currentPage, tab.pageSize);
-            this.renderPaginador(tabName, paginadorId);
-        }
+        // Guardar estado de prácticas
+        ESTADO_PRACTICAS.codigoProceso = procesoId;
 
-        // Función genérica para renderizar paginador
-        renderPaginador(tabName, paginadorId) {
-            const tab = this.tabs[tabName];
-            const totalPages = Math.max(1, Math.ceil(tab.filtered.length / tab.pageSize));
-            const paginador = document.getElementById(paginadorId);
+        // Mostrar datos del proceso (esto restaura el contenido)
+        ProcesoUI.mostrarDatosProceso(proceso);
 
-            if (!paginador) return;
+        // IMPORTANTE: Inicializar pestañas después de que se restaure el contenido
+        console.log('🔧 Llamando a inicializarPestanas después de mostrar datos del proceso...');
+        setTimeout(() => {
+            inicializarPestanas();
+            
+            // NUEVO: Configurar navegación de pestañas después de inicializar
+            setTimeout(() => {
+                configurarNavegacionPestanas();
+            }, 200);
+            
+        }, 100); // Pequeño delay para asegurar que el DOM esté listo
 
-            paginador.innerHTML = '';
-            const btnWidth = 38;
-            const paginadorWidth = paginador.offsetWidth || 400;
-            let maxBtns = Math.floor(paginadorWidth / btnWidth);
-            if (maxBtns < 5) maxBtns = 5;
+    } catch (error) {
+        console.error('Error al cargar el proceso:', error);
+        ProcesoUI.mostrarError(`Error al cargar el proceso: ${error.message}`);
+    }
+}
 
-            let btns = this.calcularBotonesPaginacion(tab.currentPage, totalPages, maxBtns);
+// Cargar datos de las pestañas (SIN prácticas - lazy loading)
+async function cargarPestanas(procesoId) {
+    try {
+        console.log('🔄 Cargando pestañas para proceso:', procesoId);
+        
+        // Cargar datos de las 3 pestañas principales + validaciones (SIN prácticas)
+        const [detalle, cabecera, aprobCabecera, validaciones] = await Promise.all([
+            safeFetch(`../data/detalle-${procesoId}.json`).catch(() => []),
+            safeFetch(`../data/cabecera-${procesoId}.json`).catch(() => []),
+            safeFetch(`../data/aprob-cabecera-${procesoId}.json`).catch(() => []),
+            safeFetch(`../data/validaciones-${procesoId}.json`).catch(() => [])
+        ]);
+        
+        // Guardar datos globales
+        practicasGlobal = []; // Se cargará lazy
+        detalleGlobal = detalle;
+        cabeceraGlobal = cabecera;
+        aprobCabeceraGlobal = aprobCabecera;
+        validacionesGlobal = validaciones;
+        
+        console.log('✅ Datos cargados:', { 
+            detalle: detalle.length, 
+            cabecera: cabecera.length, 
+            aprobCabecera: aprobCabecera.length,
+            validaciones: validaciones.length
+        });
+        
+    } catch (error) {
+        console.error('❌ Error al cargar pestañas:', error);
+    }
+}
 
-            btns.forEach((i) => {
-                if (i === '...') {
-                    const span = document.createElement('span');
-                    span.textContent = '...';
-                    span.className = 'paginador-ellipsis';
-                    span.style.padding = '8px 12px';
-                    span.style.margin = '0 4px';
-                    span.style.color = '#6c757d';
-                    paginador.appendChild(span);
+// Clase para manejar pestañas de manera unificada
+class TabManager {
+    constructor() {
+        this.tabs = {
+            practicas: {
+                data: [],
+                filtered: [],
+                currentPage: 1,
+                pageSize: 10,
+                campos: [],
+                filtros: ['concepto', 'periodo', 'prestador', 'modulo', 'practica', 'beneficiario']
+            },
+            detalle: {
+                data: [],
+                filtered: [],
+                currentPage: 1,
+                pageSize: 10,
+                campos: [],
+                filtros: ['concepto', 'periodo_ex', 'prestador', 'modulo']
+            },
+            cabecera: {
+                data: [],
+                filtered: [],
+                currentPage: 1,
+                pageSize: 10,
+                campos: [],
+                filtros: ['concepto', 'periodo_ex', 'prestador', 'modulo']
+            },
+            aprob_cabecera: {
+                data: [],
+                filtered: [],
+                currentPage: 1,
+                pageSize: 10,
+                campos: [],
+                filtros: ['concepto', 'periodo_ex', 'prestador']
+            }
+        };
+    }
+
+    // Función genérica para renderizar tabla con paginación
+    renderTabla(tabName) {
+        const tab = this.tabs[tabName];
+        const tableId = `tabla${this.capitalize(tabName)}`;
+        const paginadorId = `paginador${this.capitalize(tabName)}`;
+
+        generarTabla(tab.filtered, tableId, tab.campos, undefined, tab.currentPage, tab.pageSize);
+        this.renderPaginador(tabName, paginadorId);
+    }
+
+    // Función genérica para renderizar paginador
+    renderPaginador(tabName, paginadorId) {
+        const tab = this.tabs[tabName];
+        const totalPages = Math.max(1, Math.ceil(tab.filtered.length / tab.pageSize));
+        const paginador = document.getElementById(paginadorId);
+
+        if (!paginador) return;
+
+        paginador.innerHTML = '';
+        const btnWidth = 38;
+        const paginadorWidth = paginador.offsetWidth || 400;
+        let maxBtns = Math.floor(paginadorWidth / btnWidth);
+        if (maxBtns < 5) maxBtns = 5;
+
+        let btns = this.calcularBotonesPaginacion(tab.currentPage, totalPages, maxBtns);
+
+        btns.forEach((i) => {
+            if (i === '...') {
+                const span = document.createElement('span');
+                span.textContent = '...';
+                span.className = 'paginador-ellipsis';
+                span.style.padding = '8px 12px';
+                span.style.margin = '0 4px';
+                span.style.color = '#6c757d';
+                paginador.appendChild(span);
+            } else {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                const isActive = i === tab.currentPage;
+                btn.className = 'paginador-btn' + (isActive ? ' active' : '');
+
+                // Estilos base para todos los botones
+                btn.style.margin = '0 2px';
+                btn.style.padding = '8px 12px';
+                btn.style.border = '1px solid #dee2e6';
+                btn.style.borderRadius = '4px';
+                btn.style.cursor = 'pointer';
+                btn.style.fontSize = '14px';
+                btn.style.fontWeight = '500';
+                btn.style.transition = 'all 0.2s ease';
+                btn.style.minWidth = '36px';
+                btn.style.height = '36px';
+                btn.style.display = 'inline-flex';
+                btn.style.alignItems = 'center';
+                btn.style.justifyContent = 'center';
+
+                // Estilos específicos según si está activo o no
+                if (isActive) {
+                    btn.style.backgroundColor = '#28a745';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#28a745';
+                    btn.style.boxShadow = '0 2px 4px rgba(40, 167, 69, 0.25)';
+                    btn.style.fontWeight = '600';
                 } else {
-                    const btn = document.createElement('button');
-                    btn.textContent = i;
-                    const isActive = i === tab.currentPage;
-                    btn.className = 'paginador-btn' + (isActive ? ' active' : '');
+                    btn.style.backgroundColor = '#007bff';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#007bff';
+                }
 
-                    // Estilos base para todos los botones
-                    btn.style.margin = '0 2px';
-                    btn.style.padding = '8px 12px';
-                    btn.style.border = '1px solid #dee2e6';
-                    btn.style.borderRadius = '4px';
-                    btn.style.cursor = 'pointer';
-                    btn.style.fontSize = '14px';
-                    btn.style.fontWeight = '500';
-                    btn.style.transition = 'all 0.2s ease';
-                    btn.style.minWidth = '36px';
-                    btn.style.height = '36px';
-                    btn.style.display = 'inline-flex';
-                    btn.style.alignItems = 'center';
-                    btn.style.justifyContent = 'center';
+                // Eventos hover
+                btn.addEventListener('mouseenter', () => {
+                    if (!isActive) {
+                        btn.style.backgroundColor = '#0056b3';
+                        btn.style.borderColor = '#0056b3';
+                    }
+                });
 
-                    // Estilos específicos según si está activo o no
-                    if (isActive) {
-                        btn.style.backgroundColor = '#28a745';
-                        btn.style.color = 'white';
-                        btn.style.borderColor = '#28a745';
-                        btn.style.boxShadow = '0 2px 4px rgba(40, 167, 69, 0.25)';
-                        btn.style.fontWeight = '600';
-                    } else {
+                btn.addEventListener('mouseleave', () => {
+                    if (!isActive) {
                         btn.style.backgroundColor = '#007bff';
-                        btn.style.color = 'white';
                         btn.style.borderColor = '#007bff';
                     }
-
-                    // Eventos hover
-                    btn.addEventListener('mouseenter', () => {
-                        if (!isActive) {
-                            btn.style.backgroundColor = '#0056b3';
-                            btn.style.borderColor = '#0056b3';
-                        }
-                    });
-
-                    btn.addEventListener('mouseleave', () => {
-                        if (!isActive) {
-                            btn.style.backgroundColor = '#007bff';
-                            btn.style.borderColor = '#007bff';
-                        }
-                    });
-
-                    btn.onclick = () => {
-                        tab.currentPage = i;
-                        this.renderTabla(tabName);
-                    };
-                    paginador.appendChild(btn);
-                }
-            });
-        }
-
-        // Calcular qué botones mostrar en la paginación
-        calcularBotonesPaginacion(currentPage, totalPages, maxBtns) {
-            let btns = [];
-            if (totalPages <= maxBtns) {
-                for (let i = 1; i <= totalPages; i++) btns.push(i);
-            } else {
-                let start = Math.max(1, currentPage - Math.floor(maxBtns / 2));
-                let end = start + maxBtns - 1;
-                if (end > totalPages) {
-                    end = totalPages;
-                    start = end - maxBtns + 1;
-                }
-                if (start > 1) {
-                    btns.push(1);
-                    if (start > 2) btns.push('...');
-                }
-                for (let i = start; i <= end; i++) btns.push(i);
-                if (end < totalPages) {
-                    if (end < totalPages - 1) btns.push('...');
-                    btns.push(totalPages);
-                }
-            }
-            return btns;
-        }
-
-        // Función genérica para filtrar datos
-        filtrar(tabName) {
-            const tab = this.tabs[tabName];
-            const filtros = this.obtenerValoresFiltros(tabName);
-
-            tab.filtered = tab.data.filter((item) => {
-                return tab.filtros.every((filtro) => {
-                    const valor = filtros[filtro];
-                    if (!valor) return true;
-
-                    const campo =
-                        filtro === 'beneficiario'
-                            ? 'n_beneficio'
-                            : filtro === 'periodo'
-                            ? 'c_periodo'
-                            : filtro === 'periodo_ex'
-                            ? 'c_periodo_ex'
-                            : filtro === 'modulo'
-                            ? tabName === 'detalle' || tabName === 'cabecera'
-                                ? 'c_modulo_pami_4x'
-                                : tabName === 'aprob_cabecera'
-                                ? 'c_modulo_pami_7x'
-                                : 'c_modulo_pami_4x'
-                            : filtro === 'practica'
-                            ? 'c_practica'
-                            : `c_${filtro}`;
-
-                    if (filtro === 'concepto') {
-                        return item[campo]?.toLowerCase() === valor.toLowerCase();
-                    }
-                    return item[campo] == valor;
                 });
-            });
 
-            tab.currentPage = 1;
-            this.renderTabla(tabName);
+                btn.onclick = () => {
+                    tab.currentPage = i;
+                    this.renderTabla(tabName);
+                };
+                paginador.appendChild(btn);
+            }
+        });
+    }
+
+    // Calcular qué botones mostrar en la paginación
+    calcularBotonesPaginacion(currentPage, totalPages, maxBtns) {
+        let btns = [];
+        if (totalPages <= maxBtns) {
+            for (let i = 1; i <= totalPages; i++) btns.push(i);
+        } else {
+            let start = Math.max(1, currentPage - Math.floor(maxBtns / 2));
+            let end = start + maxBtns - 1;
+            if (end > totalPages) {
+                end = totalPages;
+                start = end - maxBtns + 1;
+            }
+            if (start > 1) {
+                btns.push(1);
+                if (start > 2) btns.push('...');
+            }
+            for (let i = start; i <= end; i++) btns.push(i);
+            if (end < totalPages) {
+                if (end < totalPages - 1) btns.push('...');
+                btns.push(totalPages);
+            }
         }
+        return btns;
+    }
 
-        // Obtener valores de los filtros de una pestaña
-        obtenerValoresFiltros(tabName) {
-            const tab = this.tabs[tabName];
-            const filtros = {};
+    // Función genérica para filtrar datos - RESTAURADA CON LÓGICA COMPLETA
+    filtrar(tabName) {
+        const tab = this.tabs[tabName];
+        const filtros = this.obtenerValoresFiltros(tabName);
 
-            tab.filtros.forEach((filtro) => {
-                const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
-                const input = document.getElementById(inputId);
-                filtros[filtro] = input?.getValue ? input.getValue() : input?.value || '';
-            });
+        tab.filtered = tab.data.filter((item) => {
+            return tab.filtros.every((filtro) => {
+                const valor = filtros[filtro];
+                if (!valor) return true;
 
-            return filtros;
-        }
-
-        // Limpiar filtros de una pestaña
-        limpiarFiltros(tabName) {
-            const tab = this.tabs[tabName];
-
-            tab.filtros.forEach((filtro) => {
-                const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
-                const input = document.getElementById(inputId);
-                if (input?.setValue) {
-                    input.setValue('');
-                } else if (input) {
-                    input.value = '';
-                }
-            });
-
-            tab.filtered = tab.data;
-            tab.currentPage = 1;
-            this.renderTabla(tabName);
-        }
-
-        // Configurar selectores personalizados para una pestaña
-        configurarSelectores(tabName) {
-            const tab = this.tabs[tabName];
-
-            tab.filtros.forEach((filtro) => {
                 const campo =
                     filtro === 'beneficiario'
                         ? 'n_beneficio'
@@ -409,162 +621,503 @@ document.addEventListener('DOMContentLoaded', () => {
                         ? 'c_practica'
                         : `c_${filtro}`;
 
-                const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
-                const dropdownId = `${filtro === 'periodo_ex' ? 'periodo' : filtro}Dropdown_${tabName}`;
-
-                crearSelectorPersonalizado(tab.data, campo, inputId, dropdownId, 'Selecciona o escribe...', () =>
-                    this.filtrar(tabName)
-                );
-            });
-        }
-
-        // Configurar botón limpiar para una pestaña
-        configurarBotonLimpiar(tabName) {
-            const btnId = `limpiarFiltrosBtn_${tabName}`;
-            const btn = document.getElementById(btnId);
-
-            if (btn) {
-                btn.addEventListener('click', () => this.limpiarFiltros(tabName));
-            }
-        }
-
-        // Inicializar una pestaña
-        inicializarTab(tabName, data, campos) {
-            const tab = this.tabs[tabName];
-            tab.data = data;
-            tab.campos = campos;
-            tab.filtered = data;
-
-            this.configurarSelectores(tabName);
-            this.renderTabla(tabName);
-            this.configurarBotonLimpiar(tabName);
-        }
-
-        // Utility function para capitalizar
-        capitalize(str) {
-            if (str === 'aprob_cabecera') return 'AprobCabecera';
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        }
-    }
-
-    // Instanciar el manager de pestañas
-    tabManager = new TabManager();
-
-    // Inicializar el código de proceso
-    codigoProceso = getParametroProceso(); // obtiene el código directamente de la URL
-
-    Promise.all([
-        safeFetch(`../data/detalle-${codigoProceso}.json`),
-        safeFetch(`../data/cabecera-${codigoProceso}.json`),
-        safeFetch(`../data/aprob-cabecera-${codigoProceso}.json`),
-        safeFetch(`../data/validaciones-${codigoProceso}.json`),
-        safeFetch(`../data/procesos.json`)
-    ])
-        .then(([detalle, cabecera, aprobCabecera, validaciones, procesos]) => {
-            const proceso = procesos.find((p) => parseInt(p.C_PROCESO) === codigoProceso);
-
-            if (!proceso) {
-                mostrarMensajeProcesoNoEncontrado(codigoProceso);
-                return;
-            }
-
-            // Poblar detalles del proceso
-            document.getElementById('codigo').textContent = proceso.C_PROCESO;
-            document.getElementById('tipo').textContent = proceso.TIPO_EJECUCION;
-            proceso.TIPO_EJECUCION === 'E'
-                ? 'Excepción'
-                : proceso.TIPO_EJECUCION === 'M'
-                ? 'Mensual'
-                : proceso.TIPO_EJECUCION;
-
-            document.getElementById('periodo').textContent = proceso.C_PERIODO;
-
-            // Formatear fechas usando parsearFecha y formatearFecha
-            if (proceso.F_INICIO) {
-                const fechaInicio = parsearFecha(proceso.F_INICIO);
-                if (fechaInicio && !isNaN(fechaInicio.getTime())) {
-                    document.getElementById('inicio').textContent = formatearFecha(fechaInicio, true);
+                if (filtro === 'concepto') {
+                    return item[campo]?.toLowerCase() === valor.toLowerCase();
                 }
-            }
-
-            if (proceso.F_FIN) {
-                const fechaFin = parsearFecha(proceso.F_FIN);
-                if (fechaFin && !isNaN(fechaFin.getTime())) {
-                    document.getElementById('fin').textContent = formatearFecha(fechaFin, true);
-                }
-            }
-
-            document.getElementById('duracion').textContent = calcularDuracion(proceso.F_INICIO, proceso.F_FIN);
-
-            document.getElementById('btnLogs').addEventListener('click', () => {
-                window.location.href = `logs.html?codigo=${proceso.codigo}`;
+                return item[campo] == valor;
             });
-
-            // Guardar datos globales
-            ESTADO_PRACTICAS.codigoProceso = codigoProceso;
-            practicasGlobal = []; // Se cargará lazy
-            detalleGlobal = detalle;
-            cabeceraGlobal = cabecera;
-            aprobCabeceraGlobal = aprobCabecera;
-            validacionesGlobal = validaciones;
-
-            // Inicializar pestañas usando el TabManager (excepto prácticas)
-            tabManager.inicializarTab('aprob_cabecera', aprobCabeceraGlobal, configuracionCampos.aprob_cabecera);
-            tabManager.inicializarTab('cabecera', cabeceraGlobal, configuracionCampos.cabecera);
-            tabManager.inicializarTab('detalle', detalleGlobal, configuracionCampos.detalle);
-            // Prácticas se inicializa lazy
-        })
-        .catch((error) => {
-            console.error('Error cargando datos del proceso:', error);
-            // Si hay error al cargar datos, mostrar mensaje de proceso no encontrado
-            mostrarMensajeProcesoNoEncontrado(codigoProceso);
         });
-});
 
-// Utilidades para manejo de botones
-const ButtonUtils = {
-    /**
-     * Aplica estado de carga a un botón
-     * @param {HTMLElement} btn - El botón a modificar
-     * @returns {Object} Estado original del botón
-     */
-    aplicarEstadoCarga(btn) {
-        const estadoOriginal = {
-            texto: btn.textContent,
-            backgroundColor: btn.style.backgroundColor,
-            disabled: btn.disabled
-        };
-
-        btn.textContent = '⏳ Cargando...';
-        btn.style.backgroundColor = '#17a2b8';
-        btn.style.transform = 'scale(0.95)';
-        btn.style.transition = 'all 0.3s ease';
-        btn.disabled = true;
-
-        return estadoOriginal;
-    },
-
-    /**
-     * Restaura el estado original de un botón
-     * @param {HTMLElement} btn - El botón a restaurar
-     * @param {Object} estadoOriginal - Estado original del botón
-     */
-    restaurarEstado(btn, estadoOriginal) {
-        btn.textContent = estadoOriginal.texto;
-        btn.style.backgroundColor = estadoOriginal.backgroundColor;
-        btn.style.transform = 'scale(1)';
-        btn.disabled = estadoOriginal.disabled;
+        tab.currentPage = 1;
+        this.renderTabla(tabName);
     }
-};
+
+    // Obtener valores de los filtros de una pestaña
+    obtenerValoresFiltros(tabName) {
+        const tab = this.tabs[tabName];
+        const filtros = {};
+
+        tab.filtros.forEach((filtro) => {
+            const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
+            const input = document.getElementById(inputId);
+            filtros[filtro] = input?.getValue ? input.getValue() : input?.value || '';
+        });
+
+        return filtros;
+    }
+
+    // Limpiar filtros de una pestaña
+    limpiarFiltros(tabName) {
+        const tab = this.tabs[tabName];
+
+        tab.filtros.forEach((filtro) => {
+            const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
+            const input = document.getElementById(inputId);
+            if (input?.setValue) {
+                input.setValue('');
+            } else if (input) {
+                input.value = '';
+            }
+        });
+
+        tab.filtered = tab.data;
+        tab.currentPage = 1;
+        this.renderTabla(tabName);
+    }
+
+    // Configurar selectores personalizados para una pestaña - RESTAURADA COMPLETA
+    configurarSelectores(tabName) {
+        const tab = this.tabs[tabName];
+
+        tab.filtros.forEach((filtro) => {
+            const campo =
+                filtro === 'beneficiario'
+                    ? 'n_beneficio'
+                    : filtro === 'periodo'
+                    ? 'c_periodo'
+                    : filtro === 'periodo_ex'
+                    ? 'c_periodo_ex'
+                    : filtro === 'modulo'
+                    ? tabName === 'detalle' || tabName === 'cabecera'
+                        ? 'c_modulo_pami_4x'
+                        : tabName === 'aprob_cabecera'
+                        ? 'c_modulo_pami_7x'
+                        : 'c_modulo_pami_4x'
+                    : filtro === 'practica'
+                    ? 'c_practica'
+                    : `c_${filtro}`;
+
+            const inputId = `filtro${this.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_${tabName}`;
+            const dropdownId = `${filtro === 'periodo_ex' ? 'periodo' : filtro}Dropdown_${tabName}`;
+
+            crearSelectorPersonalizado(tab.data, campo, inputId, dropdownId, 'Selecciona o escribe...', () =>
+                this.filtrar(tabName)
+            );
+        });
+    }
+
+    // Configurar botón limpiar para una pestaña
+    configurarBotonLimpiar(tabName) {
+        const btnId = `limpiarFiltrosBtn_${tabName}`;
+        const btn = document.getElementById(btnId);
+
+        if (btn) {
+            btn.addEventListener('click', () => this.limpiarFiltros(tabName));
+        }
+    }
+
+    // Inicializar una pestaña
+    inicializarTab(tabName, data, campos) {
+        const tab = this.tabs[tabName];
+        tab.data = data;
+        tab.campos = campos;
+        tab.filtered = data;
+
+        this.configurarSelectores(tabName);
+        this.renderTabla(tabName);
+        this.configurarBotonLimpiar(tabName);
+    }
+
+    // Utility function para capitalizar
+    capitalize(str) {
+        if (str === 'aprob_cabecera') return 'AprobCabecera';
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+}
+
+// Inicializar pestañas con datos usando TabManager - MEJORADA
+function inicializarPestanas() {
+    console.log('🔧 Inicializando pestañas...');
+    
+    const grillasPorProceso = document.getElementById('grillasPorProceso');
+    if (!grillasPorProceso) {
+        console.error('❌ No se encontró grillasPorProceso');
+        return;
+    }
+    
+    console.log('📋 Contenido actual de grillasPorProceso:', grillasPorProceso.innerHTML.trim());
+    
+    // Si grillasPorProceso está vacío o solo tiene comentario, crear contenido
+    const contenidoActual = grillasPorProceso.innerHTML.trim();
+    if (contenidoActual === '<!-- Contenido de tabs se carga dinámicamente -->' || 
+        contenidoActual === '' || 
+        !document.getElementById('tablaAprobCabecera')) {
+        
+        console.log('🏗️ Creando contenido de pestañas dinámicamente...');
+        crearContenidoPestanas();
+        
+        // Esperar un momento para que el DOM se actualice y luego inicializar
+        setTimeout(() => {
+            inicializarTablasConTabManager();
+        }, 200);
+        return;
+    }
+    
+    // Si las tablas ya existen, proceder con inicialización normal
+    console.log('✅ Las tablas ya existen, procediendo con inicialización...');
+    inicializarTablasConTabManager();
+}
+
+// Crear contenido de pestañas dinámicamente - MEJORADA
+function crearContenidoPestanas() {
+    console.log('🏗️ Creando contenido dinámico de pestañas...');
+    
+    const grillasPorProceso = document.getElementById('grillasPorProceso');
+    if (!grillasPorProceso) {
+        console.error('❌ No se encontró grillasPorProceso para crear contenido');
+        return;
+    }
+    
+    const contenido = `
+        <div id="aprob-cabecera" class="tab-content active">
+            <div class="filters">
+                <label>Concepto:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroConcepto_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="conceptoDropdown_aprob_cabecera"></div>
+                    </div>
+                </label>
+                <label>Período:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroPeriodo_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="periodoDropdown_aprob_cabecera"></div>
+                    </div>
+                </label>
+                <label>Prestador:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroPrestador_aprob_cabecera" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="prestadorDropdown_aprob_cabecera"></div>
+                    </div>
+                </label>
+                <button id="limpiarFiltrosBtn_aprob_cabecera">Limpiar</button>
+            </div>
+            <table id="tablaAprobCabecera" class="styled-table"></table>
+            <div id="paginadorAprobCabecera"></div>
+        </div>
+        
+        <div id="cabecera" class="tab-content">
+            <div class="filters">
+                <label>Concepto:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroConcepto_cabecera" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="conceptoDropdown_cabecera"></div>
+                    </div>
+                </label>
+                <label>Período:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroPeriodo_cabecera" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="periodoDropdown_cabecera"></div>
+                    </div>
+                </label>
+                <label>Prestador:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroPrestador_cabecera" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="prestadorDropdown_cabecera"></div>
+                    </div>
+                </label>
+                <label>Módulo:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroModulo_cabecera" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="moduloDropdown_cabecera"></div>
+                    </div>
+                </label>
+                <button id="limpiarFiltrosBtn_cabecera">Limpiar</button>
+            </div>
+            <table id="tablaCabecera" class="styled-table"></table>
+            <div id="paginadorCabecera"></div>
+        </div>
+        
+        <div id="detalle" class="tab-content">
+            <div class="filters">
+                <label>Concepto:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroConcepto_detalle" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="conceptoDropdown_detalle"></div>
+                    </div>
+                </label>
+                <label>Período:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroPeriodo_detalle" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="periodoDropdown_detalle"></div>
+                    </div>
+                </label>
+                <label>Prestador:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroPrestador_detalle" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="prestadorDropdown_detalle"></div>
+                    </div>
+                </label>
+                <label>Módulo:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroModulo_detalle" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="moduloDropdown_detalle"></div>
+                    </div>
+                </label>
+                <button id="limpiarFiltrosBtn_detalle">Limpiar</button>
+            </div>
+            <table id="tablaDetalle" class="styled-table"></table>
+            <div id="paginadorDetalle"></div>
+        </div>
+        
+        <div id="practicas" class="tab-content">
+            <div class="filters">
+                <label>Concepto:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroConcepto_practicas" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="conceptoDropdown_practicas"></div>
+                    </div>
+                </label>
+                <label>Período:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroPeriodo_practicas" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="periodoDropdown_practicas"></div>
+                    </div>
+                </label>
+                <label>Prestador:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroPrestador_practicas" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="prestadorDropdown_practicas"></div>
+                    </div>
+                </label>
+                <label>Módulo:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroModulo_practicas" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="moduloDropdown_practicas"></div>
+                    </div>
+                </label>
+                <label>Práctica:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroPractica_practicas" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="practicaDropdown_practicas"></div>
+                    </div>
+                </label>
+                <label>Beneficiario:
+                    <div class="custom-select-wrapper">
+                        <input type="text" id="filtroBeneficiario_practicas" placeholder="Selecciona o escribe..." readonly />
+                        <div class="custom-select-dropdown" id="beneficiarioDropdown_practicas"></div>
+                    </div>
+                </label>
+                <button id="limpiarFiltrosBtn_practicas">Limpiar</button>
+            </div>
+            <table id="tablaPracticas" class="styled-table"></table>
+            <div id="paginadorPracticas"></div>
+        </div>
+    `;
+    
+    grillasPorProceso.innerHTML = contenido;
+    console.log('✅ Contenido de pestañas creado dinámicamente');
+    
+    // Verificar que las tablas se crearon correctamente
+    setTimeout(() => {
+        const verificaciones = [
+            'tablaAprobCabecera',
+            'tablaCabecera', 
+            'tablaDetalle',
+            'tablaPracticas'
+        ];
+        
+        verificaciones.forEach(id => {
+            const elemento = document.getElementById(id);
+            console.log(`📋 Verificando ${id}: ${elemento ? '✅ Existe' : '❌ No existe'}`);
+        });
+    }, 50);
+}
+
+// Inicializar tablas usando TabManager (SIN prácticas - lazy loading) - MEJORADA
+function inicializarTablasConTabManager() {
+    console.log('🔧 Inicializando tablas con TabManager...');
+    
+    // Verificar que TabManager está listo
+    if (!tabManager) {
+        console.error('❌ TabManager no está inicializado');
+        return;
+    }
+
+    // Verificar que las tablas existen en el DOM
+    const tablasRequeridas = ['tablaAprobCabecera', 'tablaCabecera', 'tablaDetalle'];
+    let todasExisten = true;
+    
+    tablasRequeridas.forEach(id => {
+        const tabla = document.getElementById(id);
+        if (!tabla) {
+            console.error(`❌ No se encontró la tabla: ${id}`);
+            todasExisten = false;
+        } else {
+            console.log(`✅ Tabla encontrada: ${id}`);
+        }
+    });
+    
+    if (!todasExisten) {
+        console.error('❌ No se pueden inicializar las tablas porque faltan elementos en el DOM');
+        return;
+    }
+
+    // Verificar que los datos están disponibles
+    console.log('📊 Datos disponibles:', {
+        aprobCabecera: aprobCabeceraGlobal?.length || 0,
+        cabecera: cabeceraGlobal?.length || 0,
+        detalle: detalleGlobal?.length || 0
+    });
+
+    try {
+        // Inicializar pestañas usando el TabManager (SIN prácticas - lazy loading)
+        tabManager.inicializarTab('aprob_cabecera', aprobCabeceraGlobal, configuracionCampos.aprob_cabecera);
+        console.log('✅ Pestaña aprob_cabecera inicializada');
+        
+        tabManager.inicializarTab('cabecera', cabeceraGlobal, configuracionCampos.cabecera);
+        console.log('✅ Pestaña cabecera inicializada');
+        
+        tabManager.inicializarTab('detalle', detalleGlobal, configuracionCampos.detalle);
+        console.log('✅ Pestaña detalle inicializada');
+        
+        // Prácticas se inicializa lazy
+        console.log('🔄 Prácticas se inicializarán con lazy loading');
+
+        console.log('✅ Pestañas inicializadas correctamente con TabManager (excepto prácticas - lazy loading)');
+    } catch (error) {
+        console.error('❌ Error inicializando tablas con TabManager:', error);
+    }
+}
+
+// ===== FUNCIONES DE NAVEGACIÓN DE PESTAÑAS =====
+
+// Función para mostrar/ocultar pestañas - MEJORADA CON NAVEGACIÓN
+function mostrarPestaña(tabId) {
+    // Ocultar todas las pestañas
+    const todasLasPestanas = ['aprob-cabecera', 'cabecera', 'detalle', 'practicas'];
+    todasLasPestanas.forEach(id => {
+        const tab = document.getElementById(id);
+        if (tab) {
+            tab.classList.remove('active');
+            tab.style.display = 'none';
+        }
+    });
+
+    // Mostrar la pestaña seleccionada
+    const tabSeleccionada = document.getElementById(tabId);
+    if (tabSeleccionada) {
+        tabSeleccionada.classList.add('active');
+        tabSeleccionada.style.display = 'block';
+    }
+
+    // Actualizar pestañas de navegación si existen
+    const navTabs = document.querySelectorAll('.tab');
+    navTabs.forEach(navTab => {
+        navTab.classList.remove('active');
+        const onclickStr = navTab.getAttribute('onclick') || '';
+        if (onclickStr.includes(`'${tabId}'`) || onclickStr.includes(`"${tabId}"`)) {
+            navTab.classList.add('active');
+        }
+    });
+
+    console.log(`📋 Mostrando pestaña: ${tabId}`);
+}
+
+// Función showTab para compatibilidad con HTML (REQUERIDA POR EL HTML)
+function showTab(tabId) {
+    console.log('🔄 showTab llamada con:', tabId);
+    
+    // Si es prácticas y no están cargadas, usar lazy loading
+    if (tabId === 'practicas' && !ESTADO_PRACTICAS.cargadas) {
+        ejecutarCargaPracticasLazy();
+        return;
+    }
+    
+    // Para otras pestañas, mostrar directamente
+    mostrarPestaña(tabId);
+}
+
+// Exponer función showTab globalmente para uso en HTML
+window.showTab = showTab;
+
+// ===== INICIALIZACIÓN DE NAVEGACIÓN DE PESTAÑAS =====
+
+// Función para configurar navegación de pestañas - NUEVA FUNCIÓN FALTANTE
+function configurarNavegacionPestanas() {
+    console.log('🔧 Configurando navegación de pestañas...');
+    
+    // Buscar todos los elementos de navegación de pestañas
+    const navTabs = document.querySelectorAll('.nav-tab, [data-tab], [onclick*="showTab"], .tab');
+    
+    navTabs.forEach(navTab => {
+        // Obtener el ID de la pestaña
+        let tabId = navTab.dataset.tab || navTab.getAttribute('data-target');
+        
+        // Si no tiene data-tab, intentar extraer del onclick
+        if (!tabId && navTab.getAttribute('onclick')) {
+            const onclickStr = navTab.getAttribute('onclick');
+            const match = onclickStr.match(/showTab\(['"]([^'"]+)['"]\)/);
+            if (match) {
+                tabId = match[1];
+            }
+        }
+        
+        if (tabId) {
+            console.log(`🔗 Configurando navegación para pestaña: ${tabId}`);
+            
+            // No remover onclick si ya funciona, solo asegurar que showTab esté disponible
+            if (!navTab.getAttribute('onclick')) {
+                navTab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showTab(tabId);
+                });
+            }
+            
+            // Asegurar que tenga el data-tab correcto
+            navTab.dataset.tab = tabId;
+        }
+    });
+    
+    // Mostrar pestaña por defecto (aprob-cabecera) si ninguna está activa
+    setTimeout(() => {
+        const pestanaActiva = document.querySelector('.tab-content.active[style*="block"], .tab-content.active:not([style*="none"])');
+        if (!pestanaActiva) {
+            console.log('🏠 Mostrando pestaña por defecto: aprob-cabecera');
+            showTab('aprob-cabecera');
+        }
+    }, 100);
+}
+
+// ===== FUNCIONES DE NAVEGACIÓN ESPECÍFICAS =====
+// AGREGAR ESTAS FUNCIONES DESPUÉS DE configurarNavegacionPestanas() Y ANTES DE FiltroUtils
+
+// Funciones de navegación específicas - NECESARIAS PARA LOS BOTONES
+function navegarACabeceraConFiltros(item) {
+    navegarConFiltros('cabecera', item, {
+        mapeoFiltros: {
+            modulo: (() => {
+                const moduloEnCabecera = cabeceraGlobal?.find(
+                    (c) =>
+                        c.c_concepto === item.c_concepto &&
+                        c.c_periodo_ex === item.c_periodo_ex &&
+                        c.c_prestador === item.c_prestador &&
+                        (c.d_modulo_pami === item.d_modulo_pami || c.d_modulo_pami?.includes(item.d_modulo_pami))
+                );
+                return moduloEnCabecera?.c_modulo_pami_4x || '';
+            })()
+        }
+    });
+}
+
+function navegarADetalleConFiltros(item) {
+    navegarConFiltros('detalle', item);
+}
+
+function navegarAPracticasConFiltros(item) {
+    navegarConFiltros('practicas', item);
+}
+
+// Función para navegación a validaciones
+function navegarAValidaciones(codigoProceso, idPractica) {
+    const url = `validaciones.html?proceso=${codigoProceso}&practica=${idPractica}`;
+    console.log('🔄 Navegando a validaciones:', url);
+    window.location.href = url;
+}
+
+// ===== UTILIDADES PARA MANEJO DE FILTROS =====
 
 // Utilidades para manejo de filtros
 const FiltroUtils = {
-    /**
-     * Aplica filtros a una pestaña basado en un item
-     * @param {string} tabName - Nombre de la pestaña
-     * @param {Object} item - Item con datos para filtrar
-     * @param {Object} mapeoFiltros - Mapeo de filtros específicos
-     */
     aplicarFiltrosDesdeItem(tabName, item, mapeoFiltros = {}) {
         const filtrosDefault = {
             concepto: item.c_concepto,
@@ -597,7 +1150,32 @@ const FiltroUtils = {
     }
 };
 
-// Función genérica para navegación entre pestañas con filtros
+// Utilidades para botones
+const ButtonUtils = {
+    aplicarEstadoCarga(btn) {
+        const estadoOriginal = {
+            texto: btn.textContent,
+            disabled: btn.disabled,
+            backgroundColor: btn.style.backgroundColor
+        };
+        
+        btn.textContent = 'Cargando...';
+        btn.disabled = true;
+        btn.style.backgroundColor = '#6c757d';
+        
+        return estadoOriginal;
+    },
+
+    restaurarEstado(btn, estadoOriginal) {
+        btn.textContent = estadoOriginal.texto;
+        btn.disabled = estadoOriginal.disabled;
+        btn.style.backgroundColor = estadoOriginal.backgroundColor;
+    }
+};
+
+// ===== FUNCIONES DE NAVEGACIÓN CON FILTROS =====
+
+// Función genérica para navegación entre pestañas con filtros - VERSIÓN COMPLETA
 async function navegarConFiltros(tabDestino, item, configuracionEspecial = {}) {
     const btn = event.target;
     const estadoOriginal = ButtonUtils.aplicarEstadoCarga(btn);
@@ -611,20 +1189,12 @@ async function navegarConFiltros(tabDestino, item, configuracionEspecial = {}) {
                 return;
             }
 
-            // Mostrar la pestaña primero
+            // PRIMERO: Mostrar la pestaña y asegurar que el contenido existe
             mostrarPestaña('practicas');
+            await asegurarContenidoPracticas();
 
-            // Verificar que el elemento tabla exista antes de continuar
-            await new Promise((resolve) => setTimeout(resolve, 100));
-            const tablaPracticas = document.getElementById('tablaPracticas');
-            if (!tablaPracticas) {
-                console.error('❌ No se encontró el elemento tablaPracticas en el DOM');
-                ButtonUtils.restaurarEstado(btn, estadoOriginal);
-                return;
-            }
-
-            // Mostrar loader
-            mostrarLoaderEnPestaña('practicas');
+            // SEGUNDO: Mostrar loader inmediatamente
+            mostrarLoaderEnPestanaInmediato('practicas');
 
             try {
                 ESTADO_PRACTICAS.cargando = true;
@@ -637,10 +1207,22 @@ async function navegarConFiltros(tabDestino, item, configuracionEspecial = {}) {
                 practicasGlobal = practicas;
                 ESTADO_PRACTICAS.cargadas = true;
 
+                // Recrear contenido limpio y luego inicializar
+                recrearContenidoPestanaPracticas();
+                
+                // Pequeño delay para asegurar que el DOM esté actualizado
+                await new Promise(resolve => setTimeout(resolve, 50));
+                
                 // Inicializar la pestaña de prácticas
                 tabManager.inicializarTab('practicas', practicasGlobal, configuracionCampos.practicas);
 
                 console.log('✅ Prácticas cargadas exitosamente');
+                
+                // Aplicar filtros después de cargar
+                setTimeout(() => {
+                    FiltroUtils.aplicarFiltrosDesdeItem(tabDestino, item, configuracionEspecial.mapeoFiltros);
+                }, CONFIGURACION.DELAYS.FILTROS_APLICACION);
+                
             } catch (error) {
                 console.error('❌ Error cargando prácticas:', error);
                 mostrarErrorCargaEnPestaña('practicas');
@@ -648,26 +1230,31 @@ async function navegarConFiltros(tabDestino, item, configuracionEspecial = {}) {
                 return;
             } finally {
                 ESTADO_PRACTICAS.cargando = false;
-                ocultarLoaderEnPestaña('practicas');
             }
         } else if (tabDestino === 'practicas' && ESTADO_PRACTICAS.cargadas) {
-            // Si prácticas ya están cargadas, solo mostrar la pestaña
+            // Si prácticas ya están cargadas, mostrar con transición suave
             mostrarPestaña(tabDestino);
+            
+            // Aplicar filtros inmediatamente
+            setTimeout(() => {
+                FiltroUtils.aplicarFiltrosDesdeItem(tabDestino, item, configuracionEspecial.mapeoFiltros);
+            }, CONFIGURACION.DELAYS.FILTROS_APLICACION);
         } else {
             // Para otras pestañas, navegación normal
             mostrarPestaña(tabDestino);
+            
+            // Aplicar filtros después de un delay
+            setTimeout(() => {
+                FiltroUtils.aplicarFiltrosDesdeItem(tabDestino, item, configuracionEspecial.mapeoFiltros);
+
+                // Log informativo
+                const filtrosInfo = Object.entries(configuracionEspecial.mapeoFiltros || {})
+                    .map(([k, v]) => `${k}=${v}`)
+                    .join(', ');
+                console.log(`Navegando a ${tabDestino} con filtros: ${filtrosInfo}`);
+            }, CONFIGURACION.DELAYS.FILTROS_APLICACION);
         }
 
-        // Aplicar filtros después de un delay
-        setTimeout(() => {
-            FiltroUtils.aplicarFiltrosDesdeItem(tabDestino, item, configuracionEspecial.mapeoFiltros);
-
-            // Log informativo
-            const filtrosInfo = Object.entries(configuracionEspecial.mapeoFiltros || {})
-                .map(([k, v]) => `${k}=${v}`)
-                .join(', ');
-            console.log(`Navegando a ${tabDestino} con filtros: ${filtrosInfo}`);
-        }, CONFIGURACION.DELAYS.FILTROS_APLICACION);
     } catch (error) {
         console.error(`Error navegando a ${tabDestino}:`, error);
         ButtonUtils.restaurarEstado(btn, estadoOriginal);
@@ -679,162 +1266,212 @@ async function navegarConFiltros(tabDestino, item, configuracionEspecial = {}) {
     }
 }
 
-// Función para navegar a la pestaña Cabecera con filtros aplicados
-function navegarACabeceraConFiltros(item) {
-    navegarConFiltros('cabecera', item, {
-        mapeoFiltros: {
-            // Lógica específica para cabecera
-            modulo: (() => {
-                const moduloEnCabecera = cabeceraGlobal?.find(
-                    (c) =>
-                        c.c_concepto === item.c_concepto &&
-                        c.c_periodo_ex === item.c_periodo_ex &&
-                        c.c_prestador === item.c_prestador &&
-                        (c.d_modulo_pami === item.d_modulo_pami || c.d_modulo_pami?.includes(item.d_modulo_pami))
-                );
-                return moduloEnCabecera?.c_modulo_pami_4x || '';
-            })()
+// ===== FUNCIONES PARA LAZY LOADING DE PRÁCTICAS =====
+
+// NUEVA FUNCIÓN: Asegurar que el contenido de prácticas existe
+async function asegurarContenidoPracticas() {
+    console.log('🔧 Asegurando que el contenido de prácticas existe...');
+    
+    let pestanaPracticas = document.getElementById('practicas');
+    
+    // Si la pestaña no existe, crearla
+    if (!pestanaPracticas) {
+        console.log('📝 Creando pestaña de prácticas...');
+        
+        const grillasPorProceso = document.getElementById('grillasPorProceso');
+        if (!grillasPorProceso) {
+            console.error('❌ No se encontró grillasPorProceso');
+            return;
         }
-    });
-}
-
-// Función para navegar a la pestaña Detalle con filtros aplicados
-function navegarADetalleConFiltros(item) {
-    navegarConFiltros('detalle', item);
-}
-
-// Función para navegar a la pestaña Prácticas con filtros aplicados
-function navegarAPracticasConFiltros(item) {
-    navegarConFiltros('practicas', item);
-}
-
-// Navega a la página de validaciones con los parámetros correctos
-function navegarAValidaciones(codigo, c_id_practica) {
-    // Guardar el estado actual de la página de prácticas
-    const estadoPracticas = {
-        scrollY: window.scrollY,
-        filtros: {},
-        paginaActual: tabManager?.tabs?.practicas?.currentPage || 1,
-        tamañoPagina: tabManager?.tabs?.practicas?.pageSize || 10
-    };
-
-    // Guardar filtros aplicados
-    if (tabManager?.tabs?.practicas?.filtros) {
-        tabManager.tabs.practicas.filtros.forEach((filtro) => {
-            const inputId = `filtro${tabManager.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_practicas`;
-            const input = document.getElementById(inputId);
-            if (input) {
-                estadoPracticas.filtros[filtro] = input?.getValue ? input.getValue() : input?.value || '';
-            }
-        });
+        
+        // Verificar si necesitamos crear todo el contenido
+        const contenidoActual = grillasPorProceso.innerHTML.trim();
+        if (contenidoActual === '<!-- Contenido de tabs se carga dinámicamente -->' || 
+            contenidoActual === '') {
+            console.log('🏗️ Creando todo el contenido de pestañas...');
+            crearContenidoPestanas();
+        } else {
+            // Solo crear la pestaña de prácticas
+            console.log('🏗️ Creando solo la pestaña de prácticas...');
+            crearSoloPestanaPracticas();
+        }
+        
+        // Esperar a que se cree
+        await new Promise(resolve => setTimeout(resolve, 100));
+        pestanaPracticas = document.getElementById('practicas');
     }
-
-    // Guardar en sessionStorage para persistir entre páginas
-    sessionStorage.setItem(CONFIGURACION.STORAGE_KEYS.ESTADO_PRACTICAS, JSON.stringify(estadoPracticas));
-    console.log('Estado guardado antes de navegar a validaciones:', estadoPracticas);
-
-    // Navegar a validaciones
-    UrlUtils.navegarAValidaciones(codigo, c_id_practica);
+    
+    // Verificar que la tabla existe dentro de la pestaña
+    const tablaPracticas = document.getElementById('tablaPracticas');
+    if (!tablaPracticas) {
+        console.log('📝 Creando contenido interno de la pestaña prácticas...');
+        recrearContenidoPestanaPracticas();
+        await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    
+    console.log('✅ Contenido de prácticas asegurado');
 }
 
-// Extrae el código de proceso de la URL
-export function getParametroProceso() {
-    return UrlUtils.getParametroProceso();
+// NUEVA FUNCIÓN: Crear solo la pestaña de prácticas
+function crearSoloPestanaPracticas() {
+    const grillasPorProceso = document.getElementById('grillasPorProceso');
+    if (!grillasPorProceso) return;
+    
+    // Verificar si ya existe
+    if (document.getElementById('practicas')) return;
+    
+    const pestanaPracticas = document.createElement('div');
+    pestanaPracticas.id = 'practicas';
+    pestanaPracticas.className = 'tab-content';
+    
+    pestanaPracticas.innerHTML = `
+        <div class="filters">
+            <label>Concepto:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroConcepto_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="conceptoDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Período:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroPeriodo_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="periodoDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Prestador:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroPrestador_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="prestadorDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Módulo:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroModulo_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="moduloDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Práctica:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroPractica_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="practicaDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Beneficiario:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroBeneficiario_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="beneficiarioDropdown_practicas"></div>
+                </div>
+            </label>
+            <button id="limpiarFiltrosBtn_practicas">Limpiar</button>
+        </div>
+        <table id="tablaPracticas" class="styled-table"></table>
+        <div id="paginadorPracticas"></div>
+    `;
+    
+    grillasPorProceso.appendChild(pestanaPracticas);
 }
 
-// Función para construir URL de vuelta a procesos con filtros
-function construirUrlVueltaProcesos() {
-    return UrlUtils.construirUrlVueltaProcesos();
-}
-
-window.showTab = (tabId) => {
-    // Si es la pestaña de prácticas y no están cargadas, manejar lazy loading
-    if (tabId === 'practicas' && !ESTADO_PRACTICAS.cargadas && !ESTADO_PRACTICAS.cargando) {
-        ejecutarCargaPracticasLazy();
+// Función mejorada para recrear contenido de pestaña prácticas
+function recrearContenidoPestanaPracticas() {
+    console.log('🔧 Recreando contenido de pestaña prácticas...');
+    
+    let pestanaPracticas = document.getElementById('practicas');
+    if (!pestanaPracticas) {
+        console.warn('⚠️ No se encontró la pestaña prácticas, creándola...');
+        crearSoloPestanaPracticas();
+        pestanaPracticas = document.getElementById('practicas');
+    }
+    
+    if (!pestanaPracticas) {
+        console.error('❌ No se pudo crear la pestaña prácticas');
         return;
     }
-
-    // Comportamiento normal para otras pestañas o si prácticas ya están cargadas
-    mostrarPestaña(tabId);
-};
-
-// Función separada para mostrar la pestaña (comportamiento original)
-function mostrarPestaña(tabId) {
-    // Remover clase active de todos los contenidos de pestañas
-    document.querySelectorAll('.tab-content').forEach((t) => t.classList.remove('active'));
-
-    // Remover clase active de todas las pestañas
-    document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
-
-    // Activar el contenido de la pestaña correspondiente
-    const tabContent = document.getElementById(tabId);
-    if (tabContent) {
-        tabContent.classList.add('active');
-    }
-
-    // Activar la pestaña correspondiente usando un selector más específico
-    // Buscar exactamente la coincidencia entre comillas simples
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach((tab) => {
-        const onclickContent = tab.getAttribute('onclick');
-        if (onclickContent) {
-            // Buscar exactamente showTab('tabId') - coincidencia exacta
-            const match = onclickContent.match(/showTab\('([^']+)'\)/);
-            if (match && match[1] === tabId) {
-                tab.classList.add('active');
-            }
-        }
-    });
+    
+    pestanaPracticas.innerHTML = `
+        <div class="filters">
+            <label>Concepto:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroConcepto_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="conceptoDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Período:            <input type="text" id="filtroPeriodo_practicas" placeholder="Selecciona o escribe..." readonly />
+             <div class="custom-select-wrapper">
+                    <div class="custom-select-dropdown" id="periodoDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Prestador:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroPrestador_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="prestadorDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Módulo:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroModulo_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="moduloDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Práctica:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroPractica_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="practicaDropdown_practicas"></div>
+                </div>
+            </label>
+            <label>Beneficiario:
+                <div class="custom-select-wrapper">
+                    <input type="text" id="filtroBeneficiario_practicas" placeholder="Selecciona o escribe..." readonly />
+                    <div class="custom-select-dropdown" id="beneficiarioDropdown_practicas"></div>
+                </div>
+            </label>
+            <button id="limpiarFiltrosBtn_practicas">Limpiar</button>
+        </div>
+        <table id="tablaPracticas" class="styled-table"></table>
+        <div id="paginadorPracticas"></div>
+    `;
+    
+    console.log('✅ Contenido de pestaña prácticas recreado');
 }
 
-// Función principal para manejar la carga lazy de prácticas (para llamadas directas como showTab)
+// Función principal para manejar la carga lazy de prácticas
 async function ejecutarCargaPracticasLazy() {
-    // Si ya están cargadas, solo mostrar la pestaña
     if (ESTADO_PRACTICAS.cargadas) {
         mostrarPestaña('practicas');
         return;
     }
 
-    // Si ya se está cargando, esperar
     if (ESTADO_PRACTICAS.cargando) {
         return;
     }
 
-    // Verificar si el usuario quiere cargar las prácticas
     const debeCargar = await confirmarCargaPracticasLazy();
     if (!debeCargar) {
         return;
     }
 
-    // Mostrar la pestaña primero y esperar un momento para que el DOM se actualice
+    // MOSTRAR PESTAÑA Y ASEGURAR CONTENIDO
     mostrarPestaña('practicas');
-
-    // Pequeño delay para asegurar que el elemento esté disponible en el DOM
-    await new Promise((resolve) => setTimeout(resolve, 100));
-
-    // Verificar que el elemento tabla exista antes de continuar
-    const tablaPracticas = document.getElementById('tablaPracticas');
-    if (!tablaPracticas) {
-        console.error('❌ No se encontró el elemento tablaPracticas en el DOM');
-        mostrarErrorCargaEnPestaña('practicas');
-        return;
-    }
-
-    // Mostrar loader en la pestaña de prácticas
-    mostrarLoaderEnPestaña('practicas');
+    await asegurarContenidoPracticas();
+    
+    // MOSTRAR LOADER
+    mostrarLoaderEnPestanaInmediato('practicas');
 
     try {
         ESTADO_PRACTICAS.cargando = true;
 
-        // Cargar las prácticas
         console.log('🔄 Iniciando carga lazy de prácticas...');
         const practicas = await cargarPracticas(ESTADO_PRACTICAS.codigoProceso);
 
-        // Guardar datos y marcar como cargadas
         practicasGlobal = practicas;
         ESTADO_PRACTICAS.cargadas = true;
 
-        // Inicializar la pestaña de prácticas
+        // Recrear contenido de la pestaña
+        recrearContenidoPestanaPracticas();
+        
+        // Pequeño delay para asegurar DOM
+        await new Promise(resolve => setTimeout(resolve, 50));
+        
+        // Inicializar tabla
         tabManager.inicializarTab('practicas', practicasGlobal, configuracionCampos.practicas);
 
         console.log('✅ Prácticas cargadas exitosamente');
@@ -843,13 +1480,11 @@ async function ejecutarCargaPracticasLazy() {
         mostrarErrorCargaEnPestaña('practicas');
     } finally {
         ESTADO_PRACTICAS.cargando = false;
-        ocultarLoaderEnPestaña('practicas');
     }
 }
 
-// Función para confirmar si el usuario quiere cargar las prácticas
+// Función para confirmar carga de prácticas con popup
 async function confirmarCargaPracticasLazy() {
-    // Verificar si el usuario ya seleccionó "Recordar selección"
     const recordarSeleccion = localStorage.getItem(CONFIGURACION.STORAGE_KEYS.RECORDAR_CARGA);
     if (recordarSeleccion === 'true') {
         return true;
@@ -859,36 +1494,58 @@ async function confirmarCargaPracticasLazy() {
     }
 
     return new Promise((resolve) => {
-        const popup = crearPopupConfirmacion();
-        document.body.appendChild(popup.overlay);
-
-        // Manejar eventos
-        const cerrarPopup = (resultado) => {
-            // Guardar preferencia si está marcado "Recordar"
-            if (popup.checkboxRecordar.checked) {
-                localStorage.setItem(CONFIGURACION.STORAGE_KEYS.RECORDAR_CARGA, resultado.toString());
+        try {
+            const popupElements = crearPopupConfirmacion();
+            
+            if (!popupElements) {
+                console.error('❌ Error creando popup, usando valor por defecto');
+                resolve(false);
+                return;
             }
 
-            document.body.removeChild(popup.overlay);
-            resolve(resultado);
-        };
+            const { overlay, btnAceptar, btnCancelar, checkboxRecordar } = popupElements;
+            
+            document.body.appendChild(overlay);
 
-        popup.btnAceptar.addEventListener('click', () => cerrarPopup(true));
-        popup.btnCancelar.addEventListener('click', () => cerrarPopup(false));
+            const cerrarPopup = (resultado) => {
+                try {
+                    if (checkboxRecordar.checked) {
+                        localStorage.setItem(CONFIGURACION.STORAGE_KEYS.RECORDAR_CARGA, resultado.toString());
+                    }
 
-        // Cerrar con ESC
-        popup.overlay.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                cerrarPopup(false);
-            }
-        });
+                    if (document.body.contains(overlay)) {
+                        document.body.removeChild(overlay);
+                    }
+                    resolve(resultado);
+                } catch (error) {
+                    console.error('❌ Error cerrando popup:', error);
+                    resolve(false);
+                }
+            };
 
-        // Focus en el botón aceptar
-        popup.btnAceptar.focus();
+            btnAceptar.addEventListener('click', () => cerrarPopup(true));
+            btnCancelar.addEventListener('click', () => cerrarPopup(false));
+
+            const handleKeydown = (e) => {
+                if (e.key === 'Escape') {
+                    document.removeEventListener('keydown', handleKeydown);
+                    cerrarPopup(false);
+                }
+            };
+            document.addEventListener('keydown', handleKeydown);
+
+            setTimeout(() => {
+                btnAceptar.focus();
+            }, 100);
+
+        } catch (error) {
+            console.error('❌ Error en confirmarCargaPracticasLazy:', error);
+            resolve(false);
+        }
     });
 }
 
-// Función para crear el popup de confirmación
+// Función para crear popup de confirmación
 function crearPopupConfirmacion() {
     const overlay = document.createElement('div');
     overlay.className = 'popup-overlay';
@@ -941,40 +1598,87 @@ function crearPopupConfirmacion() {
 
     overlay.appendChild(popup);
 
+    const btnAceptar = popup.querySelector('#btnAceptar');
+    const btnCancelar = popup.querySelector('#btnCancelar');
+    const checkboxRecordar = popup.querySelector('#recordarSeleccion');
+
+    if (!btnAceptar || !btnCancelar || !checkboxRecordar) {
+        console.error('❌ Error: No se pudieron crear los elementos del popup');
+        return null;
+    }
+
+    btnCancelar.addEventListener('mouseenter', () => {
+        btnCancelar.style.backgroundColor = '#5a6268';
+    });
+    btnCancelar.addEventListener('mouseleave', () => {
+        btnCancelar.style.backgroundColor = '#6c757d';
+    });
+
+    btnAceptar.addEventListener('mouseenter', () => {
+        btnAceptar.style.backgroundColor = '#0056b3';
+    });
+    btnAceptar.addEventListener('mouseleave', () => {
+        btnAceptar.style.backgroundColor = '#007bff';
+    });
+
     return {
         overlay,
-        btnAceptar: popup.querySelector('#btnAceptar'),
-        btnCancelar: popup.querySelector('#btnCancelar'),
-        checkboxRecordar: popup.querySelector('#recordarSeleccion')
+        btnAceptar,
+        btnCancelar,
+        checkboxRecordar
     };
 }
 
-// Función genérica para mostrar loader en una pestaña
-function mostrarLoaderEnPestaña(tabId) {
+// Función mejorada para mostrar loader inmediatamente en una pestaña - CENTRADO CORREGIDO
+function mostrarLoaderEnPestanaInmediato(tabId) {
     const tab = document.getElementById(tabId);
     if (!tab) return;
+
+    tab.innerHTML = '';
 
     const loader = document.createElement('div');
     loader.id = `loader-${tabId}`;
     loader.style.cssText = `
-        position: absolute;
-        top: 0;
-        left: 0;
+        position: relative;
         width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.9);
+        height: 400px;
+        background: rgba(255, 255, 255, 0.95);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         z-index: ${CONFIGURACION.Z_INDEX.LOADER};
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     `;
 
     loader.innerHTML = `
-        <div style="text-align: center;">
-            <div style="border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
-            <h3 style="color: #007bff; margin: 0;">Cargando ${tabId.charAt(0).toUpperCase() + tabId.slice(1)}...</h3>
-            <p style="color: #6c757d; margin: 0.5rem 0 0 0;">Por favor espere, esto puede tardar unos momentos</p>
+        <div style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+            <div style="
+                border: 4px solid #f3f3f3; 
+                border-top: 4px solid #6f42c1; 
+                border-radius: 50%; 
+                width: 60px; 
+                height: 60px; 
+                animation: spin 1s linear infinite; 
+                margin: 0 auto 1.5rem auto;
+                display: block;
+            "></div>
+            <h3 style="
+                color: #6f42c1; 
+                margin: 0; 
+                font-size: 1.2rem; 
+                text-align: center;
+                margin-bottom: 0.5rem;
+            ">Cargando Prácticas...</h3>
+            <p style="
+                color: #6c757d; 
+                margin: 0; 
+                font-size: 0.9rem;
+                text-align: center;
+            ">
+                Aplicando filtros y cargando datos específicos
+            </p>
         </div>
         <style>
             @keyframes spin {
@@ -984,401 +1688,45 @@ function mostrarLoaderEnPestaña(tabId) {
         </style>
     `;
 
-    tab.style.position = 'relative';
     tab.appendChild(loader);
 }
 
-// Función genérica para ocultar loader de una pestaña
-function ocultarLoaderEnPestaña(tabId) {
-    const loader = document.getElementById(`loader-${tabId}`);
-    if (loader) {
-        loader.remove();
-    }
-}
+// Función de debug para verificar funciones de navegación
+window.debugNavegacion = function() {
+    console.log('🔍 Verificando funciones de navegación...');
+    console.log('navegarACabeceraConFiltros:', typeof navegarACabeceraConFiltros);
+    console.log('navegarADetalleConFiltros:', typeof navegarADetalleConFiltros);
+    console.log('navegarAPracticasConFiltros:', typeof navegarAPracticasConFiltros);
+    console.log('navegarConFiltros:', typeof navegarConFiltros);
+    console.log('navegarAValidaciones:', typeof navegarAValidaciones);
+    console.log('mostrarPestaña:', typeof mostrarPestaña);
+    console.log('showTab:', typeof showTab);
+    console.log('configurarNavegacionPestanas:', typeof configurarNavegacionPestanas);
+};
 
-// Función genérica para mostrar error de carga en una pestaña
-function mostrarErrorCargaEnPestaña(tabId) {
-    const tab = document.getElementById(tabId);
-    if (!tab) return;
+// Función de debug para verificar pestañas
+window.debugPestanas = function() {
+    console.log('🔍 === DEBUG PESTAÑAS ===');
+    console.log('grillasPorProceso:', document.getElementById('grillasPorProceso'));
+    console.log('tablaAprobCabecera:', document.getElementById('tablaAprobCabecera'));
+    console.log('tablaCabecera:', document.getElementById('tablaCabecera'));
+    console.log('tablaDetalle:', document.getElementById('tablaDetalle'));
+    console.log('tablaPracticas:', document.getElementById('tablaPracticas'));
+    console.log('TabManager:', tabManager);
+    console.log('Datos globales:', {
+        aprobCabecera: aprobCabeceraGlobal?.length,
+        cabecera: cabeceraGlobal?.length,
+        detalle: detalleGlobal?.length,
+        practicas: practicasGlobal?.length
+    });
+    console.log('=========================');
+};
 
-    const errorDiv = document.createElement('div');
-    errorDiv.style.cssText = `
-        text-align: center;
-        padding: 2rem;
-        color: #dc3545;
-    `;
-
-    errorDiv.innerHTML = `
-        <h3>❌ Error al cargar ${tabId}</h3>
-        <p>No se pudieron cargar los datos. Por favor, intente nuevamente.</p>
-        <button onclick="location.reload()" style="padding: 0.5rem 1rem; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
-            Recargar página
-        </button>
-    `;
-
-    tab.innerHTML = '';
-    tab.appendChild(errorDiv);
-}
-
-// Función utilitaria para limpiar la preferencia de carga de prácticas (para desarrollo/testing)
+// Utilidad para desarrollo
 window.limpiarPreferenciaCargaPracticas = function () {
     localStorage.removeItem(CONFIGURACION.STORAGE_KEYS.RECORDAR_CARGA);
     console.log('✅ Preferencia de carga de prácticas eliminada. La próxima vez aparecerá el popup de confirmación.');
 };
 
-// Verificar si hay un hash en la URL al cargar la página para activar una pestaña específica
-document.addEventListener('DOMContentLoaded', () => {
-    const hash = window.location.hash;
-    const urlParams = new URLSearchParams(window.location.search);
-
-    if (hash && hash.startsWith('#')) {
-        const tabId = hash.substring(1);
-        // Esperar un poco para que las pestañas se inicialicen
-        setTimeout(async () => {
-            if (document.getElementById(tabId)) {
-                // Si es la pestaña de prácticas, manejar lazy loading
-                if (tabId === 'practicas') {
-                    // Usar showTab que ahora maneja lazy loading
-                    window.showTab(tabId);
-
-                    // Si venimos de validaciones y tenemos el parámetro restore, restaurar estado
-                    if (urlParams.get('restore') === 'true') {
-                        console.log('Detectado parámetro restore=true para la pestaña prácticas');
-                        // Esperar a que se carguen las prácticas antes de restaurar
-                        const esperarCarga = setInterval(() => {
-                            if (ESTADO_PRACTICAS.cargadas) {
-                                clearInterval(esperarCarga);
-                                setTimeout(() => {
-                                    restaurarEstadoPracticas();
-                                }, CONFIGURACION.DELAYS.RESTAURACION_ESTADO);
-                            }
-                        }, 100);
-                    }
-                } else {
-                    // Para otras pestañas, comportamiento normal
-                    window.showTab(tabId);
-                }
-            }
-        }, CONFIGURACION.DELAYS.INICIALIZACION_PESTAÑAS);
-    }
-});
-
-// Función para restaurar el estado de la pestaña prácticas
-function restaurarEstadoPracticas() {
-    try {
-        const estadoSession = sessionStorage.getItem(CONFIGURACION.STORAGE_KEYS.ESTADO_PRACTICAS);
-        if (!estadoSession) {
-            console.log('No hay estado guardado para restaurar');
-            return;
-        }
-
-        const estado = JSON.parse(estadoSession);
-        console.log('Restaurando estado:', estado);
-
-        // Función para intentar restaurar con reintentos
-        const intentarRestaurar = (intentos = 0) => {
-            const maxIntentos = 10;
-
-            // Verificar que tabManager esté listo
-            if (!tabManager?.tabs?.practicas || intentos >= maxIntentos) {
-                if (intentos >= maxIntentos) {
-                    console.warn('Se agotaron los intentos para restaurar el estado');
-                }
-                sessionStorage.removeItem(CONFIGURACION.STORAGE_KEYS.ESTADO_PRACTICAS);
-                return;
-            }
-
-            // Restaurar filtros y estado
-            RestauracionUtils.aplicarFiltrosGuardados(estado);
-            RestauracionUtils.aplicarPaginacionGuardada(estado);
-            RestauracionUtils.ejecutarFiltradoYRestaurarScroll(estado);
-
-            // Limpiar estado después de usar
-            sessionStorage.removeItem(CONFIGURACION.STORAGE_KEYS.ESTADO_PRACTICAS);
-            console.log('Estado de prácticas restaurado exitosamente');
-
-            // Limpiar URL después de la restauración
-            RestauracionUtils.limpiarUrlRestore();
-        };
-
-        // Intentar restaurar
-        if (tabManager?.tabs?.practicas) {
-            intentarRestaurar();
-        } else {
-            // Reintentar cada 200ms hasta que tabManager esté listo
-            const intervalo = setInterval(() => {
-                if (tabManager?.tabs?.practicas) {
-                    clearInterval(intervalo);
-                    intentarRestaurar();
-                }
-            }, 200);
-
-            // Limpiar el intervalo después de 5 segundos máximo
-            setTimeout(() => clearInterval(intervalo), 5000);
-        }
-    } catch (error) {
-        console.error('Error restaurando estado de prácticas:', error);
-        sessionStorage.removeItem(CONFIGURACION.STORAGE_KEYS.ESTADO_PRACTICAS);
-    }
-}
-
-// Utilidades para restauración de estado
-const RestauracionUtils = {
-    aplicarFiltrosGuardados(estado) {
-        if (!estado.filtros || !tabManager.tabs.practicas.filtros) return;
-
-        let filtrosAplicados = 0;
-        tabManager.tabs.practicas.filtros.forEach((filtro) => {
-            const inputId = `filtro${tabManager.capitalize(filtro === 'periodo_ex' ? 'Periodo' : filtro)}_practicas`;
-            const input = document.getElementById(inputId);
-            const valorFiltro = estado.filtros[filtro];
-
-            if (input && valorFiltro) {
-                if (input.setValue) {
-                    input.setValue(valorFiltro);
-                    filtrosAplicados++;
-                } else if (input.value !== undefined) {
-                    input.value = valorFiltro;
-                    filtrosAplicados++;
-                }
-            }
-        });
-
-        console.log(`Filtros aplicados: ${filtrosAplicados}`);
-    },
-
-    aplicarPaginacionGuardada(estado) {
-        if (estado.paginaActual) {
-            tabManager.tabs.practicas.currentPage = estado.paginaActual;
-        }
-        if (estado.tamañoPagina) {
-            tabManager.tabs.practicas.pageSize = estado.tamañoPagina;
-
-            // Actualizar el selector de tamaño de página si existe
-            const pageSizeSelect = document.getElementById('pageSizePracticas');
-            if (pageSizeSelect) {
-                pageSizeSelect.value = estado.tamañoPagina;
-            }
-        }
-    },
-
-    ejecutarFiltradoYRestaurarScroll(estado) {
-        setTimeout(() => {
-            if (tabManager?.filtrar) {
-                // Guardar temporalmente la página actual antes de filtrar
-                const paginaGuardada = estado.paginaActual;
-
-                // Aplicar filtros (esto resetea currentPage a 1)
-                tabManager.filtrar('practicas');
-
-                // Restaurar la página después del filtrado
-                if (paginaGuardada) {
-                    tabManager.tabs.practicas.currentPage = paginaGuardada;
-                    tabManager.renderTabla('practicas');
-                }
-
-                console.log(`Filtros aplicados y tabla re-renderizada en página: ${paginaGuardada || 1}`);
-
-                // Restaurar posición del scroll
-                setTimeout(() => {
-                    if (estado.scrollY) {
-                        window.scrollTo({
-                            top: estado.scrollY,
-                            behavior: 'smooth'
-                        });
-                        console.log(`Scroll restaurado a posición: ${estado.scrollY}`);
-                    }
-                }, CONFIGURACION.DELAYS.RESTAURACION_ESTADO);
-            }
-        }, 300);
-    },
-
-    limpiarUrlRestore() {
-        setTimeout(() => {
-            const url = new URL(window.location);
-            url.searchParams.delete('restore');
-            window.history.replaceState({}, '', url.toString());
-            console.log('URL limpiada después de la restauración');
-        }, 1000);
-    }
-};
-
-// Inicializar botones de vuelta a procesos cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-    // Configurar botón de volver a procesos (escritorio)
-    const btnVolver = document.getElementById('btnVolverProcesos');
-    if (btnVolver) {
-        btnVolver.addEventListener('click', () => {
-            window.location.href = construirUrlVueltaProcesos();
-        });
-    }
-
-    // Configurar botón de volver a procesos (móvil)
-    const btnVolverMobile = document.getElementById('btnVolverProcesosMobile');
-    if (btnVolverMobile) {
-        btnVolverMobile.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = construirUrlVueltaProcesos();
-        });
-    }
-});
-
-function calcularDuracion(inicio, fin) {
-    if (!inicio || !fin) return '';
-
-    try {
-        // Usar la función parsearFecha de formatters.js que maneja múltiples formatos
-        const inicioDate = parsearFecha(inicio);
-        const finDate = parsearFecha(fin);
-
-        if (!inicioDate || !finDate || isNaN(inicioDate.getTime()) || isNaN(finDate.getTime())) {
-            return '';
-        }
-
-        const diffMs = finDate - inicioDate;
-        const diffMin = diffMs / 60000;
-
-        if (diffMin < 60) {
-            return `${Math.round(diffMin)} minutos`;
-        } else {
-            const horas = Math.floor(diffMin / 60);
-            const minutos = Math.round(diffMin % 60);
-            const minutosFormateados = minutos.toString().padStart(2, '0');
-            return `${horas}:${minutosFormateados} horas`;
-        }
-    } catch (error) {
-        console.error('Error calculando duración:', error);
-        return '';
-    }
-}
-
-/**
- * Muestra un mensaje elegante cuando no se encuentra un proceso
- * @param {number} codigoProceso - Código del proceso no encontrado
- */
-function mostrarMensajeProcesoNoEncontrado(codigoProceso) {
-    // Ocultar el contenido principal
-    const mainContent = document.querySelector('.content');
-    if (mainContent) {
-        mainContent.innerHTML = `
-            <div style="display: flex; justify-content: center; align-items: center; min-height: 60vh; padding: 2rem;">
-                <div style="
-                    background: linear-gradient(135deg, #e3f0ff 0%, #f7fafc 100%);
-                    border: 1px solid #d0e2ff;
-                    border-radius: 18px;
-                    padding: 3rem 2rem;
-                    text-align: center;
-                    box-shadow: 0 8px 32px rgba(37, 99, 235, 0.1);
-                    max-width: 500px;
-                    width: 100%;
-                    color: #1b3a6b;
-                    position: relative;
-                    overflow: hidden;
-                ">
-                    <div style="
-                        position: absolute;
-                        top: -50%;
-                        left: -50%;
-                        width: 200%;
-                        height: 200%;
-                        background: linear-gradient(45deg, transparent 30%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
-                        animation: shine 3s infinite;
-                    "></div>
-                    
-                    <div style="position: relative; z-index: 2;">
-                        <div style="
-                            background: linear-gradient(135deg, #2563eb 0%, #1b3a6b 100%);
-                            border-radius: 50%;
-                            width: 80px;
-                            height: 80px;
-                            margin: 0 auto 1.5rem;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-size: 2.5rem;
-                            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.2);
-                        ">
-                            🔍
-                        </div>
-                        
-                        <h2 style="
-                            margin: 0 0 1rem 0;
-                            font-size: 1.8rem;
-                            font-weight: 700;
-                            color: #1b3a6b;
-                            letter-spacing: 0.5px;
-                        ">
-                            Proceso No Encontrado
-                        </h2>
-                        
-                        <p style="
-                            margin: 0 0 1.5rem 0;
-                            font-size: 1rem;
-                            color: #2563eb;
-                            line-height: 1.5;
-                            font-weight: 500;
-                        ">
-                            El proceso <strong style="color: #1b3a6b;">#${codigoProceso}</strong> no se encuentra cargado en el sistema WebLiqui.
-                        </p>
-                        
-                        <div style="
-                            background: linear-gradient(135deg, #b4cefa 0%, #d0e2ff 100%);
-                            border: 1px solid #2563eb;
-                            border-radius: 12px;
-                            padding: 1rem;
-                            margin: 1.5rem 0;
-                            font-size: 0.9rem;
-                            color: #1b3a6b;
-                            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.08);
-                        ">
-                            💡 <strong>Sugerencias:</strong><br>
-                            • Verifica que el código sea correcto<br>
-                            • Asegúrate de que el proceso esté procesado<br>
-                            • Contacta al administrador si persiste el problema
-                        </div>
-                        
-                        <button onclick="window.history.back()" style="
-                            background: linear-gradient(135deg, #f7fafc 0%, #e3f0ff 100%);
-                            border: 2px solid #2563eb;
-                            color: #2563eb;
-                            padding: 0.75rem 2rem;
-                            border-radius: 25px;
-                            font-size: 1rem;
-                            font-weight: 600;
-                            cursor: pointer;
-                            transition: all 0.3s ease;
-                            margin-right: 1rem;
-                            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
-                        " onmouseover="this.style.background='linear-gradient(135deg, #e3f0ff 0%, #d0e2ff 100%)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(37, 99, 235, 0.2)'" 
-                           onmouseout="this.style.background='linear-gradient(135deg, #f7fafc 0%, #e3f0ff 100%)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(37, 99, 235, 0.1)'">
-                            ← Volver
-                        </button>
-                        
-                        <button onclick="window.location.href='procesos.html'" style="
-                            background: linear-gradient(135deg, #2563eb 0%, #1b3a6b 100%);
-                            border: none;
-                            color: white;
-                            padding: 0.75rem 2rem;
-                            border-radius: 25px;
-                            font-size: 1rem;
-                            font-weight: 600;
-                            cursor: pointer;
-                            transition: all 0.3s ease;
-                            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.2);
-                        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 24px rgba(37, 99, 235, 0.3)'" 
-                           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 18px rgba(37, 99, 235, 0.2)'">
-                            Ver Procesos
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <style>
-                @keyframes shine {
-                    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-                    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-                }
-            </style>
-        `;
-    }
-}
+// Función para verificar el final del archivo
+console.log('✅ proceso.js cargado completamente');

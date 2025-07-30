@@ -2,12 +2,21 @@ import { poblarSelectUnico, crearSelectorPersonalizado } from './tableLogic.js';
 import { generarTabla } from './tableUI.js';
 import { safeFetch, initCopyIconListener } from './newUtils.js';
 import { ProcesosManager } from './procesosUtils.js';
+import { Auth } from './auth.js';
 
 // Hacer disponibles las funciones para el manager
 window.tableLogic = { crearSelectorPersonalizado };
 window.tableUI = { generarTabla };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Validar sesión al cargar la página
+    if (!Auth.validarSesion()) {
+        return;
+    }
+    
+    // Actualizar datos del usuario en el DOM
+    Auth.actualizarDatosUsuario();
+    
     // Inicializa el listener de copiado de íconos
     initCopyIconListener();
 

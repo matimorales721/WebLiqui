@@ -1,4 +1,5 @@
 import { safeFetch } from '../js/newUtils.js';
+import { Auth } from '../js/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const usuarioInput = document.getElementById('usuario');
@@ -57,6 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
             );
 
             if (usuarioEncontrado) {
+                // Guardar datos del usuario en sessionStorage
+                Auth.guardarUsuario(usuarioEncontrado);
                 window.location.href = './procesos.html';
             } else {
                 alert('Usuario o contraseña incorrectos, o usuario inactivo.');
