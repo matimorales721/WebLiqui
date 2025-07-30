@@ -344,9 +344,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Obtener código de proceso de la URL
     codigoProceso = getParametroProceso();
 
-    // CONFIGURAR BOTONES DE VOLVER INMEDIATAMENTE
+    // CONFIGURAR BOTONES INMEDIATAMENTE
     setTimeout(() => {
         configurarBotonesVolver();
+        configurarBotonLogout(); // AGREGAR ESTA LÍNEA
     }, 100);
 
     await cargarProceso();
@@ -354,11 +355,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     // RECONFIGURAR BOTONES DESPUÉS DE CARGAR PROCESO
     setTimeout(() => {
         configurarBotonesVolver();
+        configurarBotonLogout(); // AGREGAR ESTA LÍNEA
     }, 500);
     
     // RECONFIGURAR BOTONES UNA VEZ MÁS DESPUÉS DE UN DELAY MAYOR
     setTimeout(() => {
         configurarBotonesVolver();
+        configurarBotonLogout(); // AGREGAR ESTA LÍNEA
     }, 1500);
 });
 
@@ -1690,6 +1693,204 @@ function mostrarLoaderEnPestanaInmediato(tabId) {
 
     tab.appendChild(loader);
 }
+
+// ===== CONFIGURACIÓN DE LOGOUT ===== (AGREGAR DESPUÉS DE configurarBotonesVolver)
+
+// Función para configurar el botón de logout
+function configurarBotonLogout() {
+    console.log('🔧 Configurando botón de logout...');
+    
+    const btnLogout = document.getElementById('btnLogout');
+    if (btnLogout) {
+        // Limpiar eventos existentes usando cloneNode
+        const nuevoBtnLogout = btnLogout.cloneNode(true);
+        btnLogout.parentNode.replaceChild(nuevoBtnLogout, btnLogout);
+        
+        nuevoBtnLogout.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const confirmar = confirm('¿Está seguro que desea cerrar sesión?');
+            if (confirmar) {
+                ejecutarLogout();
+            }
+        });
+        
+        console.log('✅ Botón logout configurado');
+    } else {
+        console.warn('⚠️ No se encontró btnLogout en el DOM');
+    }
+}
+
+// Función para ejecutar el logout
+function ejecutarLogout() {
+    try {
+        console.log('🔄 Ejecutando logout...');
+        
+        const btnLogout = document.getElementById('btnLogout');
+        if (btnLogout) {
+            btnLogout.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="12" r="2" opacity="0.8">
+                        <animate attributeName="r" values="2;4;2" dur="1s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            `;
+            btnLogout.disabled = true;
+            btnLogout.style.opacity = '0.6';
+            btnLogout.style.cursor = 'not-allowed';
+        }
+        
+        // Limpiar datos de sesión usando Auth
+        if (typeof Auth !== 'undefined' && Auth.cerrarSesion) {
+            Auth.cerrarSesion();
+            console.log('✅ Sesión cerrada con Auth.cerrarSesion()');
+        } else {
+            // Fallback manual si Auth no está disponible
+            console.warn('⚠️ Auth.cerrarSesion no disponible, limpiando manualmente...');
+            
+            // Limpiar localStorage
+            localStorage.removeItem('token');
+            localStorage.removeItem('usuario');
+            localStorage.removeItem('sesion');
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('userData');
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_session');
+            
+            // Limpiar sessionStorage
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('usuario');
+            sessionStorage.removeItem('sesion');
+            sessionStorage.removeItem('userToken');
+            sessionStorage.removeItem('userData');
+            sessionStorage.removeItem('auth_token');
+            sessionStorage.removeItem('user_session');
+            
+            console.log('✅ Datos de sesión limpiados manualmente');
+        }
+        
+        // Limpiar preferencias específicas de la aplicación
+        localStorage.removeItem(CONFIGURACION.STORAGE_KEYS.RECORDAR_CARGA);
+        localStorage.removeItem(CONFIGURACION.STORAGE_KEYS.ESTADO_PRACTICAS);
+        
+        // Limpiar cualquier otro dato de sesión que pueda existir
+        Object.keys(localStorage).forEach(key => {
+            if (key.toLowerCase().includes('token') || 
+                key.toLowerCase().includes('auth') || 
+                key.toLowerCase().includes('session') ||
+                key.toLowerCase().includes('user')) {
+                localStorage.removeItem(key);
+            }
+        });
+        
+        Object.keys(sessionStorage).forEach(key => {
+            if (key.toLowerCase().includes('token') || 
+                key.toLowerCase().includes('auth') || 
+                key.toLowerCase().includes('session') ||
+                key.toLowerCase().includes('user')) {
+                sessionStorage.removeItem(key);
+            }
+        });
+        
+        // Mostrar mensaje de despedida
+        console.log('👋 Sesión cerrada exitosamente');
+        
+        // Redireccionar al login después de un pequeño delay
+        setTimeout(() => {
+            window.location.replace('../index.html');
+        }, 800);
+        
+    } catch (error) {
+        console.error('❌ Error durante el logout:', error);
+        
+        // Restaurar botón en caso de error
+        const btnLogout = document.getElementById('btnLogout');
+        if (btnLogout) {
+            btnLogout.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                </svg>
+            `;
+            btnLogout.disabled = false;
+            btnLogout.style.opacity = '1';
+            btnLogout.style.cursor = 'pointer';
+        }
+        
+        alert('Error al cerrar sesión. Por favor, intente nuevamente.');
+    }
+}
+
+// AGREGAR FUNCIONES DE DEBUG PARA LOGOUT:
+
+window.debugBotones = function() {
+    console.log('🔍 === DEBUG BOTONES ===');
+    
+    const btnVolver = document.getElementById('btnVolverProcesos');
+    const btnVolverMobile = document.getElementById('btnVolverProcesosMobile');
+    const btnLogout = document.getElementById('btnLogout');
+    
+    console.log('btnVolverProcesos:', btnVolver);
+    console.log('btnVolverProcesosMobile:', btnVolverMobile);
+    console.log('btnLogout:', btnLogout);
+    
+    if (btnVolver) {
+        console.log('✅ Botón volver escritorio encontrado');
+    } else {
+        console.log('❌ Botón volver escritorio NO encontrado');
+    }
+    
+    if (btnVolverMobile) {
+        console.log('✅ Botón volver móvil encontrado');
+    } else {
+        console.log('❌ Botón volver móvil NO encontrado');
+    }
+    
+    if (btnLogout) {
+        console.log('✅ Botón logout encontrado');
+        console.log('- Texto:', btnLogout.textContent);
+        console.log('- innerHTML:', btnLogout.innerHTML);
+        console.log('- disabled:', btnLogout.disabled);
+        console.log('- Eventos logout:', getEventListeners?.(btnLogout) || 'getEventListeners no disponible');
+    } else {
+        console.log('❌ Botón logout NO encontrado');
+    }
+    
+    console.log('=========================');
+};
+
+// Función para forzar reconfiguración de todos los botones
+window.reconfigurarBotones = function() {
+    console.log('🔄 Reconfigurando todos los botones...');
+    configurarBotonesVolver();
+    configurarBotonLogout();
+    console.log('✅ Botones reconfigurados');
+    
+    // Mostrar debug después de reconfigurar
+    setTimeout(() => {
+        debugBotones();
+    }, 100);
+};
+
+// Función para probar logout manualmente
+window.probarLogout = function() {
+    console.log('🧪 Probando logout manualmente...');
+    ejecutarLogout();
+};
+
+// Función para verificar estado de sesión
+window.verificarSesion = function() {
+    console.log('🔍 === VERIFICANDO ESTADO DE SESIÓN ===');
+    console.log('localStorage token:', localStorage.getItem('token'));
+    console.log('localStorage usuario:', localStorage.getItem('usuario'));
+    console.log('sessionStorage token:', sessionStorage.getItem('token'));
+    console.log('Auth disponible:', typeof Auth !== 'undefined');
+    if (typeof Auth !== 'undefined') {
+        console.log('Auth.validarSesion:', typeof Auth.validarSesion);
+        console.log('Auth.cerrarSesion:', typeof Auth.cerrarSesion);
+    }
+    console.log('=====================================');
+};
 
 // Función de debug para verificar funciones de navegación
 window.debugNavegacion = function() {

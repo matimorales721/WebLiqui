@@ -46,7 +46,7 @@ export const Auth = {
     // Validar sesión y redirigir si no está logueado
     validarSesion() {
         if (!this.estaLogueado()) {
-            window.location.href = '../login.html';
+            window.location.href = '../pages/login.html';
             return false;
         }
         return true;
@@ -55,6 +55,6 @@ export const Auth = {
     // Cerrar sesión
     cerrarSesion() {
         sessionStorage.removeItem('usuarioLogueado');
-        window.location.href = '../login.html';
+        window.location.href = '../pages/login.html';
     }
 };
